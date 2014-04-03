@@ -8,19 +8,37 @@ This plugins is supposed to work with version `2.2.x` of PlayFramework. It uses 
 
 ## How to Use
 
-### Add dependencies
+There are just a few steps to properly configure the plugin. Just follow the steps bellow:
 
-### Disable default `dbplugin`
+### Step 1: Add dependencies
 
-### Enable HikariCP Plugin
+Add the following dependency to your `build.sbt` or `Build.scala`:
 
-### Configure HikariCP
+    "com.edulify" % "play-hirakicp" % "0.0.1"
 
-##### Using `hikari.properties`
+### Step 2: Disable default `dbplugin`
+
+Add the following line to your `conf/application.conf`:
+
+    dbplugin=disabled
+
+This will disable dbplugin and avoids that BoneCP creates useless connections (which in some cases can create database problems, like exhaust available connections).
+
+### Step 3: Enable HikariCP Plugin
+
+Add the following line to your `conf/play.plugins`:
+
+    1500:com.edulify.play.hikaricp.HikariCPPlugin
+
+### Step 4: Configure HikariCP
+
+##### Using `hikaricp.properties`
+
+That is the preferred way to configure HikariCP because you have full access to all [properties documented here](https://github.com/brettwooldridge/HikariCP#configuration-knobs-baby). Just create a `hikaricp.properties` at `conf` directory and the plugin will read it and create DataSource using it. **This mode has preference over using ordinary play way**. It will just try play mode if `hikaricp.properties` does not exists.
 
 ##### Using ordinary [Play way](http://www.playframework.com/documentation/2.2.x/SettingsJDBC)
 
-The table bellow shows how Play configurations are mapped to HikariCP:
+Just configure database properties like you do before, using the default DBPlugin. The table bellow shows how Play configurations are mapped to HikariCP:
 
 Hikari                                          | Play                           | Defaults
 :-----------------------------------------------|:-------------------------------|:-----------
