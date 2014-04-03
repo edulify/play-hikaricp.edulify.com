@@ -12,7 +12,7 @@ There are just a few steps to properly configure the plugin. Just follow the ste
 
 ### Step 1: Add dependencies
 
-Add the following dependency to your `build.sbt` or `Build.scala`:
+Add the following dependency to your `project/build.sbt` or `project/Build.scala`:
 
     "com.edulify" % "play-hirakicp" % "0.0.1"
 
@@ -34,7 +34,7 @@ Add the following line to your `conf/play.plugins`:
 
 ##### Using `hikaricp.properties`
 
-That is the preferred way to configure HikariCP because you have full access to all [properties documented here](https://github.com/brettwooldridge/HikariCP#configuration-knobs-baby). Just create a `hikaricp.properties` at `conf` directory and the plugin will read it and create DataSource using it. **This mode has preference over using ordinary play way**. It will just try play mode if `hikaricp.properties` does not exists.
+That is the preferred way to configure HikariCP because you have full access to all [properties documented here](https://github.com/brettwooldridge/HikariCP#configuration-knobs-baby). Just create a `conf/hikaricp.properties` and the plugin will read it and create DataSource using it. **This mode has preference over using ordinary play way**. It will just try play mode if `conf/hikaricp.properties` does not exists.
 
 ##### Using ordinary [Play way](http://www.playframework.com/documentation/2.2.x/SettingsJDBC)
 
