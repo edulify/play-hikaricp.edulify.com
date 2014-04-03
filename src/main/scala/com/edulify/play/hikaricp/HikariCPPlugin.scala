@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.edulify.play.hirakicp
+package com.edulify.play.hikaricp
 
 import play.api.{Application, Configuration}
 import play.api.db.{DBApi, DBPlugin}
-import com.edulify.play.hikaricp.HirakiCPDBApi
 
 class HikariCPPlugin(app: Application) extends DBPlugin {
 
@@ -35,9 +34,8 @@ class HikariCPPlugin(app: Application) extends DBPlugin {
       try {
         ds._1.getConnection.close()
       } catch {
-        case t: Throwable => {
+        case t: Throwable =>
           throw databaseConfig.reportError(ds._2 + ".url", "Cannot connect to database [" + ds._2 + "]", Some(t.getCause))
-        }
       }
     }
   }
