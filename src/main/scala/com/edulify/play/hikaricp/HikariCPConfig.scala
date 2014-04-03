@@ -21,7 +21,7 @@ import play.api.Configuration
 import java.io.{File, FileReader, IOException}
 import java.util.Properties
 
-class HikariCPConfig(configuration: Configuration) {
+class HikariCPConfig(dbConfig: Configuration) {
   lazy val DEFAULT_DATASOURCE_NAME = "default"
   lazy val HIKARI_CP_PROPERTIES_FILE = "hikaricp.properties"
 
@@ -45,8 +45,6 @@ class HikariCPConfig(configuration: Configuration) {
 
   private def mapFromPlayConfiguration(): Properties = {
     val properties = new Properties()
-    val dbConfig = configuration.getConfig("db.default").getOrElse(Configuration.empty)
-
     properties.setProperty("driverClassName",   dbConfig.getString("driver").get)
     properties.setProperty("jdbcUrl",           dbConfig.getString("url").get)
     properties.setProperty("username",          dbConfig.getString("user").get)
