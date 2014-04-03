@@ -1,7 +1,5 @@
 import sbt._
 
-import Defaults._
-
 ivyLoggingLevel := UpdateLogging.Full
 
 // Comment to get more information during initialization
@@ -11,7 +9,7 @@ resolvers ++= Seq(
     DefaultMavenRepository,
     "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
     "Sonatype snapshots" at "http://oss.sonatype.org/content/repositories/snapshots/",
-    Classpaths.typesafeResolver
+    Classpaths.typesafeReleases
 )
 
 addSbtPlugin("com.github.mpeltonen" % "sbt-idea" % "1.6.0")
