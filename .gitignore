@@ -1,0 +1,6 @@
+.*
+!.gitignore
+*.iml
+project/target
+project/project
+target
