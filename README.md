@@ -32,13 +32,23 @@ Add the following line to your `conf/play.plugins`:
 
 ### Step 4: Configure HikariCP
 
+##### Using `db.default.hikaricp.file`
+
+**That is the preferred way to configure HikariCP** because you have full access to all [properties documented here](https://github.com/brettwooldridge/HikariCP#configuration-knobs-baby) and you can also have specific configuration to development, test and production modes. You can create a specific hikari properties file and configure it using `db.default.hikaricp.file` in you `conf/application.conf` file.
+
+Per instance, if you have a `conf/production.conf` that is loaded by play in production mode, add the following line to this file:
+
+     db.default.hikaricp.file="conf/hikaricp.prod.properties"
+
+Of course, you need to create `conf/hikaricp.dev.properties` file.
+
 ##### Using `hikaricp.properties`
 
-That is the preferred way to configure HikariCP because you have full access to all [properties documented here](https://github.com/brettwooldridge/HikariCP#configuration-knobs-baby). Just create a `conf/hikaricp.properties` and the plugin will read it and create DataSource using it. **This mode has preference over using ordinary play way**. It will just try play mode if `conf/hikaricp.properties` does not exists.
+Just create a `conf/hikaricp.properties` and the plugin will read it and create DataSource. **This mode has preference over using ordinary play way** because you have fine grained access to Hikari configuration.
 
 ##### Using ordinary [Play way](http://www.playframework.com/documentation/2.2.x/SettingsJDBC)
 
-Just configure database properties like you do before, using the default DBPlugin. The table bellow shows how Play configurations are mapped to HikariCP:
+This the least recommended way. Configure database properties like stated by Play docs. The table bellow shows how Play configurations are mapped to HikariCP:
 
 Hikari                                          | Play                           | Defaults
 :-----------------------------------------------|:-------------------------------|:-----------
