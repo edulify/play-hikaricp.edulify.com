@@ -45,7 +45,7 @@ object ApplicationBuild extends Build {
       }
     }),
     libraryDependencies ++= Seq(
-      "com.zaxxer" % "HikariCP" % "1.3.4"
+      "com.zaxxer" % "HikariCP" % "1.3.5"
     )
   )
 }
