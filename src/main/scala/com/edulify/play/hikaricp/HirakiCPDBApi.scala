@@ -35,6 +35,7 @@ class HirakiCPDBApi(configuration: Configuration) extends DBApi {
   }.toList
 
   def shutdownPool(ds: DataSource) = {
+    play.api.Logger.info("Shutting down connection pool.")
     ds match {
       case ds: HikariDataSource => ds.shutdown()
     }

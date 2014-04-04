@@ -32,18 +32,22 @@ class HikariCPConfig(dbConfig: Configuration) {
   }
 
   private def props(file: File): Properties = {
+    play.api.Logger.info("Loading Hikari configuration from conf/hikaricp.properties")
+
     val properties = new Properties()
     try {
       val reader = new FileReader(file)
       properties.load(reader)
     } catch {
       case ex: IOException =>
-        play.api.Logger.warn("There is a hikaricp.properties file, but it could not be readed", ex)
+        play.api.Logger.warn("There is a hikaricp.properties file, but it could not be read", ex)
     }
     properties
   }
 
   private def mapFromPlayConfiguration(): Properties = {
+    play.api.Logger.info("Loading Hikari configuration from Play configuration")
+
     val properties = new Properties()
     properties.setProperty("driverClassName",   dbConfig.getString("driver").get)
     properties.setProperty("jdbcUrl",           dbConfig.getString("url").get)
