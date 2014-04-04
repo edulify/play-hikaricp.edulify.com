@@ -24,7 +24,7 @@ class HikariCPPlugin(app: Application) extends DBPlugin {
 
   override def enabled = true
 
-  private lazy val hirakiCPDBApi: DBApi = new HirakiCPDBApi(databaseConfig)
+  private lazy val hirakiCPDBApi: DBApi = new HirakiCPDBApi(databaseConfig, app.classloader)
 
   def api: DBApi = hirakiCPDBApi
 

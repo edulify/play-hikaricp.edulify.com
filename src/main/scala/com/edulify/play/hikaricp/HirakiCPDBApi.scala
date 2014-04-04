@@ -17,12 +17,13 @@ package com.edulify.play.hikaricp
 
 import com.zaxxer.hikari.HikariDataSource
 
-import play.api.Configuration
+import play.api.{Configuration, Logger}
 import play.api.db.DBApi
 
 import javax.sql.DataSource
+import java.sql.{Driver, DriverManager}
 
-class HirakiCPDBApi(configuration: Configuration) extends DBApi {
+class HirakiCPDBApi(configuration: Configuration, classloader: ClassLoader) extends DBApi {
 
   lazy val dataSourceConfigs = configuration.subKeys.map {
     dataSourceName => dataSourceName -> configuration.getConfig(dataSourceName).getOrElse(Configuration.empty)
@@ -31,6 +32,7 @@ class HirakiCPDBApi(configuration: Configuration) extends DBApi {
   val datasources: List[(DataSource, String)] = dataSourceConfigs.map {
     case (dataSourceName, dataSourceConfig) =>
       val hikariConfig = new HikariCPConfig(dataSourceConfig).getHikariConfig
+      registerDriver(dataSourceConfig)
       new HikariDataSource(hikariConfig) -> dataSourceName
   }.toList
 
@@ -42,8 +44,23 @@ class HirakiCPDBApi(configuration: Configuration) extends DBApi {
   }
 
   def getDataSource(name: String): DataSource = {
-    datasources.find(tuple => tuple._2 == name)
-               .map(element => element._1)
-               .getOrElse(sys.error(" - could not find datasource for name " + name))
+    Logger.info("Getting datasource named " + name)
+    val dataSource = datasources.find(tuple => tuple._2 == name)
+      .map(element => element._1)
+      .getOrElse(sys.error(" - could not find datasource for name " + name))
+    Logger.info("Found datasource " + dataSource)
+    dataSource
+  }
+
+  private def registerDriver(config: Configuration): Unit = {
+    val driver = config.getString("driver")
+    if (driver.isEmpty) return
+    try {
+      val driverClassName = driver.get
+      Logger.info("Registering driver " + driverClassName)
+      DriverManager.registerDriver(new play.utils.ProxyDriver(Class.forName(driverClassName, true, classloader).newInstance.asInstanceOf[Driver]))
+    } catch {
+      case t: Throwable => throw config.reportError("driver", "Driver not found: [" + driver + "]", Some(t))
+    }
   }
 }
