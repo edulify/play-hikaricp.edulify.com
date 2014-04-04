@@ -22,7 +22,7 @@ object ApplicationBuild extends Build {
 
   val appOrganization = "com.edulify"
   val appName         = "play-hirakicp"
-  val appVersion      = "0.0.1"
+  val appVersion      = "0.0.2"
   val appScalaVersion = "2.10.3"
   val appScalaCrossVersions = Seq(appScalaVersion, "2.9.3")
 
