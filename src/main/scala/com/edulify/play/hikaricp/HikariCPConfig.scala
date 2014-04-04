@@ -16,7 +16,7 @@
 package com.edulify.play.hikaricp
 
 import com.zaxxer.hikari.HikariConfig
-import play.api.Configuration
+import play.api.{Configuration, Logger}
 
 import java.io.{File, FileReader, IOException}
 import java.util.Properties
@@ -32,7 +32,7 @@ class HikariCPConfig(dbConfig: Configuration) {
   }
 
   private def props(file: File): Properties = {
-    play.api.Logger.info("Loading Hikari configuration from conf/hikaricp.properties")
+    Logger.info("Loading Hikari configuration from " + file)
 
     val properties = new Properties()
     try {
@@ -40,8 +40,10 @@ class HikariCPConfig(dbConfig: Configuration) {
       properties.load(reader)
     } catch {
       case ex: IOException =>
-        play.api.Logger.warn("There is a hikaricp.properties file, but it could not be read", ex)
+        play.api.Logger.warn("Could not read file " + file, ex)
     }
+
+    Logger.info("Properties: " + properties)
     properties
   }
 
@@ -64,6 +66,7 @@ class HikariCPConfig(dbConfig: Configuration) {
     properties.setProperty("registerMbeans",    dbConfig.getString("statisticsEnabled").getOrElse("false"))
     properties.setProperty("connectionInitSql", dbConfig.getString("initSQL").get)
 
+    Logger.info("Properties: " + properties)
     properties
   }
 
