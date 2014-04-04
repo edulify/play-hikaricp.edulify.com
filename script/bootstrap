@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+if hash sbt 2>/dev/null; then
+	echo 'Fetching sbt dependencies...'
+        sbt all-dependencies
+else
+	echo 'sbt not found. Falling back to play command'
+fi
+
+if hash play 2>/dev/null; then
+	echo 'Fetching play dependencies...'
+	play all-dependencies
+else
+	echo 'play not found too... :-('
+fi
