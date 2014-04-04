@@ -48,7 +48,13 @@ class HikariCPConfig(dbConfig: Configuration) {
   }
 
   private def mapFromPlayConfiguration(): Properties = {
-    play.api.Logger.info("Loading Hikari configuration from Play configuration")
+    Logger.info("Loading Hikari configuration from Play configuration.")
+
+    val configFile = dbConfig.getString("hikaricp.file")
+    if(configFile.nonEmpty) {
+      Logger.info("Loading from file configured by db.default.hikaricp.file that is " + configFile)
+      return props(new File(configFile.get))
+    }
 
     val properties = new Properties()
     properties.setProperty("driverClassName",   dbConfig.getString("driver").get)
