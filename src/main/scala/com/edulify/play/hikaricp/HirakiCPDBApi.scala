@@ -44,11 +44,9 @@ class HirakiCPDBApi(configuration: Configuration, classloader: ClassLoader) exte
   }
 
   def getDataSource(name: String): DataSource = {
-    Logger.info("Getting datasource named " + name)
     val dataSource = datasources.find(tuple => tuple._2 == name)
       .map(element => element._1)
       .getOrElse(sys.error(" - could not find datasource for name " + name))
-    Logger.info("Found datasource " + dataSource)
     dataSource
   }
 
