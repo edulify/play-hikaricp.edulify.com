@@ -15,8 +15,12 @@
  */
 package com.edulify.play.hikaricp
 
-import play.api.{Application, Configuration}
+import java.sql.Connection
+
 import play.api.db.{DBApi, DBPlugin}
+import play.api.{Application, Configuration, Mode, Logger}
+
+import scala.util.control.NonFatal
 
 class HikariCPPlugin(app: Application) extends DBPlugin {
 
@@ -30,13 +34,18 @@ class HikariCPPlugin(app: Application) extends DBPlugin {
 
   override def onStart() {
     play.api.Logger.info("Starting HikariCP connection pool...")
-    api.datasources.map { ds =>
-      try {
-        ds._1.getConnection.close()
-      } catch {
-        case t: Throwable =>
-          throw databaseConfig.reportError(ds._2 + ".url", "Cannot connect to database [" + ds._2 + "]", Some(t.getCause))
-      }
+    hirakiCPDBApi.datasources.map { ds =>
+        try {
+          ds._1.getConnection.close()
+          app.mode match {
+            case Mode.Test =>
+            case mode => Logger.info("database [" + ds._2 + "] connected at " + dbURL(ds._1.getConnection))
+          }
+        } catch {
+          case NonFatal(e) => {
+            throw databaseConfig.reportError(ds._2 + ".url", "Cannot connect to database [" + ds._2 + "]", Some(e.getCause))
+          }
+        }
     }
   }
 
@@ -45,7 +54,15 @@ class HikariCPPlugin(app: Application) extends DBPlugin {
     api.datasources.foreach {
       case (ds, _) => try {
         api.shutdownPool(ds)
-      } catch { case t: Throwable => }
+      } catch {
+        case t: Throwable =>
+      }
     }
+  }
+
+  private def dbURL(conn: Connection): String = {
+    val u = conn.getMetaData.getURL
+    conn.close()
+    u
   }
 }
