@@ -9,3 +9,6 @@ publish-local:
 
 publish:
 	@play clean publish
+
+idea:
+	@sbt clean gen-idea
