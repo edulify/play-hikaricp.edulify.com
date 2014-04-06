@@ -1,5 +1,6 @@
 .*
 !.gitignore
+!.java-version
 *.iml
 project/target
 project/project
