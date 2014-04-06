@@ -39,13 +39,13 @@ description := "HikariCP Plugin for Play Framework 2.2.x"
 
 licenses := Seq("The Apache Software License, Version 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt"))
 
-homepage := Some(url("http://blabluble.github.io/play-hikaricp.edulify.com/"))
+homepage := Some(url("http://edulify.github.io/play-hikaricp.edulify.com/"))
 
 pomExtra := (
   <scm>
-    <url>https://github.com/blabluble/play-hikaricp.edulify.com</url>
-    <connection>scm:git:git@github.com:blabluble/play-hikaricp.edulify.com.git</connection>
-    <developerConnection>scm:git:https://github.com/blabluble/play-hikaricp.edulify.com.git</developerConnection>
+    <url>https://github.com/edulify/play-hikaricp.edulify.com</url>
+    <connection>scm:git:git@github.com:edulify/play-hikaricp.edulify.com.git</connection>
+    <developerConnection>scm:git:https://github.com/edulify/play-hikaricp.edulify.com.git</developerConnection>
   </scm>
     <developers>
       <developer>
