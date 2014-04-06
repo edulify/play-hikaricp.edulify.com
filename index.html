@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>play-hikaricp by blabluble</title>
+    <title>play-hikaricp by edulify</title>
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
@@ -20,12 +20,12 @@
         <p class="header">HikariCP Plugin for Play Framework 2.2.x</p>
 
         <ul>
-          <li class="download"><a class="buttons" href="https://github.com/blabluble/play-hikaricp.edulify.com/zipball/master">Download ZIP</a></li>
-          <li class="download"><a class="buttons" href="https://github.com/blabluble/play-hikaricp.edulify.com/tarball/master">Download TAR</a></li>
-          <li><a class="buttons github" href="https://github.com/blabluble/play-hikaricp.edulify.com">View On GitHub</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/edulify/play-hikaricp.edulify.com/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/edulify/play-hikaricp.edulify.com/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/edulify/play-hikaricp.edulify.com">View On GitHub</a></li>
         </ul>
 
-        <p class="header">This project is maintained by <a class="header name" href="https://github.com/blabluble">blabluble</a></p>
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/edulify">edulify</a></p>
 
 
       </header>
@@ -33,12 +33,12 @@
         <h1>
 <a name="hikaricp-plugin-for-play-framework-22x" class="anchor" href="#hikaricp-plugin-for-play-framework-22x"><span class="octicon octicon-link"></span></a>HikariCP Plugin for Play Framework 2.2.x</h1>
 
-<p>This plugins is supposed to work with version <code>2.2.x</code> of <a href="http://www.playframework.com/">PlayFramework</a>. It uses version <code>1.3.5</code> of <a href="http://brettwooldridge.github.io/HikariCP/">HikariCP</a>.</p>
+<p>This plugins is supposed to work with version <code>2.2.x</code> of PlayFramework. It uses version <code>1.3.4</code> of HikariCP.</p>
 
 <h2>
 <a name="why-hikaricp" class="anchor" href="#why-hikaricp"><span class="octicon octicon-link"></span></a>Why HikariCP?</h2>
 
-<p><a href="https://github.com/brettwooldridge/HikariCP">HikariCP</a> is supposed to be the fastest connection pool in Java land. But we did not start to use it because of speed, but because of its reliability. After suffering with connection leaks from BoneCP, we decide to implement our own (Play) database plugin to replace the default one. You can see <a href="https://groups.google.com/forum/#!topic/play-framework/7PBnjiXkNuU">a discussion about database exceptions</a> caused by BoneCP (or misconfiguration of it). Also there are numerous other discussions about people having problems related to BoneCP.</p>
+<p><a href="https://github.com/brettwooldridge/HikariCP">HikariCP</a> is supposed to be the fastest connection pool in Java land. But we did not start to use it because of speed, but because of its reliability. After suffering with connection leaks from BoneCP, we decide to implement our own database plugin to replace the default one. You can see <a href="https://groups.google.com/forum/#!topic/play-framework/7PBnjiXkNuU">a discussion about database exceptions</a> caused by BoneCP (or misconfiguration of it). Also there are numerous other discussions about people having problems related to BoneCP.</p>
 
 <h2>
 <a name="how-to-use" class="anchor" href="#how-to-use"><span class="octicon octicon-link"></span></a>How to Use</h2>
@@ -50,7 +50,7 @@
 
 <p>Add the following dependency to your <code>project/build.sbt</code> or <code>project/Build.scala</code>:</p>
 
-<pre><code>"com.edulify" % "play-hirakicp" % "0.0.2"
+<pre><code>"com.edulify" % "play-hirakicp" % "1.0.0"
 </code></pre>
 
 <h3>
