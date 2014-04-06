@@ -5,6 +5,7 @@ name := "play-hirakicp"
 version := "0.0.3"
 
 libraryDependencies ++= Seq(
+  jdbc,
   "com.zaxxer" % "HikariCP" % "1.3.5"
 )
 
