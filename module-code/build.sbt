@@ -2,7 +2,7 @@ import play.Project._
 
 name := "play-hirakicp"
 
-version := "0.0.3"
+version := "1.0.0"
 
 libraryDependencies ++= Seq(
   jdbc,
