@@ -41,6 +41,27 @@
 <p><a href="https://github.com/brettwooldridge/HikariCP">HikariCP</a> is supposed to be the fastest connection pool in Java land. But we did not start to use it because of speed, but because of its reliability. After suffering with connection leaks from BoneCP, we decide to implement our own database plugin to replace the default one. You can see <a href="https://groups.google.com/forum/#!topic/play-framework/7PBnjiXkNuU">a discussion about database exceptions</a> caused by BoneCP (or misconfiguration of it). Also there are numerous other discussions about people having problems related to BoneCP.</p>
 
 <h2>
+<a name="versions" class="anchor" href="#versions"><span class="octicon octicon-link"></span></a>Versions</h2>
+
+<table>
+<thead><tr>
+<th align="right">Version</th>
+<th align="right">HikariCP</th>
+<th align="right">Play</th>
+</tr></thead>
+<tbody>
+<tr>
+<td align="right">1.1.0</td>
+<td align="right">1.3.8</td>
+<td align="right">2.2.3</td>
+</tr>
+<tr>
+<td align="right">1.0.0</td>
+<td align="right">1.3.5</td>
+<td align="right">2.2.2</td>
+</tr>
+</tbody>
+</table><h2>
 <a name="how-to-use" class="anchor" href="#how-to-use"><span class="octicon octicon-link"></span></a>How to Use</h2>
 
 <p>There are just a few steps to properly configure the plugin. Just follow the steps bellow:</p>
