@@ -14,7 +14,7 @@ There are just a few steps to properly configure the plugin. Just follow the ste
 
 Add the following dependency to your `project/build.sbt` or `project/Build.scala`:
 
-    "com.edulify" % "play-hirakicp" % "1.0.0"
+    "com.edulify" % "play-hirakicp_2.10" % "1.0.0"
 
 ### Step 2: Disable default `dbplugin`
 
