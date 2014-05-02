@@ -6,6 +6,13 @@ This plugins is supposed to work with version `2.2.x` of PlayFramework. It uses 
 
 [HikariCP](https://github.com/brettwooldridge/HikariCP) is supposed to be the fastest connection pool in Java land. But we did not start to use it because of speed, but because of its reliability. After suffering with connection leaks from BoneCP, we decide to implement our own database plugin to replace the default one. You can see [a discussion about database exceptions](https://groups.google.com/forum/#!topic/play-framework/7PBnjiXkNuU) caused by BoneCP (or misconfiguration of it). Also there are numerous other discussions about people having problems related to BoneCP.
 
+## Versions
+
+| Version | HikariCP | Play  |
+|--------:|---------:|------:|
+| 1.1.0   | 1.3.8    | 2.2.3 |
+| 1.0.0   | 1.3.5    | 2.2.2 |
+
 ## How to Use
 
 There are just a few steps to properly configure the plugin. Just follow the steps bellow:
