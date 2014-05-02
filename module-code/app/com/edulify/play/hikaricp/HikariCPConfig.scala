@@ -63,7 +63,7 @@ class HikariCPConfig(dbConfig: Configuration) {
     properties.setProperty("password",          dbConfig.getString("password").get)
 
     properties.setProperty("maximumPoolSize",   maxPoolSize(dbConfig))
-    properties.setProperty("minimumPoolSize",   minPoolSize(dbConfig))
+    properties.setProperty("minimumIdle",       minPoolSize(dbConfig))
 
     properties.setProperty("maxLifetime",       dbConfig.getString("maxConnectionAge").get)
     properties.setProperty("readOnly",          dbConfig.getString("defaultReadOnly").getOrElse("false"))
