@@ -21,6 +21,8 @@ import play.api.{Configuration, Logger}
 import java.io.{File, FileReader, IOException}
 import java.util.Properties
 
+import org.apache.commons.configuration.{PropertiesConfiguration, ConfigurationConverter}
+
 class HikariCPConfig(dbConfig: Configuration) {
   lazy val DEFAULT_DATASOURCE_NAME = "default"
   lazy val HIKARI_CP_PROPERTIES_FILE = "hikaricp.properties"
@@ -34,10 +36,9 @@ class HikariCPConfig(dbConfig: Configuration) {
   private def props(file: File): Properties = {
     Logger.info("Loading Hikari configuration from " + file)
 
-    val properties = new Properties()
+    var properties = new Properties()
     try {
-      val reader = new FileReader(file)
-      properties.load(reader)
+      properties = ConfigurationConverter.getProperties(new PropertiesConfiguration(file))
     } catch {
       case ex: IOException =>
         play.api.Logger.warn("Could not read file " + file, ex)
