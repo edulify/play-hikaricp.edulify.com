@@ -52,17 +52,26 @@
 <th align="right">Version</th>
 <th align="right">HikariCP</th>
 <th align="right">Play</th>
+<th align="left">Comment</th>
 </tr></thead>
 <tbody>
+<tr>
+<td align="right">1.2.0</td>
+<td align="right">1.3.8</td>
+<td align="right">2.2.3</td>
+<td align="left">Supports Heroku like services</td>
+</tr>
 <tr>
 <td align="right">1.1.0</td>
 <td align="right">1.3.8</td>
 <td align="right">2.2.3</td>
+<td align="left">Updates HikariCP and Play</td>
 </tr>
 <tr>
 <td align="right">1.0.0</td>
 <td align="right">1.3.5</td>
 <td align="right">2.2.2</td>
+<td align="left">First stable release</td>
 </tr>
 </tbody>
 </table><h2>
@@ -196,6 +205,28 @@
 </tr>
 </tbody>
 </table><h2>
+<a name="deploying-to-heroku" class="anchor" href="#deploying-to-heroku"><span class="octicon octicon-link"></span></a>Deploying to Heroku</h2>
+
+<p>When using Heroku, you need to <a href="https://devcenter.heroku.com/articles/heroku-postgresql#connecting-in-java">read database url string</a> from an environment variable called <code>DATABASE_URL</code>. Plain java Properties does not offer a way to reference these environment variables in a properties file, then we use <a href="http://commons.apache.org/proper/commons-configuration/">Commons Configuration</a> to read the <code>hikaricp.properties</code> file or the one configured by <code>db.default.hikaricp.file</code>.</p>
+
+<p>Here is an example:</p>
+
+<pre><code>jdbcUrl=${env:DATABASE_URL}
+driverClassName=org.postgresql.Driver
+
+connectionTestQuery=SELECT 1
+registerMbeans=true
+
+# 15 minutes
+maxLifetime=900000
+# 5 minutes
+idleTimeout=300000
+
+maximumPoolSize=20
+minimumIdle=5
+</code></pre>
+
+<h2>
 <a name="inspirations-and-alternatives" class="anchor" href="#inspirations-and-alternatives"><span class="octicon octicon-link"></span></a>Inspirations and Alternatives</h2>
 
 <p>The code here is highly inspired by the following plugins:</p>
