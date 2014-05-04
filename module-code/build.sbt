@@ -6,7 +6,9 @@ version := "1.1.0"
 
 libraryDependencies ++= Seq(
   jdbc,
-  "com.zaxxer" % "HikariCP" % "1.3.8"
+  "com.zaxxer" % "HikariCP" % "1.3.8",
+  "commons-configuration" % "commons-configuration" % "1.10",
+  "commons-collections" % "commons-collections" % "3.2.1"
 )
 
 resolvers ++= Seq(
