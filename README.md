@@ -12,10 +12,11 @@ Here is how HikariCP is working for us:
 
 ## Versions
 
-| Version | HikariCP | Play  |
-|--------:|---------:|------:|
-| 1.1.0   | 1.3.8    | 2.2.3 |
-| 1.0.0   | 1.3.5    | 2.2.2 |
+| Version | HikariCP | Play  | Comment                       |
+|--------:|---------:|------:|:------------------------------|
+| 1.2.0   | 1.3.8    | 2.2.3 | Supports Heroku like services |
+| 1.1.0   | 1.3.8    | 2.2.3 | Updates HikariCP and Play     |
+| 1.0.0   | 1.3.5    | 2.2.2 | First stable release          |
 
 ## How to Use
 

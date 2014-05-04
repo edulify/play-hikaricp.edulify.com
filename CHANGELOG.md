@@ -1,4 +1,8 @@
-# Changelog 
+# Changelog
+
+## Version 1.2.0 - 2014/05/04
+
+1. GH-2 - Supports configuration using environment variables
 
 ## Version 1.1.0 - 2014/05/02
 
