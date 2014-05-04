@@ -76,6 +76,28 @@ Hikari                                          | Play                          
 `registerMbeans`                                | `db.default.statisticsEnabled` | `false`
 `connectionInitSql`                             | `db.default.initSQL`           | -
 
+## Deploying to Heroku
+
+When using Heroku, you need to [read database url string](https://devcenter.heroku.com/articles/heroku-postgresql#connecting-in-java) from an environment variable called `DATABASE_URL`. Plain java Properties does not offer a way to reference these environment variables in a properties file, then we use [Commons Configuration](http://commons.apache.org/proper/commons-configuration/) to read the `hikaricp.properties` file or the one configured by `db.default.hikaricp.file`.
+
+Here is an example:
+
+```
+jdbcUrl=${env:DATABASE_URL}
+driverClassName=org.postgresql.Driver
+
+connectionTestQuery=SELECT 1
+registerMbeans=true
+
+# 15 minutes
+maxLifetime=900000
+# 5 minutes
+idleTimeout=300000
+
+maximumPoolSize=20
+minimumIdle=5
+```
+
 ## Inspirations and Alternatives
 
 The code here is highly inspired by the following plugins:
