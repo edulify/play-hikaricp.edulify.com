@@ -18,6 +18,14 @@ Here is how HikariCP is working for us:
 | 1.1.0   | 1.3.8    | 2.2.3 | Updates HikariCP and Play     |
 | 1.0.0   | 1.3.5    | 2.2.2 | First stable release          |
 
+## Repository
+
+You need to add the following repository in order to use this module:
+
+```scala
+resolvers += Resolver.url("Edulify Repository", url("http://edulify.github.io/modules/releases/"))(Resolver.ivyStylePatterns)
+```
+
 ## How to Use
 
 There are just a few steps to properly configure the plugin. Just follow the steps bellow:
