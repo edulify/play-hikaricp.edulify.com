@@ -1,8 +1,10 @@
-import play.Project._
-
 name := "play-hirakicp"
 
 version := "1.2.0"
+
+scalaVersion := "2.11.1"
+
+lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 libraryDependencies ++= Seq(
   jdbc,
@@ -61,4 +63,3 @@ pomExtra := (
 
 scalacOptions := Seq("-feature", "-deprecation")
 
-playScalaSettings
