@@ -12,11 +12,12 @@ Here is how HikariCP is working for us:
 
 ## Versions
 
-| Version | HikariCP | Play  | Comment                       |
-|--------:|---------:|------:|:------------------------------|
-| 1.2.0   | 1.3.8    | 2.2.3 | Supports Heroku like services |
-| 1.1.0   | 1.3.8    | 2.2.3 | Updates HikariCP and Play     |
-| 1.0.0   | 1.3.5    | 2.2.2 | First stable release          |
+| Version | HikariCP | Play  | Comment                          |
+|--------:|---------:|------:|:---------------------------------|
+| 1.3.0   | 1.3.8    | 2.3.1 | Upadates Play and Scala versions |
+| 1.2.0   | 1.3.8    | 2.2.3 | Supports Heroku like services    |
+| 1.1.0   | 1.3.8    | 2.2.3 | Updates HikariCP and Play        |
+| 1.0.0   | 1.3.5    | 2.2.2 | First stable release             |
 
 ## Repository
 
@@ -34,7 +35,7 @@ There are just a few steps to properly configure the plugin. Just follow the ste
 
 Add the following dependency to your `project/build.sbt` or `project/Build.scala`:
 
-    "com.edulify" % "play-hirakicp_2.10" % "1.0.0"
+    "com.edulify" %% "play-hirakicp" % "1.3.0"
 
 ### Step 2: Disable default `dbplugin`
 

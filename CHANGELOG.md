@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 1.3.0 - 2014/06/26
+
+1. PR-8 - Updates to Play 2.3.1 and Scala 2.11.1
+2. Builds across other scala versions (2.9.2, 2.10.4)
+
 ## Version 1.2.0 - 2014/05/04
 
 1. GH-2 - Supports configuration using environment variables
