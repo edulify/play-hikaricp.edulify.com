@@ -1,4 +1,4 @@
-name := "play-hirakicp"
+name := "play-hikaricp"
 
 version := "1.3.0"
 
