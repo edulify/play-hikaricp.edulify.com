@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 1.3.1 - 2014/06/30
+
+1. GH-9 - Corrects artifact name from play-*hirakicp* to play-**hikaricp**
+
 ## Version 1.3.0 - 2014/06/26
 
 1. PR-8 - Updates to Play 2.3.1 and Scala 2.11.1
