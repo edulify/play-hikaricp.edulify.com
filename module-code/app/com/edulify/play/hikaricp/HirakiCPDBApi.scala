@@ -15,13 +15,13 @@
  */
 package com.edulify.play.hikaricp
 
-import com.zaxxer.hikari.HikariDataSource
-
-import play.api.{Configuration, Logger}
-import play.api.db.DBApi
-
-import javax.sql.DataSource
 import java.sql.{Driver, DriverManager}
+import javax.sql.DataSource
+
+import com.zaxxer.hikari.{HikariConfig, HikariDataSource}
+import play.api.db.DBApi
+import play.api.libs.JNDI
+import play.api.{Configuration, Logger}
 
 class HirakiCPDBApi(configuration: Configuration, classloader: ClassLoader) extends DBApi {
 
@@ -33,7 +33,9 @@ class HirakiCPDBApi(configuration: Configuration, classloader: ClassLoader) exte
     case (dataSourceName, dataSourceConfig) =>
       val hikariConfig = new HikariCPConfig(dataSourceConfig).getHikariConfig
       registerDriver(dataSourceConfig)
-      new HikariDataSource(hikariConfig) -> dataSourceName
+      val dataSource = new HikariDataSource(hikariConfig) -> dataSourceName
+      bindToJNDI(dataSourceConfig, hikariConfig, dataSource._1)
+      dataSource
   }.toList
 
   def shutdownPool(ds: DataSource) = {
@@ -59,6 +61,13 @@ class HirakiCPDBApi(configuration: Configuration, classloader: ClassLoader) exte
       DriverManager.registerDriver(new play.utils.ProxyDriver(Class.forName(driverClassName, true, classloader).newInstance.asInstanceOf[Driver]))
     } catch {
       case t: Throwable => throw config.reportError("driver", "Driver not found: [" + driver + "]", Some(t))
+    }
+  }
+
+  private def bindToJNDI(config: Configuration, hikariConfig: HikariConfig, dataSource: DataSource): Unit = {
+    config.getString("jndiName") map { name =>
+      JNDI.initialContext.rebind(name, dataSource)
+      Logger.info(s"""datasource [${hikariConfig.getJdbcUrl}] bound to JNDI as $name""")
     }
   }
 }
