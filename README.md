@@ -14,6 +14,7 @@ Here is how HikariCP is working for us:
 
 | Version | HikariCP | Play  | Comment                          |
 |--------:|---------:|------:|:---------------------------------|
+| 1.4.0   | 1.4.0    | 2.3.1 | JNDI support and HikariCP 1.4.0  |
 | 1.3.1   | 1.3.8    | 2.3.1 | Corrects artifact name           |
 | 1.3.0   | 1.3.8    | 2.3.1 | Updates Play and Scala versions  |
 | 1.2.0   | 1.3.8    | 2.2.3 | Supports Heroku like services    |
@@ -86,6 +87,13 @@ Hikari                                          | Play                          
 `acquireRetryDelay`                             | `db.default.acquireRetryDelay` | -
 `registerMbeans`                                | `db.default.statisticsEnabled` | `false`
 `connectionInitSql`                             | `db.default.initSQL`           | -
+
+
+## JNDI Support
+
+Thanks to community contribution, the plugin supports to bind a DataSource to a JNDI context. After properly configuring the plugin (as described above), just add the following configuration in you `application.conf`:
+
+     db.default.jndiName="DefaultDataSource"
 
 ## Deploying to Heroku
 

@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 1.4.0 - 2014/07/05
+
+1. GH-7 & PR-10 - Now it is possible to specify a JNDI datasource
+2. Updates HikariCP to version 1.4.0 (see [more details here](https://groups.google.com/forum/#!topic/hikari-cp/_JAOvTJZS94))
+
 ## Version 1.3.1 - 2014/06/30
 
 1. GH-9 - Corrects artifact name from play-*hirakicp* to play-**hikaricp**
