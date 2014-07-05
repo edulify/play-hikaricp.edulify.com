@@ -10,7 +10,7 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 libraryDependencies ++= Seq(
   jdbc,
-  "com.zaxxer" % "HikariCP" % "1.3.8",
+  "com.zaxxer" % "HikariCP" % "1.4.0",
   "commons-configuration" % "commons-configuration" % "1.10",
   "commons-collections" % "commons-collections" % "3.2.1"
 )
