@@ -33,9 +33,9 @@ class HirakiCPDBApi(configuration: Configuration, classloader: ClassLoader) exte
     case (dataSourceName, dataSourceConfig) =>
       val hikariConfig = new HikariCPConfig(dataSourceConfig).getHikariConfig
       registerDriver(dataSourceConfig)
-      val dataSource = new HikariDataSource(hikariConfig) -> dataSourceName
-      bindToJNDI(dataSourceConfig, hikariConfig, dataSource._1)
-      dataSource
+      val dataSource = new HikariDataSource(hikariConfig)
+      bindToJNDI(dataSourceConfig, hikariConfig, dataSource)
+      dataSource -> dataSourceName
   }.toList
 
   def shutdownPool(ds: DataSource) = {
