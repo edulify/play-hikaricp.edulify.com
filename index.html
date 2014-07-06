@@ -33,7 +33,7 @@
         <h1>
 <a name="hikaricp-plugin-for-play-22x-and-23x" class="anchor" href="#hikaricp-plugin-for-play-22x-and-23x"><span class="octicon octicon-link"></span></a>HikariCP Plugin for Play 2.2.x and 2.3.x</h1>
 
-<p>This plugins is supposed to work with versions <code>2.2.x</code> and <code>2.3.x</code> of PlayFramework. It uses version <code>1.3.8</code> of HikariCP.</p>
+<p>This plugins is supposed to work with versions <code>2.2.x</code> and <code>2.3.x</code> of PlayFramework. It uses version <code>1.4.0</code> of HikariCP.</p>
 
 <h2>
 <a name="why-hikaricp" class="anchor" href="#why-hikaricp"><span class="octicon octicon-link"></span></a>Why HikariCP?</h2>
@@ -110,7 +110,7 @@
 
 <p>Add the following dependency to your <code>project/build.sbt</code> or <code>project/Build.scala</code>:</p>
 
-<pre><code>"com.edulify" %% "play-hikaricp" % "1.3.1"
+<pre><code>"com.edulify" %% "play-hikaricp" % "1.4.0"
 </code></pre>
 
 <h3>
@@ -129,8 +129,10 @@
 
 <p>Add the following line to your <code>conf/play.plugins</code>:</p>
 
-<pre><code>1500:com.edulify.play.hikaricp.HikariCPPlugin
+<pre><code>200:com.edulify.play.hikaricp.HikariCPPlugin
 </code></pre>
+
+<p>Due to the fact that the <a href="https://github.com/playframework/playframework/blob/master/framework/src/play-java-jpa/src/main/resources/play.plugins">Play JPA plugin</a> is assigned a priority of <strong>400</strong>, please make sure that you assign <code>com.edulify.play.hikaricp.HikariCPPlugin</code> a priority less than that when using datasources looked up via JNDI. Otherwise, during application startup when JPA attempts to create the <code>EntityManagerFactory</code> your datasource will not have been bound to JNDI yet. <a href="http://playframework.com/documentation/2.3.x/ScalaPlugins">Play documentation</a> states that connection pools should use a <strong>200</strong> priority.</p>
 
 <h3>
 <a name="step-4-configure-hikaricp" class="anchor" href="#step-4-configure-hikaricp"><span class="octicon octicon-link"></span></a>Step 4: Configure HikariCP</h3>
