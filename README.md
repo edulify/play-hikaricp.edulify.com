@@ -1,6 +1,6 @@
 # HikariCP Plugin for Play 2.2.x and 2.3.x
 
-This plugins is supposed to work with versions `2.2.x` and `2.3.x` of PlayFramework. It uses version `1.3.8` of HikariCP.
+This plugins is supposed to work with versions `2.2.x` and `2.3.x` of PlayFramework. It uses version `1.4.0` of HikariCP.
 
 ## Why HikariCP?
 
@@ -37,7 +37,7 @@ There are just a few steps to properly configure the plugin. Just follow the ste
 
 Add the following dependency to your `project/build.sbt` or `project/Build.scala`:
 
-    "com.edulify" %% "play-hikaricp" % "1.3.1"
+    "com.edulify" %% "play-hikaricp" % "1.4.0"
 
 ### Step 2: Disable default `dbplugin`
 
@@ -51,7 +51,9 @@ This will disable dbplugin and avoids that BoneCP creates useless connections (w
 
 Add the following line to your `conf/play.plugins`:
 
-    1500:com.edulify.play.hikaricp.HikariCPPlugin
+    300:com.edulify.play.hikaricp.HikariCPPlugin
+    
+Due to the fact that the [Play JPA plugin](https://github.com/playframework/playframework/blob/master/framework/src/play-java-jpa/src/main/resources/play.plugins) is assigned a priority of **400**, please make sure that you assign `com.edulify.play.hikaricp.HikariCPPlugin` a priority less than that when using datasources looked up via JNDI. Otherwise, during application startup when JPA attempts to create the `EntityManagerFactory` your datasource will not have been bound to JNDI yet.
 
 ### Step 4: Configure HikariCP
 
