@@ -51,9 +51,9 @@ This will disable dbplugin and avoids that BoneCP creates useless connections (w
 
 Add the following line to your `conf/play.plugins`:
 
-    300:com.edulify.play.hikaricp.HikariCPPlugin
+    200:com.edulify.play.hikaricp.HikariCPPlugin
     
-Due to the fact that the [Play JPA plugin](https://github.com/playframework/playframework/blob/master/framework/src/play-java-jpa/src/main/resources/play.plugins) is assigned a priority of **400**, please make sure that you assign `com.edulify.play.hikaricp.HikariCPPlugin` a priority less than that when using datasources looked up via JNDI. Otherwise, during application startup when JPA attempts to create the `EntityManagerFactory` your datasource will not have been bound to JNDI yet.
+Due to the fact that the [Play JPA plugin](https://github.com/playframework/playframework/blob/master/framework/src/play-java-jpa/src/main/resources/play.plugins) is assigned a priority of **400**, please make sure that you assign `com.edulify.play.hikaricp.HikariCPPlugin` a priority less than that when using datasources looked up via JNDI. Otherwise, during application startup when JPA attempts to create the `EntityManagerFactory` your datasource will not have been bound to JNDI yet. [Play documentation](http://playframework.com/documentation/2.3.x/ScalaPlugins) states that connection pools should use a **200** priority.
 
 ### Step 4: Configure HikariCP
 
