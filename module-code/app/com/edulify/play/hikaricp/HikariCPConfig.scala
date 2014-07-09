@@ -18,8 +18,10 @@ package com.edulify.play.hikaricp
 import com.zaxxer.hikari.HikariConfig
 import play.api.{Configuration, Logger}
 
-import java.io.{File, FileReader, IOException}
+import java.io.{File, IOException}
 import java.util.Properties
+
+import scala.collection.JavaConverters._
 
 import org.apache.commons.configuration.{PropertiesConfiguration, ConfigurationConverter}
 
@@ -44,7 +46,12 @@ class HikariCPConfig(dbConfig: Configuration) {
         play.api.Logger.warn("Could not read file " + file, ex)
     }
 
-    Logger.info("Properties: " + properties)
+    Logger.info("Properties: " + properties.asScala.map { case (name: String, value: String) =>
+      if (name contains "password") {
+        "%s=%.1s%s" format(name, value, value.substring(value.length).padTo(value.length - 1, "*").mkString)
+      } else "%s=%s" format(name, value)
+    }.mkString(", "))
+
     properties
   }
 
