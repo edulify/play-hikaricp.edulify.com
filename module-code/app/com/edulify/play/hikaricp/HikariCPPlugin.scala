@@ -26,7 +26,8 @@ class HikariCPPlugin(app: Application) extends DBPlugin {
 
   lazy val databaseConfig = app.configuration.getConfig("db").getOrElse(Configuration.empty)
 
-  override def enabled = true
+  override def enabled = !app.configuration.getString("hikari.enabled").exists(_ == "false")
+
 
   private lazy val hirakiCPDBApi: DBApi = new HirakiCPDBApi(databaseConfig, app.classloader)
 
