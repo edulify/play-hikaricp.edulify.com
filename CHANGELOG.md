@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 1.4.1 - 2014/07/31
+
+1. GH-15 & PR-16 - Updates HikariCP, Scala and Play
+2. PR-14 - Allow disabling through plays application.conf
+3. GH-5 & PR-12 - Mask any password related properties
+
 ## Version 1.4.0 - 2014/07/05
 
 1. GH-7 & PR-10 - Now it is possible to specify a JNDI datasource
