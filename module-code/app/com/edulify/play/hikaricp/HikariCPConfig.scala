@@ -73,9 +73,17 @@ class HikariCPConfig(dbConfig: Configuration) {
     properties.setProperty("maximumPoolSize",   maxPoolSize(dbConfig))
     properties.setProperty("minimumIdle",       minPoolSize(dbConfig))
 
-    properties.setProperty("maxLifetime",       dbConfig.getString("maxConnectionAge").get)
-    properties.setProperty("readOnly",          dbConfig.getString("defaultReadOnly").getOrElse("false"))
-    properties.setProperty("acquireRetryDelay", dbConfig.getString("acquireRetryDelay").get)
+    properties.setProperty("maxLifetime",            maxLifetime(dbConfig))
+    properties.setProperty("idleTimeout",            idleTimeout(dbConfig))
+    properties.setProperty("connectionTimeout",      connectionTimeout(dbConfig))
+    properties.setProperty("leakDetectionThreshold", leakDetectionThreshold(dbConfig))
+
+    properties.setProperty("catalog",              dbConfig.getString("defaultCatalog").get)
+    properties.setProperty("autoCommit",           dbConfig.getString("defaultAutoCommit").getOrElse("true"))
+    properties.setProperty("connectionTestQuery",  dbConfig.getString("connectionTestStatement").get)
+    properties.setProperty("jdbc4ConnectionTest",  (dbConfig.getString("connectionTestStatement").get == null).toString)
+    properties.setProperty("transactionIsolation", dbConfig.getString("defaultTransactionIsolation").get)
+    properties.setProperty("readOnly",             dbConfig.getString("defaultReadOnly").getOrElse("false"))
 
     properties.setProperty("registerMbeans",    dbConfig.getString("statisticsEnabled").getOrElse("false"))
     properties.setProperty("connectionInitSql", dbConfig.getString("initSQL").get)
@@ -94,5 +102,30 @@ class HikariCPConfig(dbConfig: Configuration) {
     val partitionCount = config.getInt("partitionCount").getOrElse(1)
     val maxConnectionsPerPartition = config.getInt("minConnectionsPerPartition").get
     (partitionCount * maxConnectionsPerPartition).toString
+  }
+
+  private def maxLifetime(config: Configuration) = {
+    var maxLife = dbConfig.getInt("maxConnectionAge").getOrElse(30)
+    maxLife     = dbConfig.getInt("maxConnectionAgeInSeconds").getOrElse(maxLife) * 60 * 1000
+    maxLife.toString
+  }
+
+  private def idleTimeout(config: Configuration) = {
+    var idleMaxAge = dbConfig.getInt("idleMaxAge").getOrElse(10)
+    idleMaxAge     = dbConfig.getInt("idleMaxAgeInMinutes").getOrElse(idleMaxAge) * 60
+    idleMaxAge     = dbConfig.getInt("idleMaxAgeInSeconds").getOrElse(idleMaxAge) * 1000
+    idleMaxAge.toString
+  }
+
+  private def connectionTimeout(config: Configuration) = {
+    var timeout = dbConfig.getInt("connectionTimeout").getOrElse(30000)
+    timeout     = dbConfig.getInt("connectionTimeoutInMs").getOrElse(timeout);
+    timeout.toString
+  }
+
+  private def leakDetectionThreshold(config: Configuration) = {
+    var threshold = dbConfig.getInt("closeConnectionWatchTimeout").getOrElse(0)
+    threshold     = dbConfig.getInt("closeConnectionWatchTimeoutInMs").getOrElse(threshold)
+    threshold.toString
   }
 }
