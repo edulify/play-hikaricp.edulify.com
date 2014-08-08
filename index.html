@@ -208,13 +208,58 @@
 </tr>
 <tr>
 <td align="left">
-<code>minimumPoolSize</code> (partitionSize * minPoolSize)</td>
+<code>minimumIdle</code> (partitionSize * minPoolSize)</td>
 <td align="left"><code>db.default.minPoolSize</code></td>
 <td align="left">-</td>
 </tr>
 <tr>
 <td align="left"><code>maxLifetime</code></td>
 <td align="left"><code>db.default.maxConnectionAge</code></td>
+<td align="left">30 min.</td>
+</tr>
+<tr>
+<td align="left"><code>idleTimeout</code></td>
+<td align="left">
+   <code>db.default.idleMaxAge</code><br>
+   <code>db.default.idleMaxAgeInMinutes</code><br>
+   <code>db.default.idleMaxAgeInSeconds</code><br>
+</td>
+<td align="left">10 min.</td>
+</tr>
+<tr>
+<td align="left"><code>connectionTimeout</code></td>
+<td align="left">
+   <code>db.default.connectionTimeout</code><br>
+   <code>db.default.connectionTimeoutInMs</code>
+</td>
+<td align="left">30 sec.</td>
+</tr>
+<tr>
+<td align="left"><code>leakDetectionThreshold</code></td>
+<td align="left">
+   <code>db.default.closeConnectionWatchTimeout</code><br>
+   <code>db.default.closeConnectionWatchTimeoutInMs</code>
+</td>
+<td align="left">0 ms</td>
+</tr>
+<tr>
+<td align="left"><code>connectionInitSql</code></td>
+<td align="left"><code>db.default.initSQL</code></td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left"><code>connectionTestQuery</code></td>
+<td align="left"><code>db.default.connectionTestStatement</code></td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left"><code>autoCommit</code></td>
+<td align="left"><code>db.default.defaultAutoCommit</code></td>
+<td align="left">true</td>
+</tr>
+<tr>
+<td align="left"><code>transactionIsolation</code></td>
+<td align="left"><code>db.default.defaultTransactionIsolation</code></td>
 <td align="left">-</td>
 </tr>
 <tr>
@@ -223,19 +268,14 @@
 <td align="left"><code>false</code></td>
 </tr>
 <tr>
-<td align="left"><code>acquireRetryDelay</code></td>
-<td align="left"><code>db.default.acquireRetryDelay</code></td>
-<td align="left">-</td>
+<td align="left"><code>catalog</code></td>
+<td align="left"><code>db.default.defaultCatalog</code></td>
+<td align="left"><code>-</code></td>
 </tr>
 <tr>
 <td align="left"><code>registerMbeans</code></td>
 <td align="left"><code>db.default.statisticsEnabled</code></td>
 <td align="left"><code>false</code></td>
-</tr>
-<tr>
-<td align="left"><code>connectionInitSql</code></td>
-<td align="left"><code>db.default.initSQL</code></td>
-<td align="left">-</td>
 </tr>
 </tbody>
 </table><h2>
