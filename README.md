@@ -85,11 +85,17 @@ Hikari                                          | Play                          
  -                                              | `db.default.partitionSize`     | -
 `maximumPoolSize` (partitionSize * maxPoolSize) | `db.default.maxPoolSize`       | -
 `minimumPoolSize` (partitionSize * minPoolSize) | `db.default.minPoolSize`       | -
-`maxLifetime`                                   | `db.default.maxConnectionAge`  | -
-`readOnly`                                      | `db.default.defaultReadOnly`   | `false`
-`acquireRetryDelay`                             | `db.default.acquireRetryDelay` | -
-`registerMbeans`                                | `db.default.statisticsEnabled` | `false`
+`maxLifetime`                                   | `db.default.maxConnectionAge`  | 30 min.
+`idleTimeout`                                   | `db.default.idleMaxAge`<br>`db.default.idleMaxAgeInMinutes`<br>`db.default.idleMaxAgeInSeconds`        | 10 min.
+`connectionTimeout`                             | `db.default.connectionTimeout`<br>`db.default.connectionTimeoutInMs`   | 30 sec.
+`leakDetectionThreshold`                        | `db.default.closeConnectionWatchTimeout`<br>`db.default.closeConnectionWatchTimeoutInMs`    | 0 ms
 `connectionInitSql`                             | `db.default.initSQL`           | -
+`connectionTestQuery`                           | `db.default.connectionTestStatement`           | -
+`autoCommit`                                    | `db.default.defaultAutoCommit` | `true`
+`transactionIsolation`                          | `db.default.defaultTransactionIsolation`  | -
+`readOnly`                                      | `db.default.defaultReadOnly`   | `false`
+`catalog`                                       | `db.default.defaultCatalog   ` | -
+`registerMbeans`                                | `db.default.statisticsEnabled` | `false`
 
 
 ## JNDI Support
