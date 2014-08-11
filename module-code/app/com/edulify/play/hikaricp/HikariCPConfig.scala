@@ -18,10 +18,10 @@ package com.edulify.play.hikaricp
 import com.zaxxer.hikari.HikariConfig
 import play.api.{Configuration, Logger}
 
-import java.io.{File, IOException}
+import java.io.File
 import java.util.Properties
 
-import scala.collection.JavaConverters._
+import scala.collection.JavaConversions._
 
 import org.apache.commons.configuration.{PropertiesConfiguration, ConfigurationConverter}
 
@@ -36,17 +36,15 @@ class HikariCPConfig(dbConfig: Configuration) {
   }
 
   private def props(file: File): Properties = {
-    Logger.info("Loading Hikari configuration from " + file)
-
-    var properties = new Properties()
-    try {
-      properties = ConfigurationConverter.getProperties(new PropertiesConfiguration(file))
-    } catch {
-      case ex: IOException =>
-        play.api.Logger.warn("Could not read file " + file, ex)
+    if (!file.exists()) {
+      throw new IllegalStateException(s"Hikari configuration file ${file.getAbsolutePath} doesn't exist.")
     }
 
-    Logger.info("Properties: " + properties.asScala.map { case (name: String, value: String) =>
+    Logger.info("Loading Hikari configuration from " + file)
+
+    val properties = ConfigurationConverter.getProperties(new PropertiesConfiguration(file))
+
+    Logger.info("Properties: " + properties.map { case (name: String, value: String) =>
       if (name contains "password") {
         "%s=%.1s%s" format(name, value, value.substring(value.length).padTo(value.length - 1, "*").mkString)
       } else "%s=%s" format(name, value)
