@@ -34,17 +34,16 @@ class HikariCPConfig(dbConfig: Configuration) {
   }
 
   private def props(file: File): Properties = {
-    Logger.info("Loading Hikari configuration from " + file)
-
-    var properties = new Properties()
-    try {
-      properties = ConfigurationConverter.getProperties(new PropertiesConfiguration(file))
-    } catch {
-      case ex: IOException =>
-        play.api.Logger.warn("Could not read file " + file, ex)
+    if (!file.exists()) {
+      throw new IllegalStateException(s"Hikari configuration file ${file.getAbsolutePath} doesn't exist.")
     }
 
+    Logger.info("Loading Hikari configuration from " + file)
+
+    val properties = ConfigurationConverter.getProperties(new PropertiesConfiguration(file))
+
     Logger.info("Properties: " + properties)
+
     properties
   }
 
