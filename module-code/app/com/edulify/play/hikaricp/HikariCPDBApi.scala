@@ -31,7 +31,7 @@ class HikariCPDBApi(configuration: Configuration, classloader: ClassLoader) exte
 
   val datasources: List[(DataSource, String)] = dataSourceConfigs.map {
     case (dataSourceName, dataSourceConfig) =>
-      val hikariConfig = new HikariCPConfig(dataSourceConfig).getHikariConfig
+      val hikariConfig = HikariCPConfig.getHikariConfig(dataSourceConfig)
       registerDriver(dataSourceConfig)
       val dataSource = new HikariDataSource(hikariConfig)
       bindToJNDI(dataSourceConfig, hikariConfig, dataSource)

@@ -25,14 +25,14 @@ import scala.collection.JavaConverters._
 
 import org.apache.commons.configuration.{PropertiesConfiguration, ConfigurationConverter}
 
-class HikariCPConfig(dbConfig: Configuration) {
+object HikariCPConfig {
   lazy val DEFAULT_DATASOURCE_NAME = "default"
   lazy val HIKARI_CP_PROPERTIES_FILE = "hikaricp.properties"
 
-  def getHikariConfig = {
+  def getHikariConfig(dbConfig: Configuration) = {
     val file = new File(HIKARI_CP_PROPERTIES_FILE)
-    if(file.exists()) new HikariConfig(props(file))
-    else new HikariConfig(mapFromPlayConfiguration())
+    if(file.exists()) new HikariConfig(HikariCPConfig.props(file))
+    else new HikariConfig(HikariCPConfig.mapFromPlayConfiguration(dbConfig))
   }
 
   private def props(file: File): Properties = {
@@ -50,7 +50,7 @@ class HikariCPConfig(dbConfig: Configuration) {
     properties
   }
 
-  private def mapFromPlayConfiguration(): Properties = {
+  private def mapFromPlayConfiguration(dbConfig: Configuration): Properties = {
     Logger.info("Loading Hikari configuration from Play configuration.")
 
     val configFile = dbConfig.getString("hikaricp.file")
@@ -109,27 +109,27 @@ class HikariCPConfig(dbConfig: Configuration) {
   }
 
   private def maxLifetime(config: Configuration) = {
-    var maxLife = dbConfig.getInt("maxConnectionAge").getOrElse(30)
-    maxLife     = dbConfig.getInt("maxConnectionAgeInSeconds").getOrElse(maxLife) * 60 * 1000
+    var maxLife = config.getInt("maxConnectionAge").getOrElse(30)
+    maxLife     = config.getInt("maxConnectionAgeInSeconds").getOrElse(maxLife) * 60 * 1000
     maxLife.toString
   }
 
   private def idleTimeout(config: Configuration) = {
-    var idleMaxAge = dbConfig.getInt("idleMaxAge").getOrElse(10)
-    idleMaxAge     = dbConfig.getInt("idleMaxAgeInMinutes").getOrElse(idleMaxAge) * 60
-    idleMaxAge     = dbConfig.getInt("idleMaxAgeInSeconds").getOrElse(idleMaxAge) * 1000
+    var idleMaxAge = config.getInt("idleMaxAge").getOrElse(10)
+    idleMaxAge     = config.getInt("idleMaxAgeInMinutes").getOrElse(idleMaxAge) * 60
+    idleMaxAge     = config.getInt("idleMaxAgeInSeconds").getOrElse(idleMaxAge) * 1000
     idleMaxAge.toString
   }
 
   private def connectionTimeout(config: Configuration) = {
-    var timeout = dbConfig.getInt("connectionTimeout").getOrElse(30000)
-    timeout     = dbConfig.getInt("connectionTimeoutInMs").getOrElse(timeout);
+    var timeout = config.getInt("connectionTimeout").getOrElse(30000)
+    timeout     = config.getInt("connectionTimeoutInMs").getOrElse(timeout);
     timeout.toString
   }
 
   private def leakDetectionThreshold(config: Configuration) = {
-    var threshold = dbConfig.getInt("closeConnectionWatchTimeout").getOrElse(0)
-    threshold     = dbConfig.getInt("closeConnectionWatchTimeoutInMs").getOrElse(threshold)
+    var threshold = config.getInt("closeConnectionWatchTimeout").getOrElse(0)
+    threshold     = config.getInt("closeConnectionWatchTimeoutInMs").getOrElse(threshold)
     threshold.toString
   }
 }
