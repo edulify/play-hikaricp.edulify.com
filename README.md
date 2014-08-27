@@ -63,7 +63,7 @@ Due to the fact that the [Play JPA plugin](https://github.com/playframework/play
 
 ##### Using `db.default.hikaricp.file`
 
-**That is the preferred way to configure HikariCP** because you have full access to all [properties documented here](https://github.com/brettwooldridge/HikariCP#configuration-knobs-baby) and you can also have specific configuration to development, test and production modes. You can create a specific hikari properties file and configure it using `db.default.hikaricp.file` in you `conf/application.conf` file.
+**This is the preferred way to configure HikariCP** because you have full access to all [properties documented here](https://github.com/brettwooldridge/HikariCP#configuration-knobs-baby) and you can also have specific configuration to development, test and production modes. You can create a specific hikari properties file and configure it using `db.default.hikaricp.file` in you `conf/application.conf` file.
 
 Per instance, if you have a `conf/production.conf` that is loaded by play in production mode, add the following line to this file:
 
@@ -77,15 +77,15 @@ Just create a `conf/hikaricp.properties` and the plugin will read it and create 
 
 ##### Using ordinary [Play way](http://www.playframework.com/documentation/2.2.x/SettingsJDBC)
 
-This the least recommended way. Configure database properties like stated by Play docs. The table bellow shows how Play configurations are mapped to HikariCP:
+The least recommended way. Configure database properties as stated in the Play docs. The table bellow shows how Play configurations are mapped to HikariCP:
 
 Hikari                                          | Play                           | Defaults
 :-----------------------------------------------|:-------------------------------|:-----------
-`driverClassName`                               | `db.default.driver`            | -
-`jdbcUrl`                                       | `db.default.url`               | -
-`username`                                      | `db.default.user`              | -
-`password`                                      | `db.default.password`          | -
- -                                              | `db.default.partitionSize`     | -
+`driverClassName`                               | `db.default.driver`            | * Must be provided
+`jdbcUrl`                                       | `db.default.url`               | * Must be provided
+`username`                                      | `db.default.user`              | * Must be provided
+`password`                                      | `db.default.password`          | * Must be provided
+ -                                              | `db.default.partitionSize`     | * Unused/NA
 `maximumPoolSize` (partitionSize * maxPoolSize) | `db.default.maxPoolSize`       | -
 `minimumPoolSize` (partitionSize * minPoolSize) | `db.default.minPoolSize`       | -
 `maxLifetime`                                   | `db.default.maxConnectionAge`  | 30 min.
@@ -99,7 +99,6 @@ Hikari                                          | Play                          
 `readOnly`                                      | `db.default.defaultReadOnly`   | `false`
 `catalog`                                       | `db.default.defaultCatalog   ` | -
 `registerMbeans`                                | `db.default.statisticsEnabled` | `false`
-
 
 ## JNDI Support
 
