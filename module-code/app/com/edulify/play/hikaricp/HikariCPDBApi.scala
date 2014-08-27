@@ -23,7 +23,7 @@ import play.api.db.DBApi
 import play.api.libs.JNDI
 import play.api.{Configuration, Logger}
 
-class HirakiCPDBApi(configuration: Configuration, classloader: ClassLoader) extends DBApi {
+class HikariCPDBApi(configuration: Configuration, classloader: ClassLoader) extends DBApi {
 
   lazy val dataSourceConfigs = configuration.subKeys.map {
     dataSourceName => dataSourceName -> configuration.getConfig(dataSourceName).getOrElse(Configuration.empty)
