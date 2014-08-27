@@ -98,13 +98,13 @@ object HikariCPConfig {
 
   private def maxPoolSize(config: Configuration) = {
     val partitionCount = config.getInt("partitionCount").getOrElse(1)
-    val maxConnectionsPerPartition = config.getInt("maxConnectionsPerPartition").get
+    val maxConnectionsPerPartition = config.getInt("maxConnectionsPerPartition").getOrElse(30)
     (partitionCount * maxConnectionsPerPartition).toString
   }
 
   private def minPoolSize(config: Configuration) = {
     val partitionCount = config.getInt("partitionCount").getOrElse(1)
-    val maxConnectionsPerPartition = config.getInt("minConnectionsPerPartition").get
+    val maxConnectionsPerPartition = config.getInt("minConnectionsPerPartition").getOrElse(5)
     (partitionCount * maxConnectionsPerPartition).toString
   }
 
@@ -122,8 +122,8 @@ object HikariCPConfig {
   }
 
   private def connectionTimeout(config: Configuration) = {
-    var timeout = config.getInt("connectionTimeout").getOrElse(30000)
-    timeout     = config.getInt("connectionTimeoutInMs").getOrElse(timeout);
+    var timeout = config.getInt("connectionTimeout").getOrElse(30)
+    timeout     = config.getInt("connectionTimeoutInMs").getOrElse(timeout) * 1000
     timeout.toString
   }
 
