@@ -46,12 +46,7 @@ class HikariCPConfig(dbConfig: Configuration) {
         play.api.Logger.warn("Could not read file " + file, ex)
     }
 
-    Logger.info("Properties: " + properties.asScala.map { case (name: String, value: String) =>
-      if (name contains "password") {
-        "%s=%.1s%s" format(name, value, value.substring(value.length).padTo(value.length - 1, "*").mkString)
-      } else "%s=%s" format(name, value)
-    }.mkString(", "))
-
+    logProperties(properties)
     properties
   }
 
@@ -88,8 +83,17 @@ class HikariCPConfig(dbConfig: Configuration) {
     properties.setProperty("registerMbeans",    dbConfig.getString("statisticsEnabled").getOrElse("false"))
     properties.setProperty("connectionInitSql", dbConfig.getString("initSQL").get)
 
-    Logger.info("Properties: " + properties)
+    logProperties(properties)
     properties
+  }
+
+  private def logProperties(properties: Properties): Unit = {
+    // Log the properties that are used, but don't print out the raw password for security-sake
+    Logger.info("Properties: " + properties.asScala.map { case (name: String, value: String) =>
+      if (name contains "password") {
+        "%s=%.1s%s" format(name, value, value.substring(value.length).padTo(value.length - 1, "*").mkString)
+      } else "%s=%s" format(name, value)
+    }.mkString(", "))
   }
 
   private def maxPoolSize(config: Configuration) = {
