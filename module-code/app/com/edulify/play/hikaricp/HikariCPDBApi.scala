@@ -23,7 +23,7 @@ import play.api.db.DBApi
 import play.api.libs.JNDI
 import play.api.{Configuration, Logger}
 
-class HirakiCPDBApi(configuration: Configuration, classloader: ClassLoader) extends DBApi {
+class HikariCPDBApi(configuration: Configuration, classloader: ClassLoader) extends DBApi {
 
   lazy val dataSourceConfigs = configuration.subKeys.map {
     dataSourceName => dataSourceName -> configuration.getConfig(dataSourceName).getOrElse(Configuration.empty)
@@ -31,7 +31,8 @@ class HirakiCPDBApi(configuration: Configuration, classloader: ClassLoader) exte
 
   val datasources: List[(DataSource, String)] = dataSourceConfigs.map {
     case (dataSourceName, dataSourceConfig) =>
-      val hikariConfig = new HikariCPConfig(dataSourceConfig).getHikariConfig
+      Logger.info("Creating Pool for datasource '" + dataSourceName + "'")
+      val hikariConfig = HikariCPConfig.getHikariConfig(dataSourceConfig)
       registerDriver(dataSourceConfig)
       val dataSource = new HikariDataSource(hikariConfig)
       bindToJNDI(dataSourceConfig, hikariConfig, dataSource)
@@ -39,7 +40,7 @@ class HirakiCPDBApi(configuration: Configuration, classloader: ClassLoader) exte
   }.toList
 
   def shutdownPool(ds: DataSource) = {
-    play.api.Logger.info("Shutting down connection pool.")
+    Logger.info("Shutting down connection pool.")
     ds match {
       case ds: HikariDataSource => ds.shutdown()
     }

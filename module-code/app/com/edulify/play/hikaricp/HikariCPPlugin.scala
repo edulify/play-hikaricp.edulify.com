@@ -29,13 +29,13 @@ class HikariCPPlugin(app: Application) extends DBPlugin {
   override def enabled = !app.configuration.getString("hikari.enabled").exists(_ == "false")
 
 
-  private lazy val hirakiCPDBApi: DBApi = new HirakiCPDBApi(databaseConfig, app.classloader)
+  private lazy val hikariCPDBApi: DBApi = new HikariCPDBApi(databaseConfig, app.classloader)
 
-  def api: DBApi = hirakiCPDBApi
+  def api: DBApi = hikariCPDBApi
 
   override def onStart() {
     play.api.Logger.info("Starting HikariCP connection pool...")
-    hirakiCPDBApi.datasources.map { ds =>
+    hikariCPDBApi.datasources.map { ds =>
         try {
           ds._1.getConnection.close()
           app.mode match {
@@ -52,9 +52,9 @@ class HikariCPPlugin(app: Application) extends DBPlugin {
 
   override def onStop() {
     play.api.Logger.info("Stoping HikariCP connection pool...")
-    api.datasources.foreach {
+    hikariCPDBApi.datasources.foreach {
       case (ds, _) => try {
-        api.shutdownPool(ds)
+        hikariCPDBApi.shutdownPool(ds)
       } catch {
         case t: Throwable =>
       }
