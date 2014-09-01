@@ -72,8 +72,8 @@ object HikariCPConfig {
 
     properties.setPropertyFromConfig("catalog",             "defaultCatalog")
     properties.setPropertyFromConfig("autoCommit",          "defaultAutoCommit", "true")
-    properties.setPropertyFromConfig("connectionTestQuery", "connectionTestStatement", "")
-    properties.setProperty("jdbc4ConnectionTest", properties.getProperty("connectionTestQuery"))
+    properties.setPropertyFromConfig("connectionTestQuery", "connectionTestStatement")
+    properties.setProperty("jdbc4ConnectionTest", (properties.getProperty("connectionTestQuery") == null).toString)
     properties.setPropertyFromConfig("transactionIsolation", "defaultTransactionIsolation")
     properties.setPropertyFromConfig("readOnly",             "defaultReadOnly", "false")
 
@@ -106,27 +106,28 @@ object HikariCPConfig {
   }
 
   private def maxLifetime(config: Configuration) = {
-    var maxLife = config.getInt("maxConnectionAge").getOrElse(30)
-    maxLife     = config.getInt("maxConnectionAgeInSeconds").getOrElse(maxLife) * 60 * 1000
+    var maxLife = config.getLong("maxConnectionAgeInMinutes").getOrElse(30L)
+    maxLife     = config.getLong("maxConnectionAgeInSeconds").getOrElse(maxLife * 60)
+    maxLife     = config.getMilliseconds("maxConnectionAge").getOrElse(maxLife * 1000)
     maxLife.toString
   }
 
   private def idleTimeout(config: Configuration) = {
-    var idleMaxAge = config.getInt("idleMaxAge").getOrElse(10)
-    idleMaxAge     = config.getInt("idleMaxAgeInMinutes").getOrElse(idleMaxAge) * 60
-    idleMaxAge     = config.getInt("idleMaxAgeInSeconds").getOrElse(idleMaxAge) * 1000
+    var idleMaxAge = config.getLong("idleMaxAgeInMinutes").getOrElse(10L)
+    idleMaxAge     = config.getLong("idleMaxAgeInSeconds").getOrElse(idleMaxAge) * 60
+    idleMaxAge     = config.getMilliseconds("idleMaxAge").getOrElse(idleMaxAge) * 1000
     idleMaxAge.toString
   }
 
   private def connectionTimeout(config: Configuration) = {
-    var timeout = config.getInt("connectionTimeout").getOrElse(30)
-    timeout     = config.getInt("connectionTimeoutInMs").getOrElse(timeout) * 1000
+    var timeout = config.getLong("connectionTimeoutInMs").getOrElse(30 * 1000L)
+    timeout     = config.getMilliseconds("connectionTimeout").getOrElse(timeout)
     timeout.toString
   }
 
   private def leakDetectionThreshold(config: Configuration) = {
-    var threshold = config.getInt("closeConnectionWatchTimeout").getOrElse(0)
-    threshold     = config.getInt("closeConnectionWatchTimeoutInMs").getOrElse(threshold)
+    var threshold = config.getLong("closeConnectionWatchTimeoutInMs").getOrElse(0)
+    threshold     = config.getMilliseconds("closeConnectionWatchTimeout").getOrElse(threshold)
     threshold.toString
   }
 
