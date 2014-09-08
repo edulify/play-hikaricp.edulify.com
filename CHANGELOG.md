@@ -1,5 +1,12 @@
 # Changelog
 
+## Version 1.5.0 - 2014/09/08
+
+1. PR-24 & PR-23 - Code cleanup and more robust configuration
+2. PR-21 - Embrace fail-fast principle for configuration parsing
+3. PR-19 & PR-18 - Better property mapping between Play and HikariCP
+2. GH-4 - Remove all deprecated properties
+
 ## Version 1.4.1 - 2014/07/31
 
 1. GH-15 & PR-16 - Updates HikariCP, Scala and Play

@@ -3,7 +3,7 @@
 This plugin works with `2.3.x` of PlayFramework. It uses version `2.0.1` of HikariCP.
 
 Note, it can be made to work with Play `2.2.x` of the PlayFramework, but it requires changing the dependencies as
-the current build relies on the play 2.3 plugin.
+the current build relies on the Play `2.3.x` plugin.
 
 [![Build Status](https://travis-ci.org/edulify/play-hikaricp.edulify.com.svg?branch=master)](https://travis-ci.org/edulify/play-hikaricp.edulify.com)
 
@@ -19,6 +19,7 @@ Here is how HikariCP is working for us:
 
 | Version | HikariCP | Play  | Comment                          |
 |--------:|---------:|------:|:---------------------------------|
+| 1.5.0   | 2.0.1    | 2.3.4 | Code cleanup and fail fast in case of misconfiguration |
 | 1.4.1   | 2.0.1    | 2.3.2 | Updates HikariCP, Scala and Play |
 | 1.4.0   | 1.4.0    | 2.3.1 | JNDI support and HikariCP 1.4.0  |
 | 1.3.1   | 1.3.8    | 2.3.1 | Corrects artifact name           |
@@ -43,7 +44,7 @@ There are just a few steps to properly configure the plugin. Just follow the ste
 
 Add the following dependency to your `project/build.sbt` or `project/Build.scala`:
 
-    "com.edulify" %% "play-hikaricp" % "1.4.1"
+    "com.edulify" %% "play-hikaricp" % "1.5.0"
 
 ### Step 2: Disable default `dbplugin`
 
