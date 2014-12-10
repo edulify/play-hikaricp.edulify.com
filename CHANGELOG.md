@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 1.5.1 - 2014/12/XX
+
+1. PR-32 - Update dependency to HikariCP 2.2.5 and Play 2.3.7
+
 ## Version 1.5.0 - 2014/09/08
 
 1. PR-24 & PR-23 - Code cleanup and more robust configuration
