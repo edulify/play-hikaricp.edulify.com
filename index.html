@@ -31,12 +31,12 @@
       </header>
       <section>
         <h1>
-<a name="hikaricp-plugin-for-play-22x-and-23x" class="anchor" href="#hikaricp-plugin-for-play-22x-and-23x"><span class="octicon octicon-link"></span></a>HikariCP Plugin for Play 2.2.x and 2.3.x</h1>
+<a id="hikaricp-plugin-for-play-22x-and-23x" class="anchor" href="#hikaricp-plugin-for-play-22x-and-23x" aria-hidden="true"><span class="octicon octicon-link"></span></a>HikariCP Plugin for Play 2.2.x and 2.3.x</h1>
 
 <p>This plugins is supposed to work with versions <code>2.2.x</code> and <code>2.3.x</code> of PlayFramework. It uses version <code>2.0.1</code> of HikariCP.</p>
 
 <h2>
-<a name="why-hikaricp" class="anchor" href="#why-hikaricp"><span class="octicon octicon-link"></span></a>Why HikariCP?</h2>
+<a id="why-hikaricp" class="anchor" href="#why-hikaricp" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why HikariCP?</h2>
 
 <p><a href="https://github.com/brettwooldridge/HikariCP">HikariCP</a> is supposed to be the fastest connection pool in Java land. But we did not start to use it because of speed, but because of its reliability. After suffering with connection leaks from BoneCP, we decide to implement our own database plugin to replace the default one. You can see <a href="https://groups.google.com/forum/#!topic/play-framework/7PBnjiXkNuU">a discussion about database exceptions</a> caused by BoneCP (or misconfiguration of it). Also there are numerous other discussions about people having problems related to BoneCP.</p>
 
@@ -45,15 +45,17 @@
 <p><img src="http://i.imgur.com/xPqkc7T.png" alt="HikariCP in Production"></p>
 
 <h2>
-<a name="versions" class="anchor" href="#versions"><span class="octicon octicon-link"></span></a>Versions</h2>
+<a id="versions" class="anchor" href="#versions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Versions</h2>
 
 <table>
-<thead><tr>
+<thead>
+<tr>
 <th align="right">Version</th>
 <th align="right">HikariCP</th>
 <th align="right">Play</th>
 <th align="left">Comment</th>
-</tr></thead>
+</tr>
+</thead>
 <tbody>
 <tr>
 <td align="right">1.4.1</td>
@@ -98,21 +100,22 @@
 <td align="left">First stable release</td>
 </tr>
 </tbody>
-</table><h2>
-<a name="repository" class="anchor" href="#repository"><span class="octicon octicon-link"></span></a>Repository</h2>
+</table>
+
+<h2>
+<a id="repository" class="anchor" href="#repository" aria-hidden="true"><span class="octicon octicon-link"></span></a>Repository</h2>
 
 <p>You need to add the following repository in order to use this module:</p>
 
-<div class="highlight highlight-scala"><pre><span class="n">resolvers</span> <span class="o">+=</span> <span class="nc">Resolver</span><span class="o">.</span><span class="n">url</span><span class="o">(</span><span class="s">"Edulify Repository"</span><span class="o">,</span> <span class="n">url</span><span class="o">(</span><span class="s">"http://edulify.github.io/modules/releases/"</span><span class="o">))(</span><span class="nc">Resolver</span><span class="o">.</span><span class="n">ivyStylePatterns</span><span class="o">)</span>
-</pre></div>
+<div class="highlight highlight-scala"><pre>resolvers <span class="pl-k">+</span><span class="pl-k">=</span> <span class="pl-en">Resolver</span>.url(<span class="pl-s1"><span class="pl-pds">"</span>Edulify Repository<span class="pl-pds">"</span></span>, url(<span class="pl-s1"><span class="pl-pds">"</span>http://edulify.github.io/modules/releases/<span class="pl-pds">"</span></span>))(<span class="pl-en">Resolver</span>.ivyStylePatterns)</pre></div>
 
 <h2>
-<a name="how-to-use" class="anchor" href="#how-to-use"><span class="octicon octicon-link"></span></a>How to Use</h2>
+<a id="how-to-use" class="anchor" href="#how-to-use" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to Use</h2>
 
 <p>There are just a few steps to properly configure the plugin. Just follow the steps bellow:</p>
 
 <h3>
-<a name="step-1-add-dependencies" class="anchor" href="#step-1-add-dependencies"><span class="octicon octicon-link"></span></a>Step 1: Add dependencies</h3>
+<a id="step-1-add-dependencies" class="anchor" href="#step-1-add-dependencies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 1: Add dependencies</h3>
 
 <p>Add the following dependency to your <code>project/build.sbt</code> or <code>project/Build.scala</code>:</p>
 
@@ -120,7 +123,7 @@
 </code></pre>
 
 <h3>
-<a name="step-2-disable-default-dbplugin" class="anchor" href="#step-2-disable-default-dbplugin"><span class="octicon octicon-link"></span></a>Step 2: Disable default <code>dbplugin</code>
+<a id="step-2-disable-default-dbplugin" class="anchor" href="#step-2-disable-default-dbplugin" aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 2: Disable default <code>dbplugin</code>
 </h3>
 
 <p>Add the following line to your <code>conf/application.conf</code>:</p>
@@ -131,7 +134,7 @@
 <p>This will disable dbplugin and avoids that BoneCP creates useless connections (which in some cases can create database problems, like exhaust available connections).</p>
 
 <h3>
-<a name="step-3-enable-hikaricp-plugin" class="anchor" href="#step-3-enable-hikaricp-plugin"><span class="octicon octicon-link"></span></a>Step 3: Enable HikariCP Plugin</h3>
+<a id="step-3-enable-hikaricp-plugin" class="anchor" href="#step-3-enable-hikaricp-plugin" aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 3: Enable HikariCP Plugin</h3>
 
 <p>Add the following line to your <code>conf/play.plugins</code>:</p>
 
@@ -141,10 +144,10 @@
 <p>Due to the fact that the <a href="https://github.com/playframework/playframework/blob/master/framework/src/play-java-jpa/src/main/resources/play.plugins">Play JPA plugin</a> is assigned a priority of <strong>400</strong>, please make sure that you assign <code>com.edulify.play.hikaricp.HikariCPPlugin</code> a priority less than that when using datasources looked up via JNDI. Otherwise, during application startup when JPA attempts to create the <code>EntityManagerFactory</code> your datasource will not have been bound to JNDI yet. <a href="http://playframework.com/documentation/2.3.x/ScalaPlugins">Play documentation</a> states that connection pools should use a <strong>200</strong> priority.</p>
 
 <h3>
-<a name="step-4-configure-hikaricp" class="anchor" href="#step-4-configure-hikaricp"><span class="octicon octicon-link"></span></a>Step 4: Configure HikariCP</h3>
+<a id="step-4-configure-hikaricp" class="anchor" href="#step-4-configure-hikaricp" aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 4: Configure HikariCP</h3>
 
 <h5>
-<a name="using-dbdefaulthikaricpfile" class="anchor" href="#using-dbdefaulthikaricpfile"><span class="octicon octicon-link"></span></a>Using <code>db.default.hikaricp.file</code>
+<a id="using-dbdefaulthikaricpfile" class="anchor" href="#using-dbdefaulthikaricpfile" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using <code>db.default.hikaricp.file</code>
 </h5>
 
 <p><strong>That is the preferred way to configure HikariCP</strong> because you have full access to all <a href="https://github.com/brettwooldridge/HikariCP#configuration-knobs-baby">properties documented here</a> and you can also have specific configuration to development, test and production modes. You can create a specific hikari properties file and configure it using <code>db.default.hikaricp.file</code> in you <code>conf/application.conf</code> file.</p>
@@ -157,23 +160,25 @@
 <p>Of course, you need to create <code>conf/hikaricp.dev.properties</code> file.</p>
 
 <h5>
-<a name="using-hikaricpproperties" class="anchor" href="#using-hikaricpproperties"><span class="octicon octicon-link"></span></a>Using <code>hikaricp.properties</code>
+<a id="using-hikaricpproperties" class="anchor" href="#using-hikaricpproperties" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using <code>hikaricp.properties</code>
 </h5>
 
 <p>Just create a <code>conf/hikaricp.properties</code> and the plugin will read it and create DataSource. <strong>This mode has preference over using ordinary play way</strong> because you have fine grained access to Hikari configuration.</p>
 
 <h5>
-<a name="using-ordinary-play-way" class="anchor" href="#using-ordinary-play-way"><span class="octicon octicon-link"></span></a>Using ordinary <a href="http://www.playframework.com/documentation/2.2.x/SettingsJDBC">Play way</a>
+<a id="using-ordinary-play-way" class="anchor" href="#using-ordinary-play-way" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using ordinary <a href="http://www.playframework.com/documentation/2.2.x/SettingsJDBC">Play way</a>
 </h5>
 
 <p>This the least recommended way. Configure database properties like stated by Play docs. The table bellow shows how Play configurations are mapped to HikariCP:</p>
 
 <table>
-<thead><tr>
+<thead>
+<tr>
 <th align="left">Hikari</th>
 <th align="left">Play</th>
 <th align="left">Defaults</th>
-</tr></thead>
+</tr>
+</thead>
 <tbody>
 <tr>
 <td align="left"><code>driverClassName</code></td>
@@ -238,8 +243,10 @@
 <td align="left">-</td>
 </tr>
 </tbody>
-</table><h2>
-<a name="jndi-support" class="anchor" href="#jndi-support"><span class="octicon octicon-link"></span></a>JNDI Support</h2>
+</table>
+
+<h2>
+<a id="jndi-support" class="anchor" href="#jndi-support" aria-hidden="true"><span class="octicon octicon-link"></span></a>JNDI Support</h2>
 
 <p>Thanks to community contribution, the plugin supports to bind a DataSource to a JNDI context. After properly configuring the plugin (as described above), just add the following configuration in you <code>application.conf</code>:</p>
 
@@ -247,7 +254,7 @@
 </code></pre>
 
 <h2>
-<a name="deploying-to-heroku" class="anchor" href="#deploying-to-heroku"><span class="octicon octicon-link"></span></a>Deploying to Heroku</h2>
+<a id="deploying-to-heroku" class="anchor" href="#deploying-to-heroku" aria-hidden="true"><span class="octicon octicon-link"></span></a>Deploying to Heroku</h2>
 
 <p>When using Heroku, you need to <a href="https://devcenter.heroku.com/articles/heroku-postgresql#connecting-in-java">read database url string</a> from an environment variable called <code>DATABASE_URL</code>. Plain java Properties does not offer a way to reference these environment variables in a properties file, then we use <a href="http://commons.apache.org/proper/commons-configuration/">Commons Configuration</a> to read the <code>hikaricp.properties</code> file or the one configured by <code>db.default.hikaricp.file</code>.</p>
 
@@ -269,22 +276,26 @@ minimumIdle=5
 </code></pre>
 
 <h2>
-<a name="inspirations-and-alternatives" class="anchor" href="#inspirations-and-alternatives"><span class="octicon octicon-link"></span></a>Inspirations and Alternatives</h2>
+<a id="inspirations-and-alternatives" class="anchor" href="#inspirations-and-alternatives" aria-hidden="true"><span class="octicon octicon-link"></span></a>Inspirations and Alternatives</h2>
 
 <p>The code here is highly inspired by the following plugins:</p>
 
 <ol>
 <li><a href="https://github.com/swaldman/c3p0-play">swaldman/c3p0-play</a></li>
 <li><a href="https://github.com/autma/play-hikaricp-plugin">autma/play-hikaricp-plugin</a></li>
-</ol><p>We decide to do our own because both plugins above looks unmaintained.</p>
+</ol>
+
+<p>We decide to do our own because both plugins above looks unmaintained.</p>
 
 <p>There are also two other alternatives using c3p0:</p>
 
 <ol>
 <li><a href="https://github.com/hadashi/play2-c3p0-plugin">hadashi/play2-c3p0-plugin</a></li>
 <li><a href="https://github.com/Furyu/play-c3p0-plugin">Furyu/play-c3p0-plugin</a></li>
-</ol><h2>
-<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+</ol>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
 
 <p>Copyright 2014 Edulify.com</p>
 
