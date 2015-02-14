@@ -114,8 +114,8 @@ object HikariCPConfig {
 
   private def idleTimeout(config: Configuration) = {
     var idleMaxAge = config.getLong("idleMaxAgeInMinutes").getOrElse(10L)
-    idleMaxAge     = config.getLong("idleMaxAgeInSeconds").getOrElse(idleMaxAge) * 60
-    idleMaxAge     = config.getMilliseconds("idleMaxAge").getOrElse(idleMaxAge) * 1000
+    idleMaxAge     = config.getLong("idleMaxAgeInSeconds").getOrElse(idleMaxAge * 60)
+    idleMaxAge     = config.getMilliseconds("idleMaxAge").getOrElse(idleMaxAge * 1000)
     idleMaxAge.toString
   }
 
