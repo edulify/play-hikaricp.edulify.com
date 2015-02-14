@@ -71,11 +71,11 @@ object HikariCPConfig {
     properties.setProperty("leakDetectionThreshold", leakDetectionThreshold(dbConfig))
 
     properties.setPropertyFromConfig("catalog",             "defaultCatalog")
-    properties.setPropertyFromConfig("autoCommit",          "defaultAutoCommit", "true")
+    properties.setPropertyFromConfig("autoCommit",          "autocommit", "true")
     properties.setPropertyFromConfig("connectionTestQuery", "connectionTestStatement")
     properties.setProperty("jdbc4ConnectionTest", (properties.getProperty("connectionTestQuery") == null).toString)
-    properties.setPropertyFromConfig("transactionIsolation", "defaultTransactionIsolation")
-    properties.setPropertyFromConfig("readOnly",             "defaultReadOnly", "false")
+    properties.setPropertyFromConfig("transactionIsolation", "isolation")
+    properties.setPropertyFromConfig("readOnly",             "readOnly", "false")
 
     properties.setPropertyFromConfig("registerMbeans",       "statisticsEnabled", "false")
     properties.setPropertyFromConfig("connectionInitSql",    "initSQL")
