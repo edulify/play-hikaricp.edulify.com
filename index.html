@@ -256,11 +256,16 @@
 <h2>
 <a id="deploying-to-heroku" class="anchor" href="#deploying-to-heroku" aria-hidden="true"><span class="octicon octicon-link"></span></a>Deploying to Heroku</h2>
 
-<p>When using Heroku, you need to <a href="https://devcenter.heroku.com/articles/heroku-postgresql#connecting-in-java">read database url string</a> from an environment variable called <code>DATABASE_URL</code>. Plain java Properties does not offer a way to reference these environment variables in a properties file, then we use <a href="http://commons.apache.org/proper/commons-configuration/">Commons Configuration</a> to read the <code>hikaricp.properties</code> file or the one configured by <code>db.default.hikaricp.file</code>.</p>
+<p>When using Heroku, you need to <a href="https://devcenter.heroku.com/articles/heroku-postgresql#connecting-in-java">read database url string</a> from an environment variable called <code>DATABASE_JDBC_URL</code>. To create, this environment variable, run the following command:</p>
+
+<pre><code>$ heroku config:set DATABASE_JDBC_URL="jdbc:postgresql://user:pass@host:5432/dbname"
+</code></pre>
+
+<p>You can obtain the correct values for <code>user</host>, <code>pass</host>, <code>host</host>, etc from the <code>DATABASE_URL</host> environment variable, which Heroku create for you. Plain java Properties does not offer a way to reference these environment variables in a properties file, then we use <a href="http://commons.apache.org/proper/commons-configuration/">Commons Configuration</a> to read the <code>hikaricp.properties</code> file or the one configured by <code>db.default.hikaricp.file</code>.</p>
 
 <p>Here is an example:</p>
 
-<pre><code>jdbcUrl=${env:DATABASE_URL}
+<pre><code>jdbcUrl=${env:DATABASE_JDBC_URL}
 driverClassName=org.postgresql.Driver
 
 connectionTestQuery=SELECT 1
@@ -316,6 +321,6 @@ limitations under the License.</p>
       </footer>
     </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-		
+
   </body>
 </html>
