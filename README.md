@@ -90,8 +90,8 @@ Hikari                                          | Play                          
 `username`                                      | `db.default.user`              | * Must be provided
 `password`                                      | `db.default.password`          | * Must be provided
  -                                              | `db.default.partitionSize`     | * Unused/NA
-`maximumPoolSize` (partitionSize * maxPoolSize) | `db.default.maxPoolSize`       | 30
-`minimumPoolSize` (partitionSize * minPoolSize) | `db.default.minPoolSize`       | 5
+`maximumPoolSize`                               | `db.default.maxPoolSize` * `db.default.partitionCount` | 5 * 2
+`minimumPoolSize`                               | `db.default.minPoolSize` * `db.default.partitionCount` | 5 * 2
 `maxLifetime`                                   | `db.default.maxConnectionAge`  | 30 min.
 `idleTimeout`                                   | `db.default.idleMaxAge`<br>`db.default.idleMaxAgeInMinutes`<br>`db.default.idleMaxAgeInSeconds`        | 10 min.
 `connectionTimeout`                             | `db.default.connectionTimeout`<br>`db.default.connectionTimeoutInMs`   | 30 sec.

@@ -94,13 +94,13 @@ object HikariCPConfig {
   }
 
   private def maxPoolSize(config: Configuration) = {
-    val partitionCount = config.getInt("partitionCount").getOrElse(1)
-    val maxConnectionsPerPartition = config.getInt("maxConnectionsPerPartition").getOrElse(30)
+    val partitionCount = config.getInt("partitionCount").getOrElse(2)
+    val maxConnectionsPerPartition = config.getInt("maxConnectionsPerPartition").getOrElse(5)
     (partitionCount * maxConnectionsPerPartition).toString
   }
 
   private def minPoolSize(config: Configuration) = {
-    val partitionCount = config.getInt("partitionCount").getOrElse(1)
+    val partitionCount = config.getInt("partitionCount").getOrElse(2)
     val maxConnectionsPerPartition = config.getInt("minConnectionsPerPartition").getOrElse(5)
     (partitionCount * maxConnectionsPerPartition).toString
   }
