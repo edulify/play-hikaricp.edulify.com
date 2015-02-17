@@ -98,9 +98,9 @@ Hikari                                          | Play                          
 `leakDetectionThreshold`                        | `db.default.closeConnectionWatchTimeout`<br>`db.default.closeConnectionWatchTimeoutInMs`    | 0 ms
 `connectionInitSql`                             | `db.default.initSQL`           | -
 `connectionTestQuery`                           | `db.default.connectionTestStatement`           | -
-`autoCommit`                                    | `db.default.defaultAutoCommit` | `true`
-`transactionIsolation`                          | `db.default.defaultTransactionIsolation`  | -
-`readOnly`                                      | `db.default.defaultReadOnly`   | `false`
+`autoCommit`                                    | `db.default.autocommit` | `true`
+`transactionIsolation`                          | `db.default.transactionIsolation`  | -
+`readOnly`                                      | `db.default.readOnly`   | `false`
 `catalog`                                       | `db.default.defaultCatalog   ` | -
 `registerMbeans`                                | `db.default.statisticsEnabled` | `false`
 
