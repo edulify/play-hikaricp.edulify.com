@@ -17,17 +17,20 @@ Here is how HikariCP is working for us:
 
 ## Versions
 
-| Version | HikariCP | Play  | Comment                          |
-|--------:|---------:|------:|:---------------------------------|
-| 1.5.1   | 2.2.5    | 2.3.7 | Update to latest HikariCP/Play version |
-| 1.5.0   | 2.0.1    | 2.3.4 | Code cleanup and fail fast in case of misconfiguration |
-| 1.4.1   | 2.0.1    | 2.3.2 | Updates HikariCP, Scala and Play |
-| 1.4.0   | 1.4.0    | 2.3.1 | JNDI support and HikariCP 1.4.0  |
-| 1.3.1   | 1.3.8    | 2.3.1 | Corrects artifact name           |
-| 1.3.0   | 1.3.8    | 2.3.1 | Updates Play and Scala versions  |
-| 1.2.0   | 1.3.8    | 2.2.3 | Supports Heroku like services    |
-| 1.1.0   | 1.3.8    | 2.2.3 | Updates HikariCP and Play        |
-| 1.0.0   | 1.3.5    | 2.2.2 | First stable release             |
+| Version | HikariCP | Play  |
+|--------:|---------:|------:|
+| 1.5.2   | 2.3.2    | 2.3.8 |
+| 1.5.1   | 2.2.5    | 2.3.7 |
+| 1.5.0   | 2.0.1    | 2.3.4 |
+| 1.4.1   | 2.0.1    | 2.3.2 |
+| 1.4.0   | 1.4.0    | 2.3.1 |
+| 1.3.1   | 1.3.8    | 2.3.1 |
+| 1.3.0   | 1.3.8    | 2.3.1 |
+| 1.2.0   | 1.3.8    | 2.2.3 |
+| 1.1.0   | 1.3.8    | 2.2.3 |
+| 1.0.0   | 1.3.5    | 2.2.2 |
+
+For more information about what changed in each version, please, see the CHANGELOG.md file.
 
 ## Repository
 

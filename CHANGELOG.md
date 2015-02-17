@@ -1,8 +1,17 @@
 # Changelog
 
+## Version 1.5.2 - 2015/02/17
+
+1. PR-42 & PR-48 - Fix properties names (`autocommit`, `isolation` and `readOnly`) while translating Play configuration to HikariCP configuration
+2. PR-44 - Fix `idleMaxAge` time conversion
+3. PR-46 - Updates documentation about how to use in Heroku deployments
+4. PR-47 - Explicit duration unit in config parser
+5. PR-49 - Update min and max pool size with play and hikari defaults
+6. Updates Playframework to version 2.3.8
+
 ## Version 1.5.1 - 2014/12/16
 
-1. PR-32 - Update dependency to HikariCP 2.2.5 and Play 2.3.7
+1. PR-34 - Update dependency to HikariCP 2.2.5 and Play 2.3.7
 
 ## Version 1.5.0 - 2014/09/08
 
