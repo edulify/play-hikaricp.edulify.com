@@ -106,29 +106,29 @@ object HikariCPConfig {
   }
 
   private def maxLifetime(config: Configuration) = {
-    var maxLife = config.getLong("maxConnectionAgeInMinutes").getOrElse(30L)
-    maxLife     = config.getLong("maxConnectionAgeInSeconds").getOrElse(maxLife * 60)
-    maxLife     = config.getMilliseconds("maxConnectionAge").getOrElse(maxLife * 1000)
-    maxLife.toString
+    val maxLifeMn  = config.getLong("maxConnectionAgeInMinutes").getOrElse(30L)
+    val maxLifeSec = config.getLong("maxConnectionAgeInSeconds").getOrElse(maxLifeMn * 60)
+    val maxLifeMs  = config.getMilliseconds("maxConnectionAge").getOrElse(maxLifeSec * 1000)
+    maxLifeMs.toString
   }
 
   private def idleTimeout(config: Configuration) = {
-    var idleMaxAge = config.getLong("idleMaxAgeInMinutes").getOrElse(10L)
-    idleMaxAge     = config.getLong("idleMaxAgeInSeconds").getOrElse(idleMaxAge * 60)
-    idleMaxAge     = config.getMilliseconds("idleMaxAge").getOrElse(idleMaxAge * 1000)
-    idleMaxAge.toString
+    val idleMaxAgeMn  = config.getLong("idleMaxAgeInMinutes").getOrElse(10L)
+    val idleMaxAgeSec = config.getLong("idleMaxAgeInSeconds").getOrElse(idleMaxAgeMn * 60)
+    val idleMaxAgeMs  = config.getMilliseconds("idleMaxAge").getOrElse(idleMaxAgeSec * 1000)
+    idleMaxAgeMs.toString
   }
 
   private def connectionTimeout(config: Configuration) = {
-    var timeout = config.getLong("connectionTimeoutInMs").getOrElse(30 * 1000L)
-    timeout     = config.getMilliseconds("connectionTimeout").getOrElse(timeout)
-    timeout.toString
+    var timeoutMs = config.getLong("connectionTimeoutInMs").getOrElse(30 * 1000L)
+    timeoutMs     = config.getMilliseconds("connectionTimeout").getOrElse(timeoutMs)
+    timeoutMs.toString
   }
 
   private def leakDetectionThreshold(config: Configuration) = {
-    var threshold = config.getLong("closeConnectionWatchTimeoutInMs").getOrElse(0)
-    threshold     = config.getMilliseconds("closeConnectionWatchTimeout").getOrElse(threshold)
-    threshold.toString
+    var thresholdMs = config.getLong("closeConnectionWatchTimeoutInMs").getOrElse(0)
+    thresholdMs     = config.getMilliseconds("closeConnectionWatchTimeout").getOrElse(thresholdMs)
+    thresholdMs.toString
   }
 
   private class ConfigProperties(config: Configuration) extends Properties {
