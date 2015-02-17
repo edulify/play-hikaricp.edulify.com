@@ -60,7 +60,7 @@ This will disable dbplugin and avoids that BoneCP creates useless connections (w
 Add the following line to your `conf/play.plugins`:
 
     200:com.edulify.play.hikaricp.HikariCPPlugin
-    
+
 Due to the fact that the [Play JPA plugin](https://github.com/playframework/playframework/blob/master/framework/src/play-java-jpa/src/main/resources/play.plugins) is assigned a priority of **400**, please make sure that you assign `com.edulify.play.hikaricp.HikariCPPlugin` a priority less than that when using datasources looked up via JNDI. Otherwise, during application startup when JPA attempts to create the `EntityManagerFactory` your datasource will not have been bound to JNDI yet. [Play documentation](http://playframework.com/documentation/2.3.x/ScalaPlugins) states that connection pools should use a **200** priority.
 
 ### Step 4: Configure HikariCP
@@ -112,13 +112,21 @@ Thanks to community contribution, the plugin supports to bind a DataSource to a 
 
 ## Deploying to Heroku
 
-When using Heroku, you need to [read database url string](https://devcenter.heroku.com/articles/heroku-postgresql#connecting-in-java) from an environment variable called `DATABASE_URL`. Plain java Properties does not offer a way to reference these environment variables in a properties file, then we use [Commons Configuration](http://commons.apache.org/proper/commons-configuration/) to read the `hikaricp.properties` file or the one configured by `db.default.hikaricp.file`.
+When using Heroku, you need to [read the database url string](https://devcenter.heroku.com/articles/heroku-postgresql#connecting-in-java) from an environment variable called `DATABASE_JDBC_URL` because plain Java Properties does not offer a way to reference environment variables in a properties file. You will also need to create variables for username and password. To do this, run the following commands:
+
+      $ heroku config:set DATABASE_JDBC_URL="jdbc:postgresql://host:5432/dbname"
+      $ heroku config:set DATABASE_USERNAME=username
+      $ heroku config:set DATABASE_PASSWORD=password
+
+You can obtain the correct values for `host`, `dbname`, `username`, and `password` from the `DATABASE_URL` environment variable, which Heroku creates for you.  Then we use [Commons Configuration](http://commons.apache.org/proper/commons-configuration/) to read the `hikaricp.properties` file or the one configured by `db.default.hikaricp.file`.
 
 Here is an example:
 
 ```
-jdbcUrl=${env:DATABASE_URL}
+jdbcUrl=${env:DATABASE_JDBC_URL}
 driverClassName=org.postgresql.Driver
+username=${env:DATABASE_USERNAME}
+password=${env:DATABASE_PASSWORD}
 
 connectionTestQuery=SELECT 1
 registerMbeans=true
