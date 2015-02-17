@@ -1,6 +1,6 @@
 # HikariCP Plugin for 2.3.x
 
-This plugin works with `2.3.x` of PlayFramework. It uses version `2.2.5` of HikariCP.
+This plugin works with `2.3.x` of PlayFramework. It uses version `2.3.2` of HikariCP.
 
 Note, it can be made to work with Play `2.2.x` of the PlayFramework, but it requires changing the dependencies as
 the current build relies on the Play `2.3.x` plugin.
