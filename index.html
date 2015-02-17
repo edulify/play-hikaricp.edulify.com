@@ -31,9 +31,14 @@
       </header>
       <section>
         <h1>
-<a id="hikaricp-plugin-for-play-22x-and-23x" class="anchor" href="#hikaricp-plugin-for-play-22x-and-23x" aria-hidden="true"><span class="octicon octicon-link"></span></a>HikariCP Plugin for Play 2.2.x and 2.3.x</h1>
+<a id="hikaricp-plugin-for-23x" class="anchor" href="#hikaricp-plugin-for-23x" aria-hidden="true"><span class="octicon octicon-link"></span></a>HikariCP Plugin for 2.3.x</h1>
 
-<p>This plugins is supposed to work with versions <code>2.2.x</code> and <code>2.3.x</code> of PlayFramework. It uses version <code>2.0.1</code> of HikariCP.</p>
+<p>This plugin works with <code>2.3.x</code> of PlayFramework. It uses version <code>2.2.5</code> of HikariCP.</p>
+
+<p>Note, it can be made to work with Play <code>2.2.x</code> of the PlayFramework, but it requires changing the dependencies as
+the current build relies on the Play <code>2.3.x</code> plugin.</p>
+
+<p><a href="https://travis-ci.org/edulify/play-hikaricp.edulify.com"><img src="https://travis-ci.org/edulify/play-hikaricp.edulify.com.svg?branch=master" alt="Build Status"></a></p>
 
 <h2>
 <a id="why-hikaricp" class="anchor" href="#why-hikaricp" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why HikariCP?</h2>
@@ -57,6 +62,18 @@
 </tr>
 </thead>
 <tbody>
+<tr>
+<td align="right">1.5.1</td>
+<td align="right">2.2.5</td>
+<td align="right">2.3.7</td>
+<td align="left">Update to latest HikariCP/Play version</td>
+</tr>
+<tr>
+<td align="right">1.5.0</td>
+<td align="right">2.0.1</td>
+<td align="right">2.3.4</td>
+<td align="left">Code cleanup and fail fast in case of misconfiguration</td>
+</tr>
 <tr>
 <td align="right">1.4.1</td>
 <td align="right">2.0.1</td>
@@ -119,7 +136,7 @@
 
 <p>Add the following dependency to your <code>project/build.sbt</code> or <code>project/Build.scala</code>:</p>
 
-<pre><code>"com.edulify" %% "play-hikaricp" % "1.4.1"
+<pre><code>"com.edulify" %% "play-hikaricp" % "1.5.1"
 </code></pre>
 
 <h3>
@@ -150,7 +167,7 @@
 <a id="using-dbdefaulthikaricpfile" class="anchor" href="#using-dbdefaulthikaricpfile" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using <code>db.default.hikaricp.file</code>
 </h5>
 
-<p><strong>That is the preferred way to configure HikariCP</strong> because you have full access to all <a href="https://github.com/brettwooldridge/HikariCP#configuration-knobs-baby">properties documented here</a> and you can also have specific configuration to development, test and production modes. You can create a specific hikari properties file and configure it using <code>db.default.hikaricp.file</code> in you <code>conf/application.conf</code> file.</p>
+<p><strong>This is the preferred way to configure HikariCP</strong> because you have full access to all <a href="https://github.com/brettwooldridge/HikariCP#configuration-knobs-baby">properties documented here</a> and you can also have specific configuration to development, test and production modes. You can create a specific hikari properties file and configure it using <code>db.default.hikaricp.file</code> in you <code>conf/application.conf</code> file.</p>
 
 <p>Per instance, if you have a <code>conf/production.conf</code> that is loaded by play in production mode, add the following line to this file:</p>
 
@@ -169,7 +186,7 @@
 <a id="using-ordinary-play-way" class="anchor" href="#using-ordinary-play-way" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using ordinary <a href="http://www.playframework.com/documentation/2.2.x/SettingsJDBC">Play way</a>
 </h5>
 
-<p>This the least recommended way. Configure database properties like stated by Play docs. The table bellow shows how Play configurations are mapped to HikariCP:</p>
+<p>The least recommended way. Configure database properties as stated in the Play docs. The table bellow shows how Play configurations are mapped to HikariCP:</p>
 
 <table>
 <thead>
@@ -183,43 +200,84 @@
 <tr>
 <td align="left"><code>driverClassName</code></td>
 <td align="left"><code>db.default.driver</code></td>
-<td align="left">-</td>
+<td align="left">* Must be provided</td>
 </tr>
 <tr>
 <td align="left"><code>jdbcUrl</code></td>
 <td align="left"><code>db.default.url</code></td>
-<td align="left">-</td>
+<td align="left">* Must be provided</td>
 </tr>
 <tr>
 <td align="left"><code>username</code></td>
 <td align="left"><code>db.default.user</code></td>
-<td align="left">-</td>
+<td align="left">* Must be provided</td>
 </tr>
 <tr>
 <td align="left"><code>password</code></td>
 <td align="left"><code>db.default.password</code></td>
-<td align="left">-</td>
+<td align="left">* Must be provided</td>
 </tr>
 <tr>
 <td align="left">-</td>
 <td align="left"><code>db.default.partitionSize</code></td>
-<td align="left">-</td>
+<td align="left">* Unused/NA</td>
 </tr>
 <tr>
 <td align="left">
 <code>maximumPoolSize</code> (partitionSize * maxPoolSize)</td>
 <td align="left"><code>db.default.maxPoolSize</code></td>
-<td align="left">-</td>
+<td align="left">30</td>
 </tr>
 <tr>
 <td align="left">
 <code>minimumPoolSize</code> (partitionSize * minPoolSize)</td>
 <td align="left"><code>db.default.minPoolSize</code></td>
-<td align="left">-</td>
+<td align="left">5</td>
 </tr>
 <tr>
 <td align="left"><code>maxLifetime</code></td>
 <td align="left"><code>db.default.maxConnectionAge</code></td>
+<td align="left">30 min.</td>
+</tr>
+<tr>
+<td align="left"><code>idleTimeout</code></td>
+<td align="left">
+<code>db.default.idleMaxAge</code><br><code>db.default.idleMaxAgeInMinutes</code><br><code>db.default.idleMaxAgeInSeconds</code>
+</td>
+<td align="left">10 min.</td>
+</tr>
+<tr>
+<td align="left"><code>connectionTimeout</code></td>
+<td align="left">
+<code>db.default.connectionTimeout</code><br><code>db.default.connectionTimeoutInMs</code>
+</td>
+<td align="left">30 sec.</td>
+</tr>
+<tr>
+<td align="left"><code>leakDetectionThreshold</code></td>
+<td align="left">
+<code>db.default.closeConnectionWatchTimeout</code><br><code>db.default.closeConnectionWatchTimeoutInMs</code>
+</td>
+<td align="left">0 ms</td>
+</tr>
+<tr>
+<td align="left"><code>connectionInitSql</code></td>
+<td align="left"><code>db.default.initSQL</code></td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left"><code>connectionTestQuery</code></td>
+<td align="left"><code>db.default.connectionTestStatement</code></td>
+<td align="left">-</td>
+</tr>
+<tr>
+<td align="left"><code>autoCommit</code></td>
+<td align="left"><code>db.default.defaultAutoCommit</code></td>
+<td align="left"><code>true</code></td>
+</tr>
+<tr>
+<td align="left"><code>transactionIsolation</code></td>
+<td align="left"><code>db.default.defaultTransactionIsolation</code></td>
 <td align="left">-</td>
 </tr>
 <tr>
@@ -228,19 +286,14 @@
 <td align="left"><code>false</code></td>
 </tr>
 <tr>
-<td align="left"><code>acquireRetryDelay</code></td>
-<td align="left"><code>db.default.acquireRetryDelay</code></td>
+<td align="left"><code>catalog</code></td>
+<td align="left"><code>db.default.defaultCatalog</code></td>
 <td align="left">-</td>
 </tr>
 <tr>
 <td align="left"><code>registerMbeans</code></td>
 <td align="left"><code>db.default.statisticsEnabled</code></td>
 <td align="left"><code>false</code></td>
-</tr>
-<tr>
-<td align="left"><code>connectionInitSql</code></td>
-<td align="left"><code>db.default.initSQL</code></td>
-<td align="left">-</td>
 </tr>
 </tbody>
 </table>
@@ -256,12 +309,21 @@
 <h2>
 <a id="deploying-to-heroku" class="anchor" href="#deploying-to-heroku" aria-hidden="true"><span class="octicon octicon-link"></span></a>Deploying to Heroku</h2>
 
-<p>When using Heroku, you need to <a href="https://devcenter.heroku.com/articles/heroku-postgresql#connecting-in-java">read database url string</a> from an environment variable called <code>DATABASE_URL</code>. Plain java Properties does not offer a way to reference these environment variables in a properties file, then we use <a href="http://commons.apache.org/proper/commons-configuration/">Commons Configuration</a> to read the <code>hikaricp.properties</code> file or the one configured by <code>db.default.hikaricp.file</code>.</p>
+<p>When using Heroku, you need to <a href="https://devcenter.heroku.com/articles/heroku-postgresql#connecting-in-java">read the database url string</a> from an environment variable called <code>DATABASE_JDBC_URL</code> because plain Java Properties does not offer a way to reference environment variables in a properties file. You will also need to create variables for username and password. To do this, run the following commands:</p>
+
+<pre><code>  $ heroku config:set DATABASE_JDBC_URL="jdbc:postgresql://host:5432/dbname"
+  $ heroku config:set DATABASE_USERNAME=username
+  $ heroku config:set DATABASE_PASSWORD=password
+</code></pre>
+
+<p>You can obtain the correct values for <code>host</code>, <code>dbname</code>, <code>username</code>, and <code>password</code> from the <code>DATABASE_URL</code> environment variable, which Heroku creates for you.  Then we use <a href="http://commons.apache.org/proper/commons-configuration/">Commons Configuration</a> to read the <code>hikaricp.properties</code> file or the one configured by <code>db.default.hikaricp.file</code>.</p>
 
 <p>Here is an example:</p>
 
-<pre><code>jdbcUrl=${env:DATABASE_URL}
+<pre><code>jdbcUrl=${env:DATABASE_JDBC_URL}
 driverClassName=org.postgresql.Driver
+username=${env:DATABASE_USERNAME}
+password=${env:DATABASE_PASSWORD}
 
 connectionTestQuery=SELECT 1
 registerMbeans=true
