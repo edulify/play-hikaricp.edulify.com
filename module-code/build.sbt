@@ -2,9 +2,9 @@ name := "play-hikaricp"
 
 version := "1.5.0"
 
-scalaVersion := "2.11.2"
+scalaVersion := "2.11.5"
 
-crossScalaVersions := Seq("2.10.4", "2.11.2")
+crossScalaVersions := Seq("2.10.4", "2.11.5")
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
