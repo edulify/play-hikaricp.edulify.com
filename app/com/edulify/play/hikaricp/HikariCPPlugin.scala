@@ -42,9 +42,8 @@ class HikariCPPlugin(app: Application) extends DBPlugin {
             case mode => Logger.info("database [" + ds._2 + "] connected at " + dbURL(ds._1.getConnection))
           }
         } catch {
-          case NonFatal(e) => {
+          case NonFatal(e) =>
             throw databaseConfig.reportError(ds._2 + ".url", "Cannot connect to database [" + ds._2 + "]", Some(e.getCause))
-          }
         }
     }
   }
