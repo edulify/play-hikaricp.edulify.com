@@ -54,14 +54,16 @@ class HikariCPDBApi(configuration: Configuration, classloader: ClassLoader) exte
   }
 
   private def registerDriver(config: Configuration): Unit = {
-    val driver = config.getString("driver")
-    if (driver.isEmpty) return
-    try {
-      val driverClassName = driver.get
-      Logger.info("Registering driver " + driverClassName)
-      DriverManager.registerDriver(new play.utils.ProxyDriver(Class.forName(driverClassName, true, classloader).newInstance.asInstanceOf[Driver]))
-    } catch {
-      case t: Throwable => throw config.reportError("driver", "Driver not found: [" + driver + "]", Some(t))
+    config.getString("driverClassName") match {
+      case Some(driverClassName) => {
+        try {
+          Logger.info("Registering driver " + driverClassName)
+          DriverManager.registerDriver(new play.utils.ProxyDriver(Class.forName(driverClassName, true, classloader).newInstance.asInstanceOf[Driver]))
+        } catch {
+          case t: Throwable => throw config.reportError("driverClassName", "Driver not found: [" + driverClassName + "]", Some(t))
+        }
+      }
+      case _ => Logger.debug("No driverClassName was configured.")
     }
   }
 
