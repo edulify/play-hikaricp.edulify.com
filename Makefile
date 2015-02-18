@@ -2,13 +2,16 @@ setup:
 	@./script/bootstrap
 
 clean:
-	@play clean
+	@sbt clean
+	@rm -rf target
+	@rm -rf project/target
+	@rm -rf project/project
 
-publish-local:
-	@play clean publishLocal
+publish-local: clean
+	@sbt +publishLocal
 
-publish:
-	@play clean publish
+publish: clean
+	@sbt publish
 
-idea:
-	@sbt clean gen-idea
+idea: clean
+	@sbt gen-idea
