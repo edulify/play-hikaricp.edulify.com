@@ -19,6 +19,7 @@ import java.sql.{Driver, DriverManager}
 import javax.sql.DataSource
 
 import com.zaxxer.hikari.{HikariConfig, HikariDataSource}
+import org.jdbcdslog.ConnectionPoolDataSourceProxy
 import play.api.db.DBApi
 import play.api.libs.JNDI
 import play.api.{Configuration, Logger}
@@ -32,11 +33,20 @@ class HikariCPDBApi(configuration: Configuration, classloader: ClassLoader) exte
   val datasources: List[(DataSource, String)] = dataSourceConfigs.map {
     case (dataSourceName, dataSourceConfig) =>
       Logger.info("Creating Pool for datasource '" + dataSourceName + "'")
-      val hikariConfig = HikariCPConfig.getHikariConfig(dataSourceConfig)
+
+      val hikariConfig = HikariCPConfig.toHikariConfig(dataSourceConfig)
       registerDriver(dataSourceConfig)
+
       val dataSource = new HikariDataSource(hikariConfig)
       bindToJNDI(dataSourceConfig, hikariConfig, dataSource)
-      dataSource -> dataSourceName
+
+      if(dataSourceConfig.getBoolean("logSql").getOrElse(false)) {
+        val dataSourceWithLogging = new ConnectionPoolDataSourceProxy()
+        dataSourceWithLogging.setTargetDSDirect(dataSource)
+        dataSourceWithLogging -> dataSourceName
+      } else {
+        dataSource -> dataSourceName
+      }
   }.toList
 
   def shutdownPool(ds: DataSource) = {
