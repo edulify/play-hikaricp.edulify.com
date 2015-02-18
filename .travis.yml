@@ -2,8 +2,6 @@ language: scala
 scala:
    - 2.10.4
    - 2.11.5
-before_script:
-   - cd module-code/
 script:
    - sbt ++$TRAVIS_SCALA_VERSION compile
    - sbt ++$TRAVIS_SCALA_VERSION test
