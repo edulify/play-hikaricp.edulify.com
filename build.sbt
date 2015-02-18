@@ -15,7 +15,8 @@ libraryDependencies ++= Seq(
 )
 
 resolvers ++= Seq(
-  Resolver.typesafeRepo("releases")
+  Resolver.typesafeRepo("releases"),
+  "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases"
 )
 
 organization := "com.edulify"
