@@ -49,7 +49,7 @@ class HikariCPPlugin(app: Application) extends DBPlugin {
   }
 
   override def onStop() {
-    play.api.Logger.info("Stoping HikariCP connection pool...")
+    play.api.Logger.info("Stopping HikariCP connection pool...")
     hikariCPDBApi.datasources.foreach {
       case (ds, _) => try {
         hikariCPDBApi.shutdownPool(ds)
