@@ -21,3 +21,5 @@ addSbtPlugin("com.typesafe.play" % "sbt-plugin" % System.getProperty("play.versi
 addSbtPlugin("com.typesafe.sbt" % "sbt-pgp" % "0.8.3")
 
 addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.1.7")
+
+addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.0.4")

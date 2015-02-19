@@ -15,3 +15,6 @@ publish: clean
 
 idea: clean
 	@sbt gen-idea
+
+test: clean
+	@./script/test
