@@ -5,7 +5,7 @@ This plugin works with `2.3.x` of PlayFramework. It uses version `2.3.2` of Hika
 Note, it can be made to work with Play `2.2.x` of the PlayFramework, but it requires changing the dependencies as
 the current build relies on the Play `2.3.x` plugin.
 
-[![Build Status](https://travis-ci.org/edulify/play-hikaricp.edulify.com.svg?branch=master)](https://travis-ci.org/edulify/play-hikaricp.edulify.com)
+[![Build Status](https://travis-ci.org/edulify/play-hikaricp.edulify.com.svg?branch=dev)](https://travis-ci.org/edulify/play-hikaricp.edulify.com) [![Issue Stats](http://issuestats.com/github/edulify/play-hikaricp.edulify.com/badge/pr)](http://issuestats.com/github/edulify/play-hikaricp.edulify.com) [![Issue Stats](http://issuestats.com/github/edulify/play-hikaricp.edulify.com/badge/issue)](http://issuestats.com/github/edulify/play-hikaricp.edulify.com)
 
 ## Why HikariCP?
 
