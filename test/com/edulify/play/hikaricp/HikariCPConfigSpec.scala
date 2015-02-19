@@ -15,7 +15,6 @@
  */
 package com.edulify.play.hikaricp
 
-import java.sql.DriverManager
 import java.util.Properties
 
 import com.typesafe.config.ConfigFactory
