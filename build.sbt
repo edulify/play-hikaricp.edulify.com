@@ -47,21 +47,20 @@ licenses := Seq("The Apache Software License, Version 2.0" -> url("http://www.ap
 
 homepage := Some(url("http://edulify.github.io/play-hikaricp.edulify.com/"))
 
-pomExtra := (
+pomExtra :=
   <scm>
     <url>https://github.com/edulify/play-hikaricp.edulify.com</url>
     <connection>scm:git:git@github.com:edulify/play-hikaricp.edulify.com.git</connection>
     <developerConnection>scm:git:https://github.com/edulify/play-hikaricp.edulify.com.git</developerConnection>
   </scm>
-    <developers>
-      <developer>
-        <id>megazord</id>
-        <name>Megazord</name>
-        <email>contact [at] edulify.com</email>
-        <url>https://github.com/megazord</url>
-      </developer>
-    </developers>
-  )
+  <developers>
+    <developer>
+      <id>megazord</id>
+      <name>Megazord</name>
+      <email>contact [at] edulify.com</email>
+      <url>https://github.com/megazord</url>
+    </developer>
+  </developers>
 
 scalacOptions := Seq("-feature", "-deprecation")
 
