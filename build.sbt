@@ -1,6 +1,6 @@
 name := "play-hikaricp"
 
-version := "1.5.2"
+version := "2.0.0-SNAPSHOT"
 
 scalaVersion := "2.11.5"
 
@@ -39,6 +39,8 @@ publishTo := {
   else
     Some("releases"  at nexus + "service/local/staging/deploy/maven2")
 }
+
+credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
 
 startYear := Some(2012)
 

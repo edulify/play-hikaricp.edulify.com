@@ -11,7 +11,7 @@ publish-local: clean
 	@sbt +publishLocal
 
 publish: clean
-	@sbt publish
+	@sbt publishSigned
 
 idea: clean
 	@sbt gen-idea
