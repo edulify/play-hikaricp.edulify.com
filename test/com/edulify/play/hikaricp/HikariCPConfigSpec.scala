@@ -15,10 +15,12 @@
  */
 package com.edulify.play.hikaricp
 
+import java.sql.DriverManager
 import java.util.Properties
 
 import com.typesafe.config.ConfigFactory
 import org.specs2.mutable.Specification
+import org.specs2.specification.Scope
 import play.api.Configuration
 
 class HikariCPConfigSpec extends Specification {
@@ -42,20 +44,20 @@ class HikariCPConfigSpec extends Specification {
     }
 
     "discard configuration not related to hikari config" in {
-      val props = config().valid
+      val props = Configurations().valid
       props.setProperty("just.some.garbage", "garbage")
-      HikariCPConfig.toHikariConfig(config().configuration(props))
+      HikariCPConfig.toHikariConfig(Configurations().configuration(props))
       success // won't fail because of garbage property
     }
 
     "throw exception when" in {
       "both dataSourceClassName and jdbcUrl are not present" in {
-        val emptyProperties = config().invalid
+        val emptyProperties = Configurations().invalid
         val configuration: Configuration = new Configuration(ConfigFactory.parseProperties(emptyProperties))
         HikariCPConfig.toHikariConfig(configuration) must throwA[IllegalArgumentException]
       }
       "username is not present" in {
-        val props = config().invalid
+        val props = Configurations().invalid
         props.setProperty("dataSourceClassName", "org.postgresql.ds.PGPoolingDataSource")
         val configuration: Configuration = new Configuration(ConfigFactory.parseProperties(props))
         HikariCPConfig.toHikariConfig(configuration) must throwA[IllegalArgumentException]
@@ -63,75 +65,66 @@ class HikariCPConfigSpec extends Specification {
     }
 
     "respect the defaults as" in {
-      "autoCommit to true" in {
-        val configuration = config().configuration(config().valid)
-        HikariCPConfig.toHikariConfig(configuration).isAutoCommit must beTrue
+      "autoCommit to true" in new ValidConfig {
+        HikariCPConfig.toHikariConfig(config).isAutoCommit must beTrue
       }
 
-      "connectionTimeout to 30 seconds" in {
-        val configuration = config().configuration(config().valid)
-        HikariCPConfig.toHikariConfig(configuration).getConnectionTimeout must beEqualTo(30.seconds.inMillis)
+      "connectionTimeout to 30 seconds" in new ValidConfig {
+        HikariCPConfig.toHikariConfig(config).getConnectionTimeout must beEqualTo(30.seconds.inMillis)
       }
 
-      "idleTimeout to 10 minutes" in {
-        val configuration = config().configuration(config().valid)
-        HikariCPConfig.toHikariConfig(configuration).getIdleTimeout must beEqualTo(10.minutes.inMillis)
+      "idleTimeout to 10 minutes" in new ValidConfig {
+        HikariCPConfig.toHikariConfig(config).getIdleTimeout must beEqualTo(10.minutes.inMillis)
       }
 
-      "maxLifetime to 30 minutes" in {
-        val configuration = config().configuration(config().valid)
-        HikariCPConfig.toHikariConfig(configuration).getMaxLifetime must beEqualTo(30.minutes.inMillis)
+      "maxLifetime to 30 minutes" in new ValidConfig {
+        HikariCPConfig.toHikariConfig(config).getMaxLifetime must beEqualTo(30.minutes.inMillis)
       }
 
-      "validationTimeout to 5 seconds" in {
-        val configuration = config().configuration(config().valid)
-        HikariCPConfig.toHikariConfig(configuration).getValidationTimeout must beEqualTo(5.seconds.inMillis)
+      "validationTimeout to 5 seconds" in new ValidConfig {
+        HikariCPConfig.toHikariConfig(config).getValidationTimeout must beEqualTo(5.seconds.inMillis)
       }
 
-      "minimumIdle to 10" in {
-        val configuration = config().configuration(config().valid)
-        HikariCPConfig.toHikariConfig(configuration).getMinimumIdle must beEqualTo(10)
+      "minimumIdle to 10" in new ValidConfig {
+        HikariCPConfig.toHikariConfig(config).getMinimumIdle must beEqualTo(10)
       }
 
-      "maximumPoolSize to 10" in {
-        val configuration = config().configuration(config().valid)
-        HikariCPConfig.toHikariConfig(configuration).getMaximumPoolSize must beEqualTo(10)
+      "maximumPoolSize to 10" in new ValidConfig {
+        HikariCPConfig.toHikariConfig(config).getMaximumPoolSize must beEqualTo(10)
       }
 
-      "initializationFailFast to true" in {
-        val configuration = config().configuration(config().valid)
-        HikariCPConfig.toHikariConfig(configuration).isInitializationFailFast must beTrue
+      "initializationFailFast to true" in new ValidConfig {
+        HikariCPConfig.toHikariConfig(config).isInitializationFailFast must beTrue
       }
 
-      "isolateInternalQueries to false" in {
-        val configuration = config().configuration(config().valid)
-        HikariCPConfig.toHikariConfig(configuration).isIsolateInternalQueries must beFalse
+      "isolateInternalQueries to false" in new ValidConfig {
+        HikariCPConfig.toHikariConfig(config).isIsolateInternalQueries must beFalse
       }
 
-      "allowPoolSuspension to false" in {
-        val configuration = config().configuration(config().valid)
-        HikariCPConfig.toHikariConfig(configuration).isAllowPoolSuspension must beFalse
+      "allowPoolSuspension to false" in new ValidConfig {
+        HikariCPConfig.toHikariConfig(config).isAllowPoolSuspension must beFalse
       }
 
-      "readOnly to false" in {
-        val configuration = config().configuration(config().valid)
-        HikariCPConfig.toHikariConfig(configuration).isReadOnly must beFalse
+      "readOnly to false" in new ValidConfig {
+        HikariCPConfig.toHikariConfig(config).isReadOnly must beFalse
       }
 
-      "registerMBeans to false" in {
-        val configuration = config().configuration(config().valid)
-        HikariCPConfig.toHikariConfig(configuration).isRegisterMbeans must beFalse
+      "registerMBeans to false" in new ValidConfig {
+        HikariCPConfig.toHikariConfig(config).isRegisterMbeans must beFalse
       }
 
-      "leakDetectionThreshold to 0 (zero)" in {
-        val configuration = config().configuration(config().valid)
-        HikariCPConfig.toHikariConfig(configuration).getLeakDetectionThreshold must beEqualTo(0)
+      "leakDetectionThreshold to 0 (zero)" in new ValidConfig {
+        HikariCPConfig.toHikariConfig(config).getLeakDetectionThreshold must beEqualTo(0)
       }
     }
   }
 }
 
-case class config() {
+trait ValidConfig extends Scope {
+  val config = new Configuration(ConfigFactory.parseProperties(Configurations().valid))
+}
+
+case class Configurations() {
   def valid = {
     val properties = new Properties()
     properties.setProperty("dataSourceClassName", "org.postgresql.ds.PGPoolingDataSource")
