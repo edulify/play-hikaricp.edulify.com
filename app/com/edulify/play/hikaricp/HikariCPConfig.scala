@@ -36,7 +36,14 @@ object HikariCPConfig {
       case _ => Logger.info("`jdbcUrl` not present. Pool configured from `dataSourceClassName`.")
     }
 
-    hikariConfig.setUsername(config.getString("username").get)
+    config.getConfig("dataSource") match {
+      case Some(dataSourceConfig) => dataSourceConfig.keys.foreach { key =>
+        hikariConfig.addDataSourceProperty(key, dataSourceConfig.getString(key).get)
+      }
+      case None => Logger.debug("No specific dataSource configuration. Just skipping.")
+    }
+
+    hikariConfig.setUsername(config.getString("username").orNull)
     hikariConfig.setPassword(config.getString("password").getOrElse(""))
 
     // Frequently used

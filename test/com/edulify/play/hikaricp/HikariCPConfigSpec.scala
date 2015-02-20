@@ -18,6 +18,7 @@ package com.edulify.play.hikaricp
 import java.util.Properties
 
 import com.typesafe.config.ConfigFactory
+import com.zaxxer.hikari.HikariConfig
 import org.specs2.mutable.Specification
 import org.specs2.specification.Scope
 import play.api.Configuration
@@ -49,6 +50,14 @@ class HikariCPConfigSpec extends Specification {
       success // won't fail because of garbage property
     }
 
+    "set dataSource sub properties" in {
+      val props = Configurations().valid
+      props.setProperty("dataSource.user", "user")
+      props.setProperty("dataSource.password", "password")
+      val hikariConfig: HikariConfig = HikariCPConfig.toHikariConfig(Configurations().configuration(props))
+
+      hikariConfig.getDataSourceProperties.getProperty("user") == "user"
+      hikariConfig.getDataSourceProperties.getProperty("password") == "password"
     }
 
     "respect the defaults as" in {
