@@ -32,7 +32,7 @@ class HikariCPConfigSpec extends Specification {
       properties.setProperty("dataSourceClassName", "org.postgresql.ds.PGPoolingDataSource")
       properties.setProperty("username", "user")
       val config = new Configuration(ConfigFactory.parseProperties(properties))
-      HikariCPConfig.toHikariConfig(config).getDataSourceClassName mustEqual "org.postgresql.ds.PGPoolingDataSource"
+      HikariCPConfig.toHikariConfig(config).getDataSourceClassName == "org.postgresql.ds.PGPoolingDataSource"
     }
 
     "set jdbcUrl when present" in {
@@ -40,7 +40,7 @@ class HikariCPConfigSpec extends Specification {
       properties.setProperty("jdbcUrl", "jdbc:postgresql://host/database")
       properties.setProperty("username", "user")
       val config = new Configuration(ConfigFactory.parseProperties(properties))
-      HikariCPConfig.toHikariConfig(config).getJdbcUrl mustEqual "jdbc:postgresql://host/database"
+      HikariCPConfig.toHikariConfig(config).getJdbcUrl == "jdbc:postgresql://host/database"
     }
 
     "discard configuration not related to hikari config" in {
@@ -66,27 +66,27 @@ class HikariCPConfigSpec extends Specification {
       }
 
       "connectionTimeout to 30 seconds" in new ValidConfig {
-        HikariCPConfig.toHikariConfig(config).getConnectionTimeout must beEqualTo(30.seconds.inMillis)
+        HikariCPConfig.toHikariConfig(config).getConnectionTimeout == 30.seconds.inMillis
       }
 
       "idleTimeout to 10 minutes" in new ValidConfig {
-        HikariCPConfig.toHikariConfig(config).getIdleTimeout must beEqualTo(10.minutes.inMillis)
+        HikariCPConfig.toHikariConfig(config).getIdleTimeout == 10.minutes.inMillis
       }
 
       "maxLifetime to 30 minutes" in new ValidConfig {
-        HikariCPConfig.toHikariConfig(config).getMaxLifetime must beEqualTo(30.minutes.inMillis)
+        HikariCPConfig.toHikariConfig(config).getMaxLifetime == 30.minutes.inMillis
       }
 
       "validationTimeout to 5 seconds" in new ValidConfig {
-        HikariCPConfig.toHikariConfig(config).getValidationTimeout must beEqualTo(5.seconds.inMillis)
+        HikariCPConfig.toHikariConfig(config).getValidationTimeout == 5.seconds.inMillis
       }
 
       "minimumIdle to 10" in new ValidConfig {
-        HikariCPConfig.toHikariConfig(config).getMinimumIdle must beEqualTo(10)
+        HikariCPConfig.toHikariConfig(config).getMinimumIdle == 10
       }
 
       "maximumPoolSize to 10" in new ValidConfig {
-        HikariCPConfig.toHikariConfig(config).getMaximumPoolSize must beEqualTo(10)
+        HikariCPConfig.toHikariConfig(config).getMaximumPoolSize == 10
       }
 
       "initializationFailFast to true" in new ValidConfig {
@@ -110,7 +110,7 @@ class HikariCPConfigSpec extends Specification {
       }
 
       "leakDetectionThreshold to 0 (zero)" in new ValidConfig {
-        HikariCPConfig.toHikariConfig(config).getLeakDetectionThreshold must beEqualTo(0)
+        HikariCPConfig.toHikariConfig(config).getLeakDetectionThreshold == 0
       }
     }
   }
