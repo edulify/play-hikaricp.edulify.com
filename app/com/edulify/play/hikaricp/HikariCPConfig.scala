@@ -22,22 +22,7 @@ import scala.concurrent.duration._
 
 object HikariCPConfig {
 
-  private def checkHikariConfig(config: Configuration) = {
-    if ((config.getString("dataSourceClassName") ++ config.getString("jdbcUrl")).isEmpty) {
-      throw new IllegalArgumentException(
-        """HikariCP missing configuration. `dataSourceClassName` OR `jdbcUrl`
-        must be present in your database configuration"""
-      )
-    }
-
-    if (config.getString("username").isEmpty) {
-      throw new IllegalArgumentException("You have to configure the `username` property.")
-    }
-  }
-
   def toHikariConfig(config: Configuration): HikariConfig = {
-    checkHikariConfig(config)
-
     val hikariConfig = new HikariConfig()
 
     // Essentials configurations

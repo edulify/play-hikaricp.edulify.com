@@ -49,18 +49,6 @@ class HikariCPConfigSpec extends Specification {
       success // won't fail because of garbage property
     }
 
-    "throw exception when" in {
-      "both dataSourceClassName and jdbcUrl are not present" in {
-        val emptyProperties = Configurations().invalid
-        val configuration: Configuration = new Configuration(ConfigFactory.parseProperties(emptyProperties))
-        HikariCPConfig.toHikariConfig(configuration) must throwA[IllegalArgumentException]
-      }
-      "username is not present" in {
-        val props = Configurations().invalid
-        props.setProperty("dataSourceClassName", "org.postgresql.ds.PGPoolingDataSource")
-        val configuration: Configuration = new Configuration(ConfigFactory.parseProperties(props))
-        HikariCPConfig.toHikariConfig(configuration) must throwA[IllegalArgumentException]
-      }
     }
 
     "respect the defaults as" in {
