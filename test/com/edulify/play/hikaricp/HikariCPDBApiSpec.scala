@@ -50,6 +50,11 @@ class HikariCPDBApiSpec extends Specification with AroundExample {
       val ds = api.getDataSource("default")
       DriverManager.getDrivers.exists( driver => driver.getClass.getName == "org.h2.Driver") must beTrue
     }
+    "create more than one datasource" in new Configs {
+      val api = new HikariCPDBApi(multipleDataSources, classLoader)
+      api.getDataSource("default")  != null
+      api.getDataSource("default2") != null
+    }
   }
 
   def around[T : AsResult](t: =>T) = {
@@ -73,6 +78,7 @@ trait Configs extends Scope {
     props.setProperty("default.logSql", "true")
     new Configuration(ConfigFactory.parseProperties(props))
   }
+  def multipleDataSources = new Configuration(ConfigFactory.parseProperties(Props().multipleDatabases))
   def classLoader = this.getClass.getClassLoader
 }
 
@@ -84,6 +90,22 @@ case class Props() {
     props.setProperty("default.password", "")
     props.setProperty("default.driverClassName", "org.h2.Driver")
     props.setProperty("default.jndiName", "TestContext")
+    props
+  }
+  def multipleDatabases = {
+    val props = new Properties()
+    props.setProperty("default.jdbcUrl", "jdbc:h2:mem:test")
+    props.setProperty("default.username", "sa")
+    props.setProperty("default.password", "")
+    props.setProperty("default.driverClassName", "org.h2.Driver")
+    props.setProperty("default.jndiName", "TestContext")
+
+    // default2
+    props.setProperty("default2.jdbcUrl", "jdbc:h2:mem:test")
+    props.setProperty("default2.username", "sa")
+    props.setProperty("default2.password", "")
+    props.setProperty("default2.driverClassName", "org.h2.Driver")
+    props.setProperty("default2.jndiName", "TestContext")
     props
   }
 }
