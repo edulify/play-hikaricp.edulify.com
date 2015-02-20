@@ -15,14 +15,75 @@
  */
 package com.edulify.play.hikaricp
 
-import org.specs2.mutable.Specification
+import java.sql.DriverManager
+import java.util.Properties
 
-class HikariCPDBApiSpec extends Specification {
+import com.typesafe.config.ConfigFactory
+import org.jdbcdslog.ConnectionPoolDataSourceProxy
+import org.specs2.execute.AsResult
+import org.specs2.mutable.Specification
+import org.specs2.specification.{Scope, AroundExample}
+import play.api.Configuration
+import play.api.libs.JNDI
+import scala.collection.JavaConversions._
+
+class HikariCPDBApiSpec extends Specification with AroundExample {
 
   "When starting HikariCP DB API" should {
-    "create data sources" in pending
-    "create data source with logSql enabled" in pending
-    "bind data source to jndi" in pending
-    "register driver configured in `driverClassName`" in pending
+    "create data sources" in new Configs {
+      val api = new HikariCPDBApi(config, classLoader)
+      val ds = api.getDataSource("default")
+      ds.getConnection.getMetaData.getURL == "jdbc:h2:mem:test"
+    }
+    "create data source with logSql enabled" in new Configs {
+      val api = new HikariCPDBApi(configWithLogSql, classLoader)
+      val ds = api.getDataSource("default")
+      ds.isInstanceOf[ConnectionPoolDataSourceProxy] must beTrue
+    }
+    "bind data source to jndi" in new Configs {
+      val api = new HikariCPDBApi(configWithLogSql, classLoader)
+      val ds = api.getDataSource("default")
+      JNDI.initialContext.lookup("TestContext") != null
+    }
+    "register driver configured in `driverClassName`" in new Configs {
+      val api = new HikariCPDBApi(configWithLogSql, classLoader)
+      val ds = api.getDataSource("default")
+      DriverManager.getDrivers.exists( driver => driver.getClass.getName == "org.h2.Driver") must beTrue
+    }
+  }
+
+  def around[T : AsResult](t: =>T) = {
+    Class.forName("org.h2.Driver")
+    val conn = DriverManager.getConnection("jdbc:h2:mem:test", "sa",  "")
+    try {
+      val result = AsResult(t)
+      result
+    } catch {
+      case e: Exception => failure(e.getMessage)
+    } finally {
+      conn.close()
+    }
+  }
+}
+
+trait Configs extends Scope {
+  def config = new Configuration(ConfigFactory.parseProperties(Props().properties))
+  def configWithLogSql = {
+    val props = new Props().properties
+    props.setProperty("default.logSql", "true")
+    new Configuration(ConfigFactory.parseProperties(props))
+  }
+  def classLoader = this.getClass.getClassLoader
+}
+
+case class Props() {
+  def properties = {
+    val props = new Properties()
+    props.setProperty("default.jdbcUrl", "jdbc:h2:mem:test")
+    props.setProperty("default.username", "sa")
+    props.setProperty("default.password", "")
+    props.setProperty("default.driverClassName", "org.h2.Driver")
+    props.setProperty("default.jndiName", "TestContext")
+    props
   }
 }
