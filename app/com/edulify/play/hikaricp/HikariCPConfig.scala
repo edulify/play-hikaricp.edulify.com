@@ -28,12 +28,12 @@ object HikariCPConfig {
     // Essentials configurations
     config.getString("dataSourceClassName") match {
       case Some(className) => hikariConfig.setDataSourceClassName(className)
-      case _ => Logger.info("`dataSourceClassName` not present. Will use `jdbcUrl` instead.")
+      case None => Logger.debug("`dataSourceClassName` not present. Will use `jdbcUrl` instead.")
     }
 
     config.getString("jdbcUrl") match {
       case Some(jdbcUrl) => hikariConfig.setJdbcUrl(jdbcUrl)
-      case _ => Logger.info("`jdbcUrl` not present. Pool configured from `dataSourceClassName`.")
+      case None => Logger.debug("`jdbcUrl` not present. Pool configured from `dataSourceClassName`.")
     }
 
     config.getConfig("dataSource") match {
