@@ -19,6 +19,7 @@ Here is how HikariCP is working for us:
 
 | Version | HikariCP | Play  |
 |--------:|---------:|------:|
+| 2.0.0-M1| 2.3.2    | 2.3.8 |
 | 1.5.2   | 2.3.2    | 2.3.8 |
 | 1.5.1   | 2.2.5    | 2.3.7 |
 | 1.5.0   | 2.0.1    | 2.3.4 |
@@ -48,7 +49,7 @@ There are just a few steps to properly configure the plugin. Just follow the ste
 
 Add the following dependency to your `project/build.sbt` or `project/Build.scala`:
 
-    "com.edulify" %% "play-hikaricp" % "1.5.2"
+    "com.edulify" %% "play-hikaricp" % "2.0.0-M1"
 
 ### Step 2: Disable default `dbplugin`
 
@@ -68,80 +69,136 @@ Due to the fact that the [Play JPA plugin](https://github.com/playframework/play
 
 ### Step 4: Configure HikariCP
 
-##### Using `db.default.hikaricp.file`
+Please, before reading this section, we recommend that you get familiarized with [HikariCP configurations](https://github.com/brettwooldridge/HikariCP#configuration-knobs-baby). It is the main source to understand each possible configuration for HikariCP and it have invaluable information about how to best configure your pool. Also, it is a good idea to read about [Typesafe Config](https://github.com/typesafehub/config), which is the configuration language used by PlayFramework.
 
-**This is the preferred way to configure HikariCP** because you have full access to all [properties documented here](https://github.com/brettwooldridge/HikariCP#configuration-knobs-baby) and you can also have specific configuration to development, test and production modes. You can create a specific hikari properties file and configure it using `db.default.hikaricp.file` in you `conf/application.conf` file.
+This plugin just read each possible Hikari configuration and create the pool from it and all the defaults are honored. Here is a simple example of how to configure you pool in `application.conf`:
 
-Per instance, if you have a `conf/production.conf` that is loaded by play in production mode, add the following line to this file:
+    db {
+      default {
+        driverClassName=org.postgresql.Driver
+        jdbcUrl="jdbc:mysql://localhost:3306/simpsons"
+        username=bart
+        password=51mp50n
+      }
+    }
 
-     db.default.hikaricp.file="conf/hikaricp.prod.properties"
+Of course, you can configure it using a data source provided by your JDBC Driver:
 
-Of course, you need to create `conf/hikaricp.dev.properties` file.
+    db {
+      default {
+        dataSourceClassName=org.postgresql.ds.PGSimpleDataSource
+        dataSource {
+          user=bart
+          password=51mp50n
+          databaseName=springfield
+          serverName=localhost
+        }
+      }
+    }
 
-##### Using `hikaricp.properties`
+HikariCP documentation has a [list of JDBC DataSource classes for popular databases](https://github.com/brettwooldridge/HikariCP#popular-datasource-class-names). Both `dataSourceClassName` and `jdbcUrl` are supported, but HikariCP recommends the former. Also, you can configure more than one database:
 
-Just create a `conf/hikaricp.properties` and the plugin will read it and create DataSource. **This mode has preference over using ordinary play way** because you have fine grained access to Hikari configuration.
+    db {
 
-##### Using ordinary [Play way](http://www.playframework.com/documentation/2.2.x/SettingsJDBC)
+      default {
+        dataSourceClassName=org.postgresql.ds.PGSimpleDataSource
+        dataSource {
+          user=bart
+          password=51mp50n
+          databaseName=springfield
+          serverName=localhost
+        }
+      }
 
-The least recommended way. Configure database properties as stated in the Play docs. The table bellow shows how Play configurations are mapped to HikariCP:
+      orders {
+        dataSourceClassName=org.postgresql.ds.PGSimpleDataSource
+          dataSource {
+            user=homer
+            password=duffbeer
+            databaseName=orders
+            serverName=localhost
+          }
+        }
+    }
 
-Hikari                                          | Play                           | Defaults
-:-----------------------------------------------|:-------------------------------|:-----------
-`driverClassName`                               | `db.default.driver`            | * Must be provided
-`jdbcUrl`                                       | `db.default.url`               | * Must be provided
-`username`                                      | `db.default.user`              | * Must be provided
-`password`                                      | `db.default.password`          | * Must be provided
- -                                              | `db.default.partitionSize`     | * Unused/NA
-`maximumPoolSize`                               | `db.default.maxPoolSize` * `db.default.partitionCount` | 5 * 2
-`minimumPoolSize`                               | `db.default.minPoolSize` * `db.default.partitionCount` | 5 * 2
-`maxLifetime`                                   | `db.default.maxConnectionAge`  | 30 min.
-`idleTimeout`                                   | `db.default.idleMaxAge`<br>`db.default.idleMaxAgeInMinutes`<br>`db.default.idleMaxAgeInSeconds`        | 10 min.
-`connectionTimeout`                             | `db.default.connectionTimeout`<br>`db.default.connectionTimeoutInMs`   | 30 sec.
-`leakDetectionThreshold`                        | `db.default.closeConnectionWatchTimeout`<br>`db.default.closeConnectionWatchTimeoutInMs`    | 0 ms
-`connectionInitSql`                             | `db.default.initSQL`           | -
-`connectionTestQuery`                           | `db.default.connectionTestStatement`           | -
-`autoCommit`                                    | `db.default.autocommit` | `true`
-`transactionIsolation`                          | `db.default.transactionIsolation`  | -
-`readOnly`                                      | `db.default.readOnly`   | `false`
-`catalog`                                       | `db.default.defaultCatalog   ` | -
-`registerMbeans`                                | `db.default.statisticsEnabled` | `false`
+## Log SQL statements
+
+HikariCP does not offer (out of the box) a way to log SQL statements and it recommends that you use the log capacities of your database vendor. From HikariCP docs:
+
+> **Log Statement Text / Slow Query Logging**
+> Like Statement caching, most major database vendors support statement logging through properties of their own driver. This includes Oracle, MySQL, Derby, MSSQL, and others. Some even support slow query logging. We consider this a "development-time" feature. For those few databases that do not support it, jdbcdslog-exp is a good option. Great stuff during development and pre-Production.
+
+We take the suggestion of using [jdbcdslog-exp](https://code.google.com/p/jdbcdslog-exp/) and this plugin supports SQL log statement, which can be configured by database:
+
+    db {
+      default {
+
+        logSql=true
+
+        dataSourceClassName=org.postgresql.ds.PGSimpleDataSource
+        dataSource {
+          user=bart
+          password=51mp50n
+          databaseName=springfield
+          serverName=localhost
+
+        }
+      }
+    }
 
 ## JNDI Support
 
-Thanks to community contribution, the plugin supports to bind a DataSource to a JNDI context. After properly configuring the plugin (as described above), just add the following configuration in you `application.conf`:
+Thanks to community contribution, the plugin supports to bind a DataSource to a JNDI context. Here is an example of how to add configure it in `application.conf`:
 
-     db.default.jndiName="DefaultDataSource"
+    db {
+      default {
+
+        jndiName="DefaultDataSource"
+
+        dataSourceClassName=org.postgresql.ds.PGSimpleDataSource
+        dataSource {
+          user=bart
+          password=51mp50n
+          databaseName=springfield
+          serverName=localhost
+        }
+      }
+    }
 
 ## Deploying to Heroku
 
-When using Heroku, you need to [read the database url string](https://devcenter.heroku.com/articles/heroku-postgresql#connecting-in-java) from an environment variable called `DATABASE_JDBC_URL` because plain Java Properties does not offer a way to reference environment variables in a properties file. You will also need to create variables for username and password. To do this, run the following commands:
+When using Heroku, you need to first translate its `DATABASE_URL` into another variable with the format expected by PostgreSQL JDBC Driver. As stated by [Heroku docs](https://devcenter.heroku.com/articles/heroku-postgresql#spring-java):
+
+> The `DATABASE_URL` for the Heroku Postgres add-on follows this naming convention:
+>
+>     postgres://<username>:<password>@<host>/<dbname>
+>
+> However the Postgres JDBC driver uses the following convention:
+>
+>     jdbc:postgresql://<host>:<port>/<dbname>?user=<username>&password=<password>
+>
+> Notice the additional `ql` at the end of `jdbc:postgresql`? Due to this difference you will need to hardcode the scheme to jdbc:postgresql` in your Java class or your Spring XML configuration.
+
+So, you will need to create another environment variable with the proper format and you will also need to create variables for username and password. To do this, run the following commands:
 
       $ heroku config:set DATABASE_JDBC_URL="jdbc:postgresql://host:5432/dbname"
       $ heroku config:set DATABASE_USERNAME=username
       $ heroku config:set DATABASE_PASSWORD=password
 
-You can obtain the correct values for `host`, `dbname`, `username`, and `password` from the `DATABASE_URL` environment variable, which Heroku creates for you.  Then we use [Commons Configuration](http://commons.apache.org/proper/commons-configuration/) to read the `hikaricp.properties` file or the one configured by `db.default.hikaricp.file`.
+You can obtain the correct values for `host`, `dbname`, `username`, and `password` from the `DATABASE_URL` environment variable, which Heroku creates for you. Then you can use these variables directly inside `application.conf`, since it is supported by [Typesafe Config](https://github.com/typesafehub/config):
 
-Here is an example:
+    db {
+      default {
+        driverClassName=org.postgresql.Driver
+        jdbcUrl=${DATABASE_JDBC_URL}
+        username=${DATABASE_USERNAME}
+        password=${DATABASE_PASSWORD}
+      }
+    }
 
-```
-jdbcUrl=${env:DATABASE_JDBC_URL}
-driverClassName=org.postgresql.Driver
-username=${env:DATABASE_USERNAME}
-password=${env:DATABASE_PASSWORD}
+## Contributors
 
-connectionTestQuery=SELECT 1
-registerMbeans=true
-
-# 15 minutes
-maxLifetime=900000
-# 5 minutes
-idleTimeout=300000
-
-maximumPoolSize=20
-minimumIdle=5
-```
+You can see a full list of contributors [here](https://github.com/edulify/play-hikaricp.edulify.com/graphs/contributors).
 
 ## Inspirations and Alternatives
 
