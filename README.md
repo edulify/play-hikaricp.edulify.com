@@ -167,7 +167,7 @@ Thanks to community contribution, the plugin supports to bind a DataSource to a 
 
 ## Deploying to Heroku
 
-When using Heroku, you need to first translate its `DATABASE_URL` into another variable with the format expected by PostgreSQL JDBC Driver. As stated by [Heroku docs](https://devcenter.heroku.com/articles/heroku-postgresql#spring-java):
+When using Heroku, you first need to translate its `DATABASE_URL` into another variable with the format expected by PostgreSQL JDBC Driver. As stated by [Heroku docs](https://devcenter.heroku.com/articles/heroku-postgresql#spring-java):
 
 > The `DATABASE_URL` for the Heroku Postgres add-on follows this naming convention:
 >
@@ -198,7 +198,7 @@ You can obtain the correct values for `host`, `dbname`, `username`, and `passwor
 
 ## Contributors
 
-You can see a full list of contributors [here](https://github.com/edulify/play-hikaricp.edulify.com/graphs/contributors).
+You can see a full list of contributors [here](https://github.com/edulify/play-hikaricp.edulify.com/graphs/contributors). Thank you very much to all the people that helps us to maintain and evolve this plugin.
 
 ## Inspirations and Alternatives
 
