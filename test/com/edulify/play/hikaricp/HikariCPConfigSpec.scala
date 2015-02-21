@@ -113,6 +113,80 @@ class HikariCPConfigSpec extends Specification {
         HikariCPConfig.toHikariConfig(config).getLeakDetectionThreshold == 0
       }
     }
+
+    "override the defaults for property" in {
+      "autoCommit" in new Configs {
+        val props = valid
+        props.setProperty("autoCommit", "false")
+        HikariCPConfig.toHikariConfig(asConfig(props)).isAutoCommit must beFalse
+      }
+
+      "connectionTimeout" in new Configs {
+        val props = valid
+        props.setProperty("connectionTimeout", "40 seconds")
+        HikariCPConfig.toHikariConfig(asConfig(props)).getConnectionTimeout == 40.seconds.inMillis
+      }
+
+      "idleTimeout" in new Configs {
+        val props = valid
+        props.setProperty("idleTimeout", "5 minutes")
+        HikariCPConfig.toHikariConfig(asConfig(props)).getIdleTimeout == 5.minutes.inMillis
+      }
+
+      "maxLifetime" in new Configs {
+        val props = valid
+        props.setProperty("maxLifetime", "15 minutes")
+        HikariCPConfig.toHikariConfig(asConfig(props)).getMaxLifetime == 15.minutes.inMillis
+      }
+
+      "validationTimeout" in new Configs {
+        val props = valid
+        props.setProperty("validationTimeout", "10 seconds")
+        HikariCPConfig.toHikariConfig(asConfig(props)).getValidationTimeout == 10.seconds.inMillis
+      }
+
+      "minimumIdle" in new Configs {
+        val props = valid
+        props.setProperty("minimumIdle", "20")
+        HikariCPConfig.toHikariConfig(asConfig(props)).getMinimumIdle == 20
+      }
+
+      "maximumPoolSize" in new Configs {
+        val props = valid
+        props.setProperty("maximumPoolSize", "20")
+        HikariCPConfig.toHikariConfig(asConfig(props)).getMaximumPoolSize == 20
+      }
+
+      "initializationFailFast" in new Configs {
+        val props = valid
+        props.setProperty("initializationFailFast", "false")
+        HikariCPConfig.toHikariConfig(asConfig(props)).isInitializationFailFast must beFalse
+      }
+
+      "isolateInternalQueries" in new Configs {
+        val props = valid
+        props.setProperty("isolateInternalQueries", "true")
+        HikariCPConfig.toHikariConfig(asConfig(props)).isIsolateInternalQueries must beTrue
+      }
+
+      "allowPoolSuspension" in new Configs {
+        val props = valid
+        props.setProperty("allowPoolSuspension", "true")
+        HikariCPConfig.toHikariConfig(asConfig(props)).isAllowPoolSuspension must beTrue
+      }
+
+      "readOnly" in new Configs {
+        val props = valid
+        props.setProperty("readOnly", "true")
+        HikariCPConfig.toHikariConfig(asConfig(props)).isReadOnly must beTrue
+      }
+
+      "leakDetectionThreshold" in new Configs {
+        val props = valid
+        props.setProperty("leakDetectionThreshold", "2")
+        HikariCPConfig.toHikariConfig(asConfig(props)).getLeakDetectionThreshold == 0
+      }
+    }
   }
 }
 
