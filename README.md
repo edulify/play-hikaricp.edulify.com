@@ -1,9 +1,8 @@
 # HikariCP Plugin for 2.3.x
 
-This plugin works with `2.3.x` of PlayFramework. It uses version `2.3.2` of HikariCP.
+This plugin works with `2.3.x` of PlayFramework and uses version `2.3.2` of HikariCP.
 
-Note, it can be made to work with Play `2.2.x` of the PlayFramework, but it requires changing the dependencies as
-the current build relies on the Play `2.3.x` plugin.
+Note, it can be made to work with Play `2.2.x` of the PlayFramework, but it requires changing the dependencies as the current build relies on the Play `2.3.x` plugin. Please, see the versions table below to see which version of Play is supported.
 
 [![Build Status](https://travis-ci.org/edulify/play-hikaricp.edulify.com.svg?branch=dev)](https://travis-ci.org/edulify/play-hikaricp.edulify.com) [![Issue Stats](http://issuestats.com/github/edulify/play-hikaricp.edulify.com/badge/pr)](http://issuestats.com/github/edulify/play-hikaricp.edulify.com) [![Issue Stats](http://issuestats.com/github/edulify/play-hikaricp.edulify.com/badge/issue)](http://issuestats.com/github/edulify/play-hikaricp.edulify.com)
 
@@ -35,7 +34,7 @@ Here is how HikariCP is working for us:
 | 1.1.0   | 1.3.8    | 2.2.3 |
 | 1.0.0   | 1.3.5    | 2.2.2 |
 
-For more information about what changed in each version, please, see the CHANGELOG.md file.
+For more information about what changed in each version, please, see the our CHANGELOG.md file.
 
 ## Repository
 
@@ -47,9 +46,9 @@ resolvers += Resolver.url("Edulify Repository", url("http://edulify.github.io/mo
 
 ## How to Use
 
-There are just a few steps to properly configure the plugin. Just follow the steps bellow:
+There are just a few steps to properly configure the plugin:
 
-### Step 1: Add dependencies
+### Step 1: Add the dependency
 
 Add the following dependency to your `project/build.sbt` or `project/Build.scala`:
 
@@ -69,7 +68,7 @@ Add the following line to your `conf/play.plugins`:
 
     200:com.edulify.play.hikaricp.HikariCPPlugin
 
-Due to the fact that the [Play JPA plugin](https://github.com/playframework/playframework/blob/master/framework/src/play-java-jpa/src/main/resources/play.plugins) is assigned a priority of **400**, please make sure that you assign `com.edulify.play.hikaricp.HikariCPPlugin` a priority less than that when using datasources looked up via JNDI. Otherwise, during application startup when JPA attempts to create the `EntityManagerFactory` your datasource will not have been bound to JNDI yet. [Play documentation](http://playframework.com/documentation/2.3.x/ScalaPlugins) states that connection pools should use a **200** priority.
+Due to the fact that the [Play JPA plugin](https://github.com/playframework/playframework/blob/master/framework/src/play-java-jpa/src/main/resources/play.plugins) is assigned a priority of **400**, please make sure that you assign `com.edulify.play.hikaricp.HikariCPPlugin` a priority less than that when using datasources looked up via JNDI. Otherwise, during application startup when JPA attempts to create the `EntityManagerFactory` your data source will not have been bound to JNDI yet. [Play documentation](http://playframework.com/documentation/2.3.x/ScalaPlugins) states that connection pools should use a **200** priority.
 
 ### Step 4: Configure HikariCP
 
@@ -86,7 +85,7 @@ This plugin just read each possible Hikari configuration and create the pool fro
       }
     }
 
-Of course, you can configure it using a data source provided by your JDBC Driver:
+Alternatively, you can configure it using a data source provided by your JDBC Driver:
 
     db {
       default {
@@ -132,7 +131,7 @@ HikariCP does not offer (out of the box) a way to log SQL statements and it reco
 > **Log Statement Text / Slow Query Logging**
 > Like Statement caching, most major database vendors support statement logging through properties of their own driver. This includes Oracle, MySQL, Derby, MSSQL, and others. Some even support slow query logging. We consider this a "development-time" feature. For those few databases that do not support it, jdbcdslog-exp is a good option. Great stuff during development and pre-Production.
 
-We take the suggestion of using [jdbcdslog-exp](https://code.google.com/p/jdbcdslog-exp/) and this plugin supports SQL log statement, which can be configured by database:
+We take the suggestion of using [jdbcdslog-exp](https://code.google.com/p/jdbcdslog-exp/) and have implemented SQL log statement support, which can be configured by database, using `logSql` property:
 
     db {
       default {
@@ -152,7 +151,7 @@ We take the suggestion of using [jdbcdslog-exp](https://code.google.com/p/jdbcds
 
 ## JNDI Support
 
-Thanks to community contribution, the plugin supports to bind a DataSource to a JNDI context. Here is an example of how to add configure it in `application.conf`:
+Thanks to contributions from the community, this plugin supports to bind a DataSource to a JNDI context. Here is an example of how to add configure it in `conf/application.conf`:
 
     db {
       default {
