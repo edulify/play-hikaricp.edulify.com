@@ -40,7 +40,7 @@ class HikariCPDBApi(configuration: Configuration, classloader: ClassLoader) exte
       val dataSource = new HikariDataSource(hikariConfig)
       bindToJNDI(dataSourceConfig, hikariConfig, dataSource)
 
-      if(dataSourceConfig.getBoolean("logSql").getOrElse(false)) {
+      if (dataSourceConfig.getBoolean("logSql").getOrElse(false)) {
         val dataSourceWithLogging = new ConnectionPoolDataSourceProxy()
         dataSourceWithLogging.setTargetDSDirect(dataSource)
         dataSourceWithLogging -> dataSourceName
@@ -57,28 +57,26 @@ class HikariCPDBApi(configuration: Configuration, classloader: ClassLoader) exte
   }
 
   def getDataSource(name: String): DataSource = {
-    val dataSource = datasources.find(tuple => tuple._2 == name)
-      .map(element => element._1)
-      .getOrElse(sys.error(" - could not find datasource for name " + name))
-    dataSource
+    datasources.find(_._2 == name)
+      .map(_._1)
+      .getOrElse(sys.error(" - could not find data source for name " + name))
   }
 
-  private def registerDriver(config: Configuration): Unit = {
-    config.getString("driverClassName") match {
-      case Some(driverClassName) => {
-        try {
-          Logger.info("Registering driver " + driverClassName)
-          DriverManager.registerDriver(new play.utils.ProxyDriver(Class.forName(driverClassName, true, classloader).newInstance.asInstanceOf[Driver]))
-        } catch {
-          case t: Throwable => throw config.reportError("driverClassName", "Driver not found: [" + driverClassName + "]", Some(t))
-        }
+  private def registerDriver(config: Configuration) = {
+    config.getString("driverClassName").foreach { driverClassName =>
+      try {
+        Logger.info("Registering driver " + driverClassName)
+        DriverManager.registerDriver(new play.utils.ProxyDriver(Class.forName(driverClassName, true, classloader)
+          .newInstance
+          .asInstanceOf[Driver]))
+      } catch {
+        case t: Throwable => throw config.reportError("driverClassName", "Driver not found: [" + driverClassName + "]", Some(t))
       }
-      case _ => Logger.debug("No driverClassName was configured.")
     }
   }
 
   private def bindToJNDI(config: Configuration, hikariConfig: HikariConfig, dataSource: DataSource): Unit = {
-    config.getString("jndiName") map { name =>
+    config.getString("jndiName").map { name =>
       JNDI.initialContext.rebind(name, dataSource)
       Logger.info(s"""datasource [${hikariConfig.getJdbcUrl}] bound to JNDI as $name""")
     }

@@ -18,8 +18,6 @@ package com.edulify.play.hikaricp
 import com.zaxxer.hikari.HikariConfig
 import play.api.{Configuration, Logger}
 
-import scala.concurrent.duration._
-
 object HikariCPConfig {
 
   def toHikariConfig(config: Configuration): HikariConfig = {
@@ -36,42 +34,38 @@ object HikariCPConfig {
       case None => Logger.debug("`jdbcUrl` not present. Pool configured from `dataSourceClassName`.")
     }
 
-    config.getConfig("dataSource") match {
-      case Some(dataSourceConfig) => dataSourceConfig.keys.foreach { key =>
+    config.getConfig("dataSource").foreach { dataSourceConfig =>
+      dataSourceConfig.keys.foreach { key =>
         hikariConfig.addDataSourceProperty(key, dataSourceConfig.getString(key).get)
       }
-      case None => Logger.debug("No specific dataSource configuration. Just skipping.")
     }
 
-    hikariConfig.setUsername(config.getString("username").orNull)
-    hikariConfig.setPassword(config.getString("password").getOrElse(""))
+    config.getString("username").foreach(hikariConfig.setUsername)
+    config.getString("password").foreach(hikariConfig.setPassword)
+
+    config.getString("driverClassName").foreach(hikariConfig.setDriverClassName)
 
     // Frequently used
-    hikariConfig.setAutoCommit(config.getBoolean("autoCommit").getOrElse(true))
-    hikariConfig.setConnectionTimeout(config.getMilliseconds("connectionTimeout").getOrElse(30.seconds.toMillis))
-    hikariConfig.setIdleTimeout(config.getMilliseconds("idleTimeout").getOrElse(10.minutes.toMillis))
-    hikariConfig.setMaxLifetime(config.getMilliseconds("maxLifetime").getOrElse(30.minutes.toMillis))
-    hikariConfig.setConnectionTestQuery(config.getString("connectionTestQuery").orNull)
-    hikariConfig.setMinimumIdle(config.getInt("minimumIdle").getOrElse(10))
-    hikariConfig.setMaximumPoolSize(config.getInt("maximumPoolSize").getOrElse(10))
-    hikariConfig.setPoolName(config.getString("poolName").orNull)
+    config.getBoolean("autoCommit").foreach(hikariConfig.setAutoCommit)
+    config.getMilliseconds("connectionTimeout").foreach(hikariConfig.setConnectionTimeout)
+    config.getMilliseconds("idleTimeout").foreach(hikariConfig.setIdleTimeout)
+    config.getMilliseconds("maxLifetime").foreach(hikariConfig.setMaxLifetime)
+    config.getString("connectionTestQuery").foreach(hikariConfig.setConnectionTestQuery)
+    config.getInt("minimumIdle").foreach(hikariConfig.setMinimumIdle)
+    config.getInt("maximumPoolSize").foreach(hikariConfig.setMaximumPoolSize)
+    config.getString("poolName").foreach(hikariConfig.setPoolName)
 
     // Infrequently used
-    hikariConfig.setInitializationFailFast(config.getBoolean("initializationFailFast").getOrElse(true))
-    hikariConfig.setIsolateInternalQueries(config.getBoolean("isolateInternalQueries").getOrElse(false))
-    hikariConfig.setAllowPoolSuspension(config.getBoolean("allowPoolSuspension").getOrElse(false))
-    hikariConfig.setReadOnly(config.getBoolean("readOnly").getOrElse(false))
-    hikariConfig.setRegisterMbeans(config.getBoolean("registerMbeans").getOrElse(false))
-    hikariConfig.setCatalog(config.getString("catalog").orNull)
-    hikariConfig.setConnectionInitSql(config.getString("connectionInitSql").orNull)
-    hikariConfig.setTransactionIsolation(config.getString("transactionIsolation").orNull)
-    hikariConfig.setValidationTimeout(config.getMilliseconds("validationTimeout").getOrElse(5.seconds.toMillis))
-    hikariConfig.setLeakDetectionThreshold(config.getMilliseconds("leakDetectionThreshold").getOrElse(0))
-
-    config.getString("driverClassName") match {
-      case Some(driverClassName) => hikariConfig.setDriverClassName(driverClassName)
-      case _ => // do nothing
-    }
+    config.getBoolean("initializationFailFast").foreach(hikariConfig.setInitializationFailFast)
+    config.getBoolean("isolateInternalQueries").foreach(hikariConfig.setIsolateInternalQueries)
+    config.getBoolean("allowPoolSuspension").foreach(hikariConfig.setAllowPoolSuspension)
+    config.getBoolean("readOnly").foreach(hikariConfig.setReadOnly)
+    config.getBoolean("registerMbeans").foreach(hikariConfig.setRegisterMbeans)
+    config.getString("catalog").foreach(hikariConfig.setCatalog)
+    config.getString("connectionInitSql").foreach(hikariConfig.setConnectionInitSql)
+    config.getString("transactionIsolation").foreach(hikariConfig.setTransactionIsolation)
+    config.getMilliseconds("validationTimeout").foreach(hikariConfig.setValidationTimeout)
+    config.getMilliseconds("leakDetectionThreshold").foreach(hikariConfig.setLeakDetectionThreshold)
 
     hikariConfig
   }
