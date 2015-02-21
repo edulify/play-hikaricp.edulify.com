@@ -23,7 +23,7 @@ import org.jdbcdslog.ConnectionPoolDataSourceProxy
 import org.specs2.execute.AsResult
 import org.specs2.mutable.Specification
 import org.specs2.specification.{Scope, AroundExample}
-import play.api.Configuration
+import play.api.{PlayException, Configuration}
 import play.api.libs.JNDI
 import scala.collection.JavaConversions._
 
@@ -54,6 +54,14 @@ class HikariCPDBApiSpec extends Specification with AroundExample {
       val api = new HikariCPDBApi(multipleDataSources, classLoader)
       api.getDataSource("default")  != null
       api.getDataSource("default2") != null
+    }
+    "report misconfiguration error" in new DataSourceConfigs {
+      val properties = new Properties()
+      properties.setProperty("default.username", "sa")
+      properties.setProperty("default.password", "")
+
+      val misConfig = new Configuration(ConfigFactory.parseProperties(properties))
+      new HikariCPDBApi(misConfig, classLoader) must throwA[PlayException]
     }
   }
 

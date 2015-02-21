@@ -32,20 +32,24 @@ class HikariCPDBApi(configuration: Configuration, classloader: ClassLoader) exte
 
   val datasources: List[(DataSource, String)] = dataSourceConfigs.map {
     case (dataSourceName, dataSourceConfig) =>
-      Logger.info("Creating Pool for datasource '" + dataSourceName + "'")
+      try {
+        Logger.info("Creating Pool for datasource '" + dataSourceName + "'")
 
-      val hikariConfig = HikariCPConfig.toHikariConfig(dataSourceConfig)
-      registerDriver(dataSourceConfig)
+        val hikariConfig = HikariCPConfig.toHikariConfig(dataSourceConfig)
+        registerDriver(dataSourceConfig)
 
-      val dataSource = new HikariDataSource(hikariConfig)
-      bindToJNDI(dataSourceConfig, hikariConfig, dataSource)
+        val dataSource = new HikariDataSource(hikariConfig)
+        bindToJNDI(dataSourceConfig, hikariConfig, dataSource)
 
-      if (dataSourceConfig.getBoolean("logSql").getOrElse(false)) {
-        val dataSourceWithLogging = new ConnectionPoolDataSourceProxy()
-        dataSourceWithLogging.setTargetDSDirect(dataSource)
-        dataSourceWithLogging -> dataSourceName
-      } else {
-        dataSource -> dataSourceName
+        if (dataSourceConfig.getBoolean("logSql").getOrElse(false)) {
+          val dataSourceWithLogging = new ConnectionPoolDataSourceProxy()
+          dataSourceWithLogging.setTargetDSDirect(dataSource)
+          dataSourceWithLogging -> dataSourceName
+        } else {
+          dataSource -> dataSourceName
+        }
+      } catch {
+        case ex: IllegalArgumentException => throw dataSourceConfig.reportError(dataSourceName, ex.getMessage, Some(ex))
       }
   }.toList
 
