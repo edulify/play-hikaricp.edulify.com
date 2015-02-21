@@ -30,27 +30,27 @@ import scala.collection.JavaConversions._
 class HikariCPDBApiSpec extends Specification with AroundExample {
 
   "When starting HikariCP DB API" should {
-    "create data sources" in new Configs {
+    "create data sources" in new DataSourceConfigs {
       val api = new HikariCPDBApi(config, classLoader)
       val ds = api.getDataSource("default")
       ds.getConnection.getMetaData.getURL == "jdbc:h2:mem:test"
     }
-    "create data source with logSql enabled" in new Configs {
+    "create data source with logSql enabled" in new DataSourceConfigs {
       val api = new HikariCPDBApi(configWithLogSql, classLoader)
       val ds = api.getDataSource("default")
       ds.isInstanceOf[ConnectionPoolDataSourceProxy] must beTrue
     }
-    "bind data source to jndi" in new Configs {
+    "bind data source to jndi" in new DataSourceConfigs {
       val api = new HikariCPDBApi(configWithLogSql, classLoader)
       val ds = api.getDataSource("default")
       JNDI.initialContext.lookup("TestContext") != null
     }
-    "register driver configured in `driverClassName`" in new Configs {
+    "register driver configured in `driverClassName`" in new DataSourceConfigs {
       val api = new HikariCPDBApi(configWithLogSql, classLoader)
       val ds = api.getDataSource("default")
       DriverManager.getDrivers.exists( driver => driver.getClass.getName == "org.h2.Driver") must beTrue
     }
-    "create more than one datasource" in new Configs {
+    "create more than one datasource" in new DataSourceConfigs {
       val api = new HikariCPDBApi(multipleDataSources, classLoader)
       api.getDataSource("default")  != null
       api.getDataSource("default2") != null
@@ -71,7 +71,7 @@ class HikariCPDBApiSpec extends Specification with AroundExample {
   }
 }
 
-trait Configs extends Scope {
+trait DataSourceConfigs extends Scope {
   def config = new Configuration(ConfigFactory.parseProperties(Props().properties))
   def configWithLogSql = {
     val props = new Props().properties

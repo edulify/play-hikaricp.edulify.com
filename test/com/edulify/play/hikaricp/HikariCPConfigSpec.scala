@@ -43,84 +43,83 @@ class HikariCPConfigSpec extends Specification {
       HikariCPConfig.toHikariConfig(config).getJdbcUrl == "jdbc:postgresql://host/database"
     }
 
-    "discard configuration not related to hikari config" in {
-      val props = Configurations().valid
+    "discard configuration not related to hikari config" in new Configs {
+      val props = valid
       props.setProperty("just.some.garbage", "garbage")
-      HikariCPConfig.toHikariConfig(Configurations().configuration(props))
+      HikariCPConfig.toHikariConfig(asConfig(props))
       success // won't fail because of garbage property
     }
 
-    "set dataSource sub properties" in {
-      val props = Configurations().valid
+    "set dataSource sub properties" in new Configs {
+      val props = valid
       props.setProperty("dataSource.user", "user")
       props.setProperty("dataSource.password", "password")
-      val hikariConfig: HikariConfig = HikariCPConfig.toHikariConfig(Configurations().configuration(props))
+      val hikariConfig: HikariConfig = HikariCPConfig.toHikariConfig(asConfig(props))
 
       hikariConfig.getDataSourceProperties.getProperty("user") == "user"
       hikariConfig.getDataSourceProperties.getProperty("password") == "password"
     }
 
     "respect the defaults as" in {
-      "autoCommit to true" in new ValidConfig {
+      "autoCommit to true" in new Configs {
         HikariCPConfig.toHikariConfig(config).isAutoCommit must beTrue
       }
 
-      "connectionTimeout to 30 seconds" in new ValidConfig {
+      "connectionTimeout to 30 seconds" in new Configs {
         HikariCPConfig.toHikariConfig(config).getConnectionTimeout == 30.seconds.inMillis
       }
 
-      "idleTimeout to 10 minutes" in new ValidConfig {
+      "idleTimeout to 10 minutes" in new Configs {
         HikariCPConfig.toHikariConfig(config).getIdleTimeout == 10.minutes.inMillis
       }
 
-      "maxLifetime to 30 minutes" in new ValidConfig {
+      "maxLifetime to 30 minutes" in new Configs {
         HikariCPConfig.toHikariConfig(config).getMaxLifetime == 30.minutes.inMillis
       }
 
-      "validationTimeout to 5 seconds" in new ValidConfig {
+      "validationTimeout to 5 seconds" in new Configs {
         HikariCPConfig.toHikariConfig(config).getValidationTimeout == 5.seconds.inMillis
       }
 
-      "minimumIdle to 10" in new ValidConfig {
+      "minimumIdle to 10" in new Configs {
         HikariCPConfig.toHikariConfig(config).getMinimumIdle == 10
       }
 
-      "maximumPoolSize to 10" in new ValidConfig {
+      "maximumPoolSize to 10" in new Configs {
         HikariCPConfig.toHikariConfig(config).getMaximumPoolSize == 10
       }
 
-      "initializationFailFast to true" in new ValidConfig {
+      "initializationFailFast to true" in new Configs {
         HikariCPConfig.toHikariConfig(config).isInitializationFailFast must beTrue
       }
 
-      "isolateInternalQueries to false" in new ValidConfig {
+      "isolateInternalQueries to false" in new Configs {
         HikariCPConfig.toHikariConfig(config).isIsolateInternalQueries must beFalse
       }
 
-      "allowPoolSuspension to false" in new ValidConfig {
+      "allowPoolSuspension to false" in new Configs {
         HikariCPConfig.toHikariConfig(config).isAllowPoolSuspension must beFalse
       }
 
-      "readOnly to false" in new ValidConfig {
+      "readOnly to false" in new Configs {
         HikariCPConfig.toHikariConfig(config).isReadOnly must beFalse
       }
 
-      "registerMBeans to false" in new ValidConfig {
+      "registerMBeans to false" in new Configs {
         HikariCPConfig.toHikariConfig(config).isRegisterMbeans must beFalse
       }
 
-      "leakDetectionThreshold to 0 (zero)" in new ValidConfig {
+      "leakDetectionThreshold to 0 (zero)" in new Configs {
         HikariCPConfig.toHikariConfig(config).getLeakDetectionThreshold == 0
       }
     }
   }
 }
 
-trait ValidConfig extends Scope {
-  val config = new Configuration(ConfigFactory.parseProperties(Configurations().valid))
-}
+trait Configs extends Scope {
+  val config = asConfig(valid)
+  val invalid = new Properties()
 
-case class Configurations() {
   def valid = {
     val properties = new Properties()
     properties.setProperty("dataSourceClassName", "org.postgresql.ds.PGPoolingDataSource")
@@ -128,7 +127,5 @@ case class Configurations() {
     properties
   }
 
-  def invalid = new Properties()
-
-  def configuration(props: Properties) = new Configuration(ConfigFactory.parseProperties(props))
+  def asConfig(props: Properties) = new Configuration(ConfigFactory.parseProperties(props))
 }
