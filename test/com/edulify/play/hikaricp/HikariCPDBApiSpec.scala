@@ -15,11 +15,11 @@
  */
 package com.edulify.play.hikaricp
 
-import java.sql.DriverManager
+import java.sql.{SQLException, DriverManager}
 import java.util.Properties
 
 import com.typesafe.config.ConfigFactory
-import org.jdbcdslog.ConnectionPoolDataSourceProxy
+import org.jdbcdslog.LogSqlDataSource
 import org.specs2.execute.AsResult
 import org.specs2.mutable.Specification
 import org.specs2.specification.{Scope, AroundExample}
@@ -38,7 +38,7 @@ class HikariCPDBApiSpec extends Specification with AroundExample {
     "create data source with logSql enabled" in new DataSourceConfigs {
       val api = new HikariCPDBApi(configWithLogSql, classLoader)
       val ds = api.getDataSource("default")
-      ds.isInstanceOf[ConnectionPoolDataSourceProxy] must beTrue
+      ds.isInstanceOf[LogSqlDataSource] must beTrue
     }
     "bind data source to jndi" in new DataSourceConfigs {
       val api = new HikariCPDBApi(configWithLogSql, classLoader)
@@ -62,6 +62,21 @@ class HikariCPDBApiSpec extends Specification with AroundExample {
 
       val misConfig = new Configuration(ConfigFactory.parseProperties(properties))
       new HikariCPDBApi(misConfig, classLoader) must throwA[PlayException]
+    }
+  }
+
+  "When shutting down pool" should {
+    "shutdown data source" in new DataSourceConfigs {
+      val api = new HikariCPDBApi(config, classLoader)
+      val ds = api.getDataSource("default")
+      api.shutdownPool(ds)
+      ds.getConnection must throwA[SQLException]
+    }
+    "shutdown data source with logSql enabled" in new DataSourceConfigs {
+      val api = new HikariCPDBApi(configWithLogSql, classLoader)
+      val ds = api.getDataSource("default")
+      api.shutdownPool(ds)
+      ds.getConnection must throwA[SQLException]
     }
   }
 

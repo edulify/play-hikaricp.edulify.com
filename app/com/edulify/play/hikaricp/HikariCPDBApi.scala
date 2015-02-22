@@ -19,7 +19,7 @@ import java.sql.{Driver, DriverManager}
 import javax.sql.DataSource
 
 import com.zaxxer.hikari.{HikariConfig, HikariDataSource}
-import org.jdbcdslog.ConnectionPoolDataSourceProxy
+import org.jdbcdslog.LogSqlDataSource
 import play.api.db.DBApi
 import play.api.libs.JNDI
 import play.api.{Configuration, Logger}
@@ -42,7 +42,7 @@ class HikariCPDBApi(configuration: Configuration, classloader: ClassLoader) exte
         bindToJNDI(dataSourceConfig, hikariConfig, dataSource)
 
         if (dataSourceConfig.getBoolean("logSql").getOrElse(false)) {
-          val dataSourceWithLogging = new ConnectionPoolDataSourceProxy()
+          val dataSourceWithLogging = new LogSqlDataSource()
           dataSourceWithLogging.setTargetDSDirect(dataSource)
           dataSourceWithLogging -> dataSourceName
         } else {
@@ -57,6 +57,7 @@ class HikariCPDBApi(configuration: Configuration, classloader: ClassLoader) exte
     Logger.info("Shutting down connection pool.")
     ds match {
       case ds: HikariDataSource => ds.shutdown()
+      case ds: LogSqlDataSource => ds.shutdown()
     }
   }
 
