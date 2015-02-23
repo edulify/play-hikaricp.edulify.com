@@ -149,6 +149,13 @@ We take the suggestion of using [jdbcdslog-exp](https://code.google.com/p/jdbcds
       }
     }
 
+After that, you can configure the jdbcdslog-exp [log level as explained in their manual](https://code.google.com/p/jdbcdslog/wiki/UserGuide#Setup_logging_engine). Basically, you need to configure your root logger to `INFO` and then decide what jdbcdslog-exp will log (connections, statements and result sets). Here is an example using `conf/application.conf` to configure the logs:
+
+    logger.root=INFO
+    logger.org.jdbcdslog.ConnectionLogger=ERROR # won't log connections
+    logger.org.jdbcdslog.StatementLogger=INFO   # log all statements
+    logger.org.jdbcdslog.ResultSetLogger=DEBUG  # won't log result sets
+
 ## JNDI Support
 
 Thanks to contributions from the community, this plugin supports to bind a DataSource to a JNDI context. Here is an example of how to add configure it in `conf/application.conf`:
