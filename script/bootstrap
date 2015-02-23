@@ -4,12 +4,12 @@ if hash sbt 2>/dev/null; then
 	echo 'Fetching sbt dependencies...'
         sbt all-dependencies
 else
-	echo 'sbt not found. Falling back to play command'
+	echo 'sbt not found. Falling back to activator command'
 fi
 
-if hash play 2>/dev/null; then
-	echo 'Fetching play dependencies...'
-	play all-dependencies
+if hash activator 2>/dev/null; then
+	echo 'Fetching activator dependencies...'
+	activator all-dependencies
 else
-	echo 'play not found too... :-('
+	echo 'activator not found too... :-('
 fi
