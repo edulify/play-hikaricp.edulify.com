@@ -224,6 +224,14 @@ There are also two other alternatives using c3p0:
 1. [hadashi/play2-c3p0-plugin](https://github.com/hadashi/play2-c3p0-plugin)
 2. [Furyu/play-c3p0-plugin](https://github.com/Furyu/play-c3p0-plugin)
 
+## References
+
+1. [HikariCP Configuration](https://github.com/brettwooldridge/HikariCP): See information about what can be configured, supported data sources and drivers
+2. [Play Plugins Docs](https://playframework.com/documentation/2.3.x/ScalaPlugins): Understand how plugins are created and configured
+3. [Typesafe Config](https://github.com/typesafehub/config): What is supported and help with the syntax
+4. [jdbcdslog-exp](https://code.google.com/p/jdbcdslog-exp/): How to configure the logSql enabler
+5. [Heroku Docs](https://www.playframework.com/documentation/2.3.x/ProductionHeroku): Docs about how to deploy Play applications to Heroku.
+
 ## License
 
 Copyright 2014 Edulify.com
