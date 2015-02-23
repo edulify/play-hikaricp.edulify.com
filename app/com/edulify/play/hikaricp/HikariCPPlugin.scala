@@ -39,11 +39,11 @@ class HikariCPPlugin(app: Application) extends DBPlugin {
           ds._1.getConnection.close()
           app.mode match {
             case Mode.Test =>
-            case mode => Logger.info("database [" + ds._2 + "] connected at " + dbURL(ds._1.getConnection))
+            case mode => Logger.info(s"database [$ds._2] connected at ${dbURL(ds._1.getConnection)}")
           }
         } catch {
           case NonFatal(e) =>
-            throw databaseConfig.reportError(ds._2 + ".url", "Cannot connect to database [" + ds._2 + "]", Some(e.getCause))
+            throw databaseConfig.reportError(s"$ds._2.url", s"Cannot connect to database [$ds._2]", Some(e.getCause))
         }
     }
   }

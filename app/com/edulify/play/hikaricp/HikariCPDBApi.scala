@@ -31,7 +31,7 @@ class HikariCPDBApi(configuration: Configuration, classloader: ClassLoader) exte
       val dataSourceConfig = configuration.getConfig(dataSourceName)
       if (dataSourceConfig.isEmpty) {
         configuration.reportError(
-          path = s"db.$dataSourceName", 
+          path = s"db.$dataSourceName",
           message = s"Missing data source configuration for db.$dataSourceName"
         )
       }
@@ -42,7 +42,7 @@ class HikariCPDBApi(configuration: Configuration, classloader: ClassLoader) exte
   val datasources: List[(DataSource, String)] = dataSourceConfigs.map {
     case (dataSourceName, dataSourceConfig) =>
       try {
-        Logger.info("Creating Pool for datasource '" + dataSourceName + "'")
+        Logger.info(s"Creating Pool for datasource '$dataSourceName'")
 
         val hikariConfig = HikariCPConfig.toHikariConfig(dataSourceConfig)
         registerDriver(dataSourceConfig)
@@ -73,7 +73,7 @@ class HikariCPDBApi(configuration: Configuration, classloader: ClassLoader) exte
   def getDataSource(name: String): DataSource = {
     datasources.find(_._2 == name)
       .map(_._1)
-      .getOrElse(sys.error(" - could not find data source for name " + name))
+      .getOrElse(sys.error(s" - could not find data source for name $name"))
   }
 
   private def registerDriver(config: Configuration) = {
@@ -84,15 +84,15 @@ class HikariCPDBApi(configuration: Configuration, classloader: ClassLoader) exte
           .newInstance
           .asInstanceOf[Driver]))
       } catch {
-        case t: Throwable => throw config.reportError("driverClassName", "Driver not found: [" + driverClassName + "]", Some(t))
+        case t: Throwable => throw config.reportError("driverClassName", s"Driver not found: [$driverClassName]", Some(t))
       }
     }
   }
 
   private def bindToJNDI(config: Configuration, hikariConfig: HikariConfig, dataSource: DataSource): Unit = {
-    config.getString("jndiName").map { name =>
+    config.getString("jndiName").foreach { name =>
       JNDI.initialContext.rebind(name, dataSource)
-      Logger.info(s"""datasource [${hikariConfig.getJdbcUrl}] bound to JNDI as $name""")
+      Logger.info(s"datasource [${hikariConfig.getJdbcUrl}] bound to JNDI as $name")
     }
   }
 }
