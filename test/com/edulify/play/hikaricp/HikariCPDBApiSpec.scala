@@ -55,13 +55,21 @@ class HikariCPDBApiSpec extends Specification with AroundExample {
       api.getDataSource("default")  != null
       api.getDataSource("default2") != null
     }
-    "report misconfiguration error" in new DataSourceConfigs {
-      val properties = new Properties()
-      properties.setProperty("default.username", "sa")
-      properties.setProperty("default.password", "")
+    "report misconfiguration error when" in {
+      "dataSourceClassName and jdbcUrl are not present" in new DataSourceConfigs {
+        val properties = new Properties()
+        properties.setProperty("default.username", "sa")
+        properties.setProperty("default.password", "")
 
-      val misConfig = new Configuration(ConfigFactory.parseProperties(properties))
-      new HikariCPDBApi(misConfig, classLoader) must throwA[PlayException]
+        val misConfig = new Configuration(ConfigFactory.parseProperties(properties))
+        new HikariCPDBApi(misConfig, classLoader) must throwA[PlayException]
+      }
+      "db configuration has no dataSources configured" in new DataSourceConfigs {
+        val properties = new Properties()
+        properties.setProperty("default", "")
+        val misConfig = new Configuration(ConfigFactory.parseProperties(properties))
+        new HikariCPDBApi(misConfig, classLoader) must throwA[PlayException]
+      }
     }
   }
 

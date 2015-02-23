@@ -27,7 +27,16 @@ import play.api.{Configuration, Logger}
 class HikariCPDBApi(configuration: Configuration, classloader: ClassLoader) extends DBApi {
 
   lazy val dataSourceConfigs = configuration.subKeys.map {
-    dataSourceName => dataSourceName -> configuration.getConfig(dataSourceName).getOrElse(Configuration.empty)
+    dataSourceName => {
+      val dataSourceConfig = configuration.getConfig(dataSourceName)
+      if (dataSourceConfig.isEmpty) {
+        configuration.reportError(
+          path = s"db.$dataSourceName", 
+          message = s"Missing data source configuration for db.$dataSourceName"
+        )
+      }
+      dataSourceName -> dataSourceConfig.getOrElse(Configuration.empty)
+    }
   }
 
   val datasources: List[(DataSource, String)] = dataSourceConfigs.map {
