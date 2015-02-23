@@ -3,7 +3,8 @@ scala:
    - 2.10.4
    - 2.11.5
 script:
-   - sbt ++$TRAVIS_SCALA_VERSION compile
-   - sbt ++$TRAVIS_SCALA_VERSION test
+   - sbt ++$TRAVIS_SCALA_VERSION clean coverage test
+after_success:
+   - sbt coveralls
 jdk:
    - oraclejdk8
