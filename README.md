@@ -129,6 +129,7 @@ HikariCP documentation has a [list of JDBC DataSource classes for popular databa
 HikariCP does not offer (out of the box) a way to log SQL statements and it recommends that you use the log capacities of your database vendor. From HikariCP docs:
 
 > **Log Statement Text / Slow Query Logging**
+>
 > Like Statement caching, most major database vendors support statement logging through properties of their own driver. This includes Oracle, MySQL, Derby, MSSQL, and others. Some even support slow query logging. We consider this a "development-time" feature. For those few databases that do not support it, jdbcdslog-exp is a good option. Great stuff during development and pre-Production.
 
 We take the suggestion of using [jdbcdslog-exp](https://code.google.com/p/jdbcdslog-exp/) and have implemented SQL log statement support, which can be configured by database, using `logSql` property:
