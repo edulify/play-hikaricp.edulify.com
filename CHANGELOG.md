@@ -1,5 +1,27 @@
 # Changelog
 
+## Version 2.0.0 - 2015/02/24
+
+This is a full rewrite of this plugin and it is not backwards compatible with previous versions. We did that in order to have:
+
+1. Simplified configuration: now it just exposes the HikariCP properties which can be configured directly in `conf/application.conf` file
+2. Better documentation: it is more clear, concise and direct
+3. Automated tests: now we have a specs suite
+4. Java 8 support
+
+Also, a lot of issues were closed in this release:
+
+1. [#3 - Play way is not correct](https://github.com/edulify/play-hikaricp.edulify.com/issues/3)
+2. [#25 - Cannot find config](https://github.com/edulify/play-hikaricp.edulify.com/issues/25)
+3. [#27 - Instructions to use latest hikari plugin with Play 2.2.x](https://github.com/edulify/play-hikaricp.edulify.com/issues/27)
+4. [#35 - Problem loading the file hikaricp.prod.properties](https://github.com/edulify/play-hikaricp.edulify.com/issues/35)
+5. [#36 - Dynamically translate typesafe HOCON properties to Hikari properties](https://github.com/edulify/play-hikaricp.edulify.com/issues/36)
+6. [#40 - Get rid of "jdbcConnectionTest" warning when using Play configuration](https://github.com/edulify/play-hikaricp.edulify.com/issues/40)
+7. [#41 - Bad mapping for some properties & incoherent default values](https://github.com/edulify/play-hikaricp.edulify.com/issues/41)
+8. [#43 - Invalid time conversion on IdleMaxAge](https://github.com/edulify/play-hikaricp.edulify.com/issues/43)
+9. [#50 - Info level messages leaking into logs despite error level set](https://github.com/edulify/play-hikaricp.edulify.com/issues/50)
+10. [#51 - It seems that 2.0.0-M1 cannot be resolved from the repository](https://github.com/edulify/play-hikaricp.edulify.com/issues/51)
+
 ## Version 1.5.2 - 2015/02/17
 
 1. PR-42 & PR-48 - Fix properties names (`autocommit`, `isolation` and `readOnly`) while translating Play configuration to HikariCP configuration
