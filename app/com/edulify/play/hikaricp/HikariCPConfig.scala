@@ -17,6 +17,7 @@ package com.edulify.play.hikaricp
 
 import com.zaxxer.hikari.HikariConfig
 import play.api.{Configuration, Logger}
+import java.net.URI
 
 object HikariCPConfig {
 
@@ -31,7 +32,21 @@ object HikariCPConfig {
 
     config.getString("jdbcUrl") match {
       case Some(jdbcUrl) => hikariConfig.setJdbcUrl(jdbcUrl)
-      case None => Logger.debug("`jdbcUrl` not present. Pool configured from `dataSourceClassName`.")
+      case None => Logger.debug("`jdbcUrl` not present. Pool configured from `databaseUrl`.")
+    }
+
+    config.getString("databaseUrl") match {
+      case Some(databaseUrl) => {
+        val dbUri = new URI(databaseUrl)
+        val dbScheme = dbUri.getScheme match {
+          case "postgres" => "postgresql"
+          case scheme => scheme
+        }
+        hikariConfig.setJdbcUrl(s"jdbc:${dbScheme}://${dbUri.getHost}:${dbUri.getPort}${dbUri.getPath}")
+        hikariConfig.setUsername(dbUri.getUserInfo.split(":")(0))
+        hikariConfig.setPassword(dbUri.getUserInfo.split(":")(1))
+      }
+      case None => Logger.debug("`databaseUrl` not present. Will use `dataSourceClassName` instead.")
     }
 
     config.getConfig("dataSource").foreach { dataSourceConfig =>

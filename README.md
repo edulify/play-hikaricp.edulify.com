@@ -178,32 +178,12 @@ Thanks to contributions from the community, this plugin supports to bind a DataS
 
 ## Deploying to Heroku
 
-When using Heroku, you first need to translate its `DATABASE_URL` into another variable with the format expected by PostgreSQL JDBC Driver. As stated by [Heroku docs](https://devcenter.heroku.com/articles/heroku-postgresql#spring-java):
-
-> The `DATABASE_URL` for the Heroku Postgres add-on follows this naming convention:
->
->     postgres://<username>:<password>@<host>/<dbname>
->
-> However the Postgres JDBC driver uses the following convention:
->
->     jdbc:postgresql://<host>:<port>/<dbname>?user=<username>&password=<password>
->
-> Notice the additional `ql` at the end of `jdbc:postgresql`? Due to this difference you will need to hardcode the scheme to jdbc:postgresql` in your Java class or your Spring XML configuration.
-
-So, you will need to create another environment variable with the proper format and you will also need to create variables for username and password. To do this, run the following commands:
-
-      $ heroku config:set DATABASE_JDBC_URL="jdbc:postgresql://host:5432/dbname"
-      $ heroku config:set DATABASE_USERNAME=username
-      $ heroku config:set DATABASE_PASSWORD=password
-
-You can obtain the correct values for `host`, `dbname`, `username`, and `password` from the `DATABASE_URL` environment variable, which Heroku creates for you. Then you can use these variables directly inside `application.conf`, since it is supported by [Typesafe Config](https://github.com/typesafehub/config):
+When using Heroku, a `DATABASE_URL` environment variable in the form `scheme://user:password@host:port/db` will be created for you. This variable can be used directly inside `application.conf`:
 
     db {
       default {
         driverClassName=org.postgresql.Driver
-        jdbcUrl=${DATABASE_JDBC_URL}
-        username=${DATABASE_USERNAME}
-        password=${DATABASE_PASSWORD}
+        databaseUrl=${DATABASE_URL}
       }
     }
 

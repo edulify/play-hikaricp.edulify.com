@@ -35,6 +35,17 @@ class HikariCPConfigSpec extends Specification {
       HikariCPConfig.toHikariConfig(config).getDataSourceClassName == "org.postgresql.ds.PGPoolingDataSource"
     }
 
+    "set databaseUrl when present" in {
+      val properties = new Properties()
+      properties.setProperty("databaseUrl", "postgres://foo:bar@host:1234/dbname")
+      val config = new Configuration(ConfigFactory.parseProperties(properties))
+      val hikariConfig: HikariConfig = HikariCPConfig.toHikariConfig(config)
+
+      hikariConfig.getJdbcUrl == "jdbc:postgresql://host:1234/dbname"
+      hikariConfig.getUsername == "foo"
+      hikariConfig.getPassword == "bar"
+    }
+
     "set jdbcUrl when present" in {
       val properties = new Properties()
       properties.setProperty("jdbcUrl", "jdbc:postgresql://host/database")
