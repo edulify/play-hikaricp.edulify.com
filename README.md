@@ -52,7 +52,7 @@ There are just a few steps to properly configure the plugin:
 
 Add the following dependency to your `project/build.sbt` or `project/Build.scala`:
 
-    "com.edulify" %% "play-hikaricp" % "2.0.0-M1"
+    "com.edulify" %% "play-hikaricp" % "2.0.0-M4"
 
 ### Step 2: Disable default `dbplugin`
 
@@ -154,7 +154,7 @@ After that, you can configure the jdbcdslog-exp [log level as explained in their
     logger.root=INFO
     logger.org.jdbcdslog.ConnectionLogger=ERROR # won't log connections
     logger.org.jdbcdslog.StatementLogger=INFO   # log all statements
-    logger.org.jdbcdslog.ResultSetLogger=DEBUG  # won't log result sets
+    logger.org.jdbcdslog.ResultSetLogger=ERROR  # won't log result sets
 
 ## JNDI Support
 
