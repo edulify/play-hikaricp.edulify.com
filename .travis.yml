@@ -5,3 +5,8 @@ after_success:
    - sbt coveralls
 jdk:
    - oraclejdk8
+cache:
+   directories:
+   - $HOME/.m2
+   - $HOME/.ivy2
+   - $HOME/.sbt
