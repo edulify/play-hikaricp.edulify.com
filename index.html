@@ -33,12 +33,16 @@
         <h1>
 <a id="hikaricp-plugin-for-23x" class="anchor" href="#hikaricp-plugin-for-23x" aria-hidden="true"><span class="octicon octicon-link"></span></a>HikariCP Plugin for 2.3.x</h1>
 
-<p>This plugin works with <code>2.3.x</code> of PlayFramework. It uses version <code>2.2.5</code> of HikariCP.</p>
+<p>This plugin works with <code>2.3.x</code> of PlayFramework and uses version <code>2.3.2</code> of HikariCP.</p>
 
-<p>Note, it can be made to work with Play <code>2.2.x</code> of the PlayFramework, but it requires changing the dependencies as
-the current build relies on the Play <code>2.3.x</code> plugin.</p>
+<p>Note, it can be made to work with Play <code>2.2.x</code> of the PlayFramework, but it requires changing the dependencies as the current build relies on the Play <code>2.3.x</code> plugin. Please, see the versions table below to see which version of Play is supported.</p>
 
-<p><a href="https://travis-ci.org/edulify/play-hikaricp.edulify.com"><img src="https://travis-ci.org/edulify/play-hikaricp.edulify.com.svg?branch=master" alt="Build Status"></a></p>
+<p><a href="https://travis-ci.org/edulify/play-hikaricp.edulify.com"><img src="https://travis-ci.org/edulify/play-hikaricp.edulify.com.svg?branch=master" alt="Build Status"></a> <a href="http://issuestats.com/github/edulify/play-hikaricp.edulify.com"><img src="http://issuestats.com/github/edulify/play-hikaricp.edulify.com/badge/pr" alt="Issue Stats"></a> <a href="https://www.versioneye.com/user/projects/54eaa687d1ec577c97000cd5"><img src="https://www.versioneye.com/user/projects/54eaa687d1ec577c97000cd5/badge.svg?style=flat" alt="Dependency Status"></a> <a href="https://coveralls.io/r/edulify/play-hikaricp.edulify.com?branch=master"><img src="https://coveralls.io/repos/edulify/play-hikaricp.edulify.com/badge.svg?branch=master" alt="Coverage Status"></a></p>
+
+<h2>
+<a id="about-this-documentation" class="anchor" href="#about-this-documentation" aria-hidden="true"><span class="octicon octicon-link"></span></a>About this documentation</h2>
+
+<p>When reading this documentation at Github, select the tag that matches the version of the plugin that you are using.</p>
 
 <h2>
 <a id="why-hikaricp" class="anchor" href="#why-hikaricp" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why HikariCP?</h2>
@@ -58,66 +62,68 @@ the current build relies on the Play <code>2.3.x</code> plugin.</p>
 <th align="right">Version</th>
 <th align="right">HikariCP</th>
 <th align="right">Play</th>
-<th align="left">Comment</th>
 </tr>
 </thead>
 <tbody>
 <tr>
+<td align="right">2.0.0</td>
+<td align="right">2.3.2</td>
+<td align="right">2.3.8</td>
+</tr>
+<tr>
+<td align="right">1.5.2</td>
+<td align="right">2.3.2</td>
+<td align="right">2.3.8</td>
+</tr>
+<tr>
 <td align="right">1.5.1</td>
 <td align="right">2.2.5</td>
 <td align="right">2.3.7</td>
-<td align="left">Update to latest HikariCP/Play version</td>
 </tr>
 <tr>
 <td align="right">1.5.0</td>
 <td align="right">2.0.1</td>
 <td align="right">2.3.4</td>
-<td align="left">Code cleanup and fail fast in case of misconfiguration</td>
 </tr>
 <tr>
 <td align="right">1.4.1</td>
 <td align="right">2.0.1</td>
 <td align="right">2.3.2</td>
-<td align="left">Updates HikariCP, Scala and Play</td>
 </tr>
 <tr>
 <td align="right">1.4.0</td>
 <td align="right">1.4.0</td>
 <td align="right">2.3.1</td>
-<td align="left">JNDI support and HikariCP 1.4.0</td>
 </tr>
 <tr>
 <td align="right">1.3.1</td>
 <td align="right">1.3.8</td>
 <td align="right">2.3.1</td>
-<td align="left">Corrects artifact name</td>
 </tr>
 <tr>
 <td align="right">1.3.0</td>
 <td align="right">1.3.8</td>
 <td align="right">2.3.1</td>
-<td align="left">Updates Play and Scala versions</td>
 </tr>
 <tr>
 <td align="right">1.2.0</td>
 <td align="right">1.3.8</td>
 <td align="right">2.2.3</td>
-<td align="left">Supports Heroku like services</td>
 </tr>
 <tr>
 <td align="right">1.1.0</td>
 <td align="right">1.3.8</td>
 <td align="right">2.2.3</td>
-<td align="left">Updates HikariCP and Play</td>
 </tr>
 <tr>
 <td align="right">1.0.0</td>
 <td align="right">1.3.5</td>
 <td align="right">2.2.2</td>
-<td align="left">First stable release</td>
 </tr>
 </tbody>
 </table>
+
+<p>For more information about what changed in each version, please, see the our CHANGELOG.md file.</p>
 
 <h2>
 <a id="repository" class="anchor" href="#repository" aria-hidden="true"><span class="octicon octicon-link"></span></a>Repository</h2>
@@ -129,14 +135,14 @@ the current build relies on the Play <code>2.3.x</code> plugin.</p>
 <h2>
 <a id="how-to-use" class="anchor" href="#how-to-use" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to Use</h2>
 
-<p>There are just a few steps to properly configure the plugin. Just follow the steps bellow:</p>
+<p>There are just a few steps to properly configure the plugin:</p>
 
 <h3>
-<a id="step-1-add-dependencies" class="anchor" href="#step-1-add-dependencies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 1: Add dependencies</h3>
+<a id="step-1-add-the-dependency" class="anchor" href="#step-1-add-the-dependency" aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 1: Add the dependency</h3>
 
 <p>Add the following dependency to your <code>project/build.sbt</code> or <code>project/Build.scala</code>:</p>
 
-<pre><code>"com.edulify" %% "play-hikaricp" % "1.5.1"
+<pre><code>"com.edulify" %% "play-hikaricp" % "2.0.0"
 </code></pre>
 
 <h3>
@@ -158,184 +164,167 @@ the current build relies on the Play <code>2.3.x</code> plugin.</p>
 <pre><code>200:com.edulify.play.hikaricp.HikariCPPlugin
 </code></pre>
 
-<p>Due to the fact that the <a href="https://github.com/playframework/playframework/blob/master/framework/src/play-java-jpa/src/main/resources/play.plugins">Play JPA plugin</a> is assigned a priority of <strong>400</strong>, please make sure that you assign <code>com.edulify.play.hikaricp.HikariCPPlugin</code> a priority less than that when using datasources looked up via JNDI. Otherwise, during application startup when JPA attempts to create the <code>EntityManagerFactory</code> your datasource will not have been bound to JNDI yet. <a href="http://playframework.com/documentation/2.3.x/ScalaPlugins">Play documentation</a> states that connection pools should use a <strong>200</strong> priority.</p>
+<p>Due to the fact that the <a href="https://github.com/playframework/playframework/blob/master/framework/src/play-java-jpa/src/main/resources/play.plugins">Play JPA plugin</a> is assigned a priority of <strong>400</strong>, please make sure that you assign <code>com.edulify.play.hikaricp.HikariCPPlugin</code> a priority less than that when using datasources looked up via JNDI. Otherwise, during application startup when JPA attempts to create the <code>EntityManagerFactory</code> your data source will not have been bound to JNDI yet. <a href="http://playframework.com/documentation/2.3.x/ScalaPlugins">Play documentation</a> states that connection pools should use a <strong>200</strong> priority.</p>
 
 <h3>
 <a id="step-4-configure-hikaricp" class="anchor" href="#step-4-configure-hikaricp" aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 4: Configure HikariCP</h3>
 
-<h5>
-<a id="using-dbdefaulthikaricpfile" class="anchor" href="#using-dbdefaulthikaricpfile" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using <code>db.default.hikaricp.file</code>
-</h5>
+<p>Please, before reading this section, we recommend that you get familiarized with <a href="https://github.com/brettwooldridge/HikariCP#configuration-knobs-baby">HikariCP configurations</a>. It is the main source to understand each possible configuration for HikariCP and it have invaluable information about how to best configure your pool. Also, it is a good idea to read about <a href="https://github.com/typesafehub/config">Typesafe Config</a>, which is the configuration language used by PlayFramework.</p>
 
-<p><strong>This is the preferred way to configure HikariCP</strong> because you have full access to all <a href="https://github.com/brettwooldridge/HikariCP#configuration-knobs-baby">properties documented here</a> and you can also have specific configuration to development, test and production modes. You can create a specific hikari properties file and configure it using <code>db.default.hikaricp.file</code> in you <code>conf/application.conf</code> file.</p>
+<p>This plugin just read each possible Hikari configuration and create the pool from it and all the defaults are honored. Here is a simple example of how to configure you pool in <code>application.conf</code>:</p>
 
-<p>Per instance, if you have a <code>conf/production.conf</code> that is loaded by play in production mode, add the following line to this file:</p>
-
-<pre><code> db.default.hikaricp.file="conf/hikaricp.prod.properties"
+<pre><code>db {
+  default {
+    driverClassName=org.postgresql.Driver
+    jdbcUrl="jdbc:mysql://localhost:3306/simpsons"
+    username=bart
+    password=51mp50n
+  }
+}
 </code></pre>
 
-<p>Of course, you need to create <code>conf/hikaricp.dev.properties</code> file.</p>
+<p>Alternatively, you can configure it using a data source provided by your JDBC Driver:</p>
 
-<h5>
-<a id="using-hikaricpproperties" class="anchor" href="#using-hikaricpproperties" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using <code>hikaricp.properties</code>
-</h5>
+<pre><code>db {
+  default {
+    dataSourceClassName=org.postgresql.ds.PGSimpleDataSource
+    dataSource {
+      user=bart
+      password=51mp50n
+      databaseName=springfield
+      serverName=localhost
+    }
+  }
+}
+</code></pre>
 
-<p>Just create a <code>conf/hikaricp.properties</code> and the plugin will read it and create DataSource. <strong>This mode has preference over using ordinary play way</strong> because you have fine grained access to Hikari configuration.</p>
+<p>HikariCP documentation has a <a href="https://github.com/brettwooldridge/HikariCP#popular-datasource-class-names">list of JDBC DataSource classes for popular databases</a>. Both <code>dataSourceClassName</code> and <code>jdbcUrl</code> are supported, but HikariCP recommends the former. Also, you can configure more than one database:</p>
 
-<h5>
-<a id="using-ordinary-play-way" class="anchor" href="#using-ordinary-play-way" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using ordinary <a href="http://www.playframework.com/documentation/2.2.x/SettingsJDBC">Play way</a>
-</h5>
+<pre><code>db {
 
-<p>The least recommended way. Configure database properties as stated in the Play docs. The table bellow shows how Play configurations are mapped to HikariCP:</p>
+  default {
+    dataSourceClassName=org.postgresql.ds.PGSimpleDataSource
+    dataSource {
+      user=bart
+      password=51mp50n
+      databaseName=springfield
+      serverName=localhost
+    }
+  }
 
-<table>
-<thead>
-<tr>
-<th align="left">Hikari</th>
-<th align="left">Play</th>
-<th align="left">Defaults</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left"><code>driverClassName</code></td>
-<td align="left"><code>db.default.driver</code></td>
-<td align="left">* Must be provided</td>
-</tr>
-<tr>
-<td align="left"><code>jdbcUrl</code></td>
-<td align="left"><code>db.default.url</code></td>
-<td align="left">* Must be provided</td>
-</tr>
-<tr>
-<td align="left"><code>username</code></td>
-<td align="left"><code>db.default.user</code></td>
-<td align="left">* Must be provided</td>
-</tr>
-<tr>
-<td align="left"><code>password</code></td>
-<td align="left"><code>db.default.password</code></td>
-<td align="left">* Must be provided</td>
-</tr>
-<tr>
-<td align="left">-</td>
-<td align="left"><code>db.default.partitionSize</code></td>
-<td align="left">* Unused/NA</td>
-</tr>
-<tr>
-<td align="left">
-<code>maximumPoolSize</code> (partitionSize * maxPoolSize)</td>
-<td align="left"><code>db.default.maxPoolSize</code></td>
-<td align="left">30</td>
-</tr>
-<tr>
-<td align="left">
-<code>minimumPoolSize</code> (partitionSize * minPoolSize)</td>
-<td align="left"><code>db.default.minPoolSize</code></td>
-<td align="left">5</td>
-</tr>
-<tr>
-<td align="left"><code>maxLifetime</code></td>
-<td align="left"><code>db.default.maxConnectionAge</code></td>
-<td align="left">30 min.</td>
-</tr>
-<tr>
-<td align="left"><code>idleTimeout</code></td>
-<td align="left">
-<code>db.default.idleMaxAge</code><br><code>db.default.idleMaxAgeInMinutes</code><br><code>db.default.idleMaxAgeInSeconds</code>
-</td>
-<td align="left">10 min.</td>
-</tr>
-<tr>
-<td align="left"><code>connectionTimeout</code></td>
-<td align="left">
-<code>db.default.connectionTimeout</code><br><code>db.default.connectionTimeoutInMs</code>
-</td>
-<td align="left">30 sec.</td>
-</tr>
-<tr>
-<td align="left"><code>leakDetectionThreshold</code></td>
-<td align="left">
-<code>db.default.closeConnectionWatchTimeout</code><br><code>db.default.closeConnectionWatchTimeoutInMs</code>
-</td>
-<td align="left">0 ms</td>
-</tr>
-<tr>
-<td align="left"><code>connectionInitSql</code></td>
-<td align="left"><code>db.default.initSQL</code></td>
-<td align="left">-</td>
-</tr>
-<tr>
-<td align="left"><code>connectionTestQuery</code></td>
-<td align="left"><code>db.default.connectionTestStatement</code></td>
-<td align="left">-</td>
-</tr>
-<tr>
-<td align="left"><code>autoCommit</code></td>
-<td align="left"><code>db.default.defaultAutoCommit</code></td>
-<td align="left"><code>true</code></td>
-</tr>
-<tr>
-<td align="left"><code>transactionIsolation</code></td>
-<td align="left"><code>db.default.defaultTransactionIsolation</code></td>
-<td align="left">-</td>
-</tr>
-<tr>
-<td align="left"><code>readOnly</code></td>
-<td align="left"><code>db.default.defaultReadOnly</code></td>
-<td align="left"><code>false</code></td>
-</tr>
-<tr>
-<td align="left"><code>catalog</code></td>
-<td align="left"><code>db.default.defaultCatalog</code></td>
-<td align="left">-</td>
-</tr>
-<tr>
-<td align="left"><code>registerMbeans</code></td>
-<td align="left"><code>db.default.statisticsEnabled</code></td>
-<td align="left"><code>false</code></td>
-</tr>
-</tbody>
-</table>
+  orders {
+    dataSourceClassName=org.postgresql.ds.PGSimpleDataSource
+      dataSource {
+        user=homer
+        password=duffbeer
+        databaseName=orders
+        serverName=localhost
+      }
+    }
+}
+</code></pre>
+
+<h2>
+<a id="log-sql-statements" class="anchor" href="#log-sql-statements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Log SQL statements</h2>
+
+<p>HikariCP does not offer (out of the box) a way to log SQL statements and it recommends that you use the log capacities of your database vendor. From HikariCP docs:</p>
+
+<blockquote>
+<p><strong>Log Statement Text / Slow Query Logging</strong></p>
+
+<p>Like Statement caching, most major database vendors support statement logging through properties of their own driver. This includes Oracle, MySQL, Derby, MSSQL, and others. Some even support slow query logging. We consider this a "development-time" feature. For those few databases that do not support it, jdbcdslog-exp is a good option. Great stuff during development and pre-Production.</p>
+</blockquote>
+
+<p>We take the suggestion of using <a href="https://code.google.com/p/jdbcdslog-exp/">jdbcdslog-exp</a> and have implemented SQL log statement support, which can be configured by database, using <code>logSql</code> property:</p>
+
+<pre><code>db {
+  default {
+
+    logSql=true
+
+    dataSourceClassName=org.postgresql.ds.PGSimpleDataSource
+    dataSource {
+      user=bart
+      password=51mp50n
+      databaseName=springfield
+      serverName=localhost
+
+    }
+  }
+}
+</code></pre>
+
+<p>After that, you can configure the jdbcdslog-exp <a href="https://code.google.com/p/jdbcdslog/wiki/UserGuide#Setup_logging_engine">log level as explained in their manual</a>. Basically, you need to configure your root logger to <code>INFO</code> and then decide what jdbcdslog-exp will log (connections, statements and result sets). Here is an example using <code>conf/application.conf</code> to configure the logs:</p>
+
+<pre><code>logger.root=INFO
+logger.org.jdbcdslog.ConnectionLogger=ERROR # won't log connections
+logger.org.jdbcdslog.StatementLogger=INFO   # log all statements
+logger.org.jdbcdslog.ResultSetLogger=ERROR  # won't log result sets
+</code></pre>
 
 <h2>
 <a id="jndi-support" class="anchor" href="#jndi-support" aria-hidden="true"><span class="octicon octicon-link"></span></a>JNDI Support</h2>
 
-<p>Thanks to community contribution, the plugin supports to bind a DataSource to a JNDI context. After properly configuring the plugin (as described above), just add the following configuration in you <code>application.conf</code>:</p>
+<p>Thanks to contributions from the community, this plugin supports to bind a DataSource to a JNDI context. Here is an example of how to add configure it in <code>conf/application.conf</code>:</p>
 
-<pre><code> db.default.jndiName="DefaultDataSource"
+<pre><code>db {
+  default {
+
+    jndiName="DefaultDataSource"
+
+    dataSourceClassName=org.postgresql.ds.PGSimpleDataSource
+    dataSource {
+      user=bart
+      password=51mp50n
+      databaseName=springfield
+      serverName=localhost
+    }
+  }
+}
 </code></pre>
 
 <h2>
 <a id="deploying-to-heroku" class="anchor" href="#deploying-to-heroku" aria-hidden="true"><span class="octicon octicon-link"></span></a>Deploying to Heroku</h2>
 
-<p>When using Heroku, you need to <a href="https://devcenter.heroku.com/articles/heroku-postgresql#connecting-in-java">read the database url string</a> from an environment variable called <code>DATABASE_JDBC_URL</code> because plain Java Properties does not offer a way to reference environment variables in a properties file. You will also need to create variables for username and password. To do this, run the following commands:</p>
+<p>When using Heroku, you first need to translate its <code>DATABASE_URL</code> into another variable with the format expected by PostgreSQL JDBC Driver. As stated by <a href="https://devcenter.heroku.com/articles/heroku-postgresql#spring-java">Heroku docs</a>:</p>
+
+<blockquote>
+<p>The <code>DATABASE_URL</code> for the Heroku Postgres add-on follows this naming convention:</p>
+
+<pre><code>postgres://&lt;username&gt;:&lt;password&gt;@&lt;host&gt;/&lt;dbname&gt;
+</code></pre>
+
+<p>However the Postgres JDBC driver uses the following convention:</p>
+
+<pre><code>jdbc:postgresql://&lt;host&gt;:&lt;port&gt;/&lt;dbname&gt;?user=&lt;username&gt;&amp;password=&lt;password&gt;
+</code></pre>
+
+<p>Notice the additional <code>ql</code> at the end of <code>jdbc:postgresql</code>? Due to this difference you will need to hardcode the scheme to jdbc:postgresql` in your Java class or your Spring XML configuration.</p>
+</blockquote>
+
+<p>So, you will need to create another environment variable with the proper format and you will also need to create variables for username and password. To do this, run the following commands:</p>
 
 <pre><code>  $ heroku config:set DATABASE_JDBC_URL="jdbc:postgresql://host:5432/dbname"
   $ heroku config:set DATABASE_USERNAME=username
   $ heroku config:set DATABASE_PASSWORD=password
 </code></pre>
 
-<p>You can obtain the correct values for <code>host</code>, <code>dbname</code>, <code>username</code>, and <code>password</code> from the <code>DATABASE_URL</code> environment variable, which Heroku creates for you.  Then we use <a href="http://commons.apache.org/proper/commons-configuration/">Commons Configuration</a> to read the <code>hikaricp.properties</code> file or the one configured by <code>db.default.hikaricp.file</code>.</p>
+<p>You can obtain the correct values for <code>host</code>, <code>dbname</code>, <code>username</code>, and <code>password</code> from the <code>DATABASE_URL</code> environment variable, which Heroku creates for you. Then you can use these variables directly inside <code>application.conf</code>, since it is supported by <a href="https://github.com/typesafehub/config">Typesafe Config</a>:</p>
 
-<p>Here is an example:</p>
-
-<pre><code>jdbcUrl=${env:DATABASE_JDBC_URL}
-driverClassName=org.postgresql.Driver
-username=${env:DATABASE_USERNAME}
-password=${env:DATABASE_PASSWORD}
-
-connectionTestQuery=SELECT 1
-registerMbeans=true
-
-# 15 minutes
-maxLifetime=900000
-# 5 minutes
-idleTimeout=300000
-
-maximumPoolSize=20
-minimumIdle=5
+<pre><code>db {
+  default {
+    driverClassName=org.postgresql.Driver
+    jdbcUrl=${DATABASE_JDBC_URL}
+    username=${DATABASE_USERNAME}
+    password=${DATABASE_PASSWORD}
+  }
+}
 </code></pre>
+
+<h2>
+<a id="contributors" class="anchor" href="#contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributors</h2>
+
+<p>You can see a full list of contributors <a href="https://github.com/edulify/play-hikaricp.edulify.com/graphs/contributors">here</a>. Thank you very much to all the people that helps us to maintain and evolve this plugin.</p>
 
 <h2>
 <a id="inspirations-and-alternatives" class="anchor" href="#inspirations-and-alternatives" aria-hidden="true"><span class="octicon octicon-link"></span></a>Inspirations and Alternatives</h2>
@@ -354,6 +343,22 @@ minimumIdle=5
 <ol>
 <li><a href="https://github.com/hadashi/play2-c3p0-plugin">hadashi/play2-c3p0-plugin</a></li>
 <li><a href="https://github.com/Furyu/play-c3p0-plugin">Furyu/play-c3p0-plugin</a></li>
+</ol>
+
+<h2>
+<a id="references" class="anchor" href="#references" aria-hidden="true"><span class="octicon octicon-link"></span></a>References</h2>
+
+<ol>
+<li>
+<a href="https://github.com/brettwooldridge/HikariCP">HikariCP Configuration</a>: See information about what can be configured, supported data sources and drivers</li>
+<li>
+<a href="https://playframework.com/documentation/2.3.x/ScalaPlugins">Play Plugins Docs</a>: Understand how plugins are created and configured</li>
+<li>
+<a href="https://github.com/typesafehub/config">Typesafe Config</a>: What is supported and help with the syntax</li>
+<li>
+<a href="https://code.google.com/p/jdbcdslog-exp/">jdbcdslog-exp</a>: How to configure the logSql enabler</li>
+<li>
+<a href="https://www.playframework.com/documentation/2.3.x/ProductionHeroku">Heroku Docs</a>: Docs about how to deploy Play applications to Heroku.</li>
 </ol>
 
 <h2>
