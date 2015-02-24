@@ -58,7 +58,7 @@ class HikariCPDBApi(configuration: Configuration, classloader: ClassLoader) exte
           dataSource -> dataSourceName
         }
       } catch {
-        case ex: IllegalArgumentException => throw dataSourceConfig.reportError(dataSourceName, ex.getMessage, Some(ex))
+        case ex: Exception => throw dataSourceConfig.reportError(dataSourceName, ex.getMessage, Some(ex))
       }
   }.toList
 
