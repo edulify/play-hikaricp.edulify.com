@@ -66,6 +66,11 @@
 </thead>
 <tbody>
 <tr>
+<td align="right">2.0.1</td>
+<td align="right">2.3.2</td>
+<td align="right">2.3.8</td>
+</tr>
+<tr>
 <td align="right">2.0.0</td>
 <td align="right">2.3.2</td>
 <td align="right">2.3.8</td>
@@ -123,7 +128,7 @@
 </tbody>
 </table>
 
-<p>For more information about what changed in each version, please, see the our CHANGELOG.md file.</p>
+<p>For more information about what changed in each version, see the our CHANGELOG.md file.</p>
 
 <h2>
 <a id="repository" class="anchor" href="#repository" aria-hidden="true"><span class="octicon octicon-link"></span></a>Repository</h2>
@@ -142,7 +147,7 @@
 
 <p>Add the following dependency to your <code>project/build.sbt</code> or <code>project/Build.scala</code>:</p>
 
-<pre><code>"com.edulify" %% "play-hikaricp" % "2.0.0"
+<pre><code>"com.edulify" %% "play-hikaricp" % "2.0.1"
 </code></pre>
 
 <h3>
@@ -154,7 +159,7 @@
 <pre><code>dbplugin=disabled
 </code></pre>
 
-<p>This will disable dbplugin and avoids that BoneCP creates useless connections (which in some cases can create database problems, like exhaust available connections).</p>
+<p>This will disable <code>dbplugin</code> and avoids that BoneCP creates useless connections (which in some cases can create database problems, like exhaust available connections).</p>
 
 <h3>
 <a id="step-3-enable-hikaricp-plugin" class="anchor" href="#step-3-enable-hikaricp-plugin" aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 3: Enable HikariCP Plugin</h3>
@@ -169,21 +174,21 @@
 <h3>
 <a id="step-4-configure-hikaricp" class="anchor" href="#step-4-configure-hikaricp" aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 4: Configure HikariCP</h3>
 
-<p>Please, before reading this section, we recommend that you get familiarized with <a href="https://github.com/brettwooldridge/HikariCP#configuration-knobs-baby">HikariCP configurations</a>. It is the main source to understand each possible configuration for HikariCP and it have invaluable information about how to best configure your pool. Also, it is a good idea to read about <a href="https://github.com/typesafehub/config">Typesafe Config</a>, which is the configuration language used by PlayFramework.</p>
+<p>Please, before reading this section, we recommend that you get familiarized with <a href="https://github.com/brettwooldridge/HikariCP#configuration-knobs-baby">HikariCP configurations</a>. It is the main source to understand each possible configuration for HikariCP and it have invaluable information about how to best configure your pool. We also recommends that you read about <a href="https://github.com/typesafehub/config">Typesafe Config</a>, which is the configuration language used by PlayFramework.</p>
 
-<p>This plugin just read each possible Hikari configuration and create the pool from it and all the defaults are honored. Here is a simple example of how to configure you pool in <code>application.conf</code>:</p>
+<p>This plugin just read each possible HikariCP configuration and create the pool from it, with all the defaults honored. Here is a simple example of how to configure your pool in <code>application.conf</code>:</p>
 
 <pre><code>db {
   default {
     driverClassName=org.postgresql.Driver
-    jdbcUrl="jdbc:mysql://localhost:3306/simpsons"
+    jdbcUrl="jdbc:postgresql://localhost/simpsons"
     username=bart
     password=51mp50n
   }
 }
 </code></pre>
 
-<p>Alternatively, you can configure it using a data source provided by your JDBC Driver:</p>
+<p>Alternatively, you can configure it using some implementation of <code>javax.sql.DataSource</code> provided by your JDBC Driver:</p>
 
 <pre><code>db {
   default {
@@ -227,7 +232,7 @@
 <h2>
 <a id="log-sql-statements" class="anchor" href="#log-sql-statements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Log SQL statements</h2>
 
-<p>HikariCP does not offer (out of the box) a way to log SQL statements and it recommends that you use the log capacities of your database vendor. From HikariCP docs:</p>
+<p>HikariCP does not offer (out of the box) a way to log SQL statements and it suggests that you use the log capacities of your database vendor. From HikariCP docs:</p>
 
 <blockquote>
 <p><strong>Log Statement Text / Slow Query Logging</strong></p>
@@ -262,6 +267,8 @@ logger.org.jdbcdslog.StatementLogger=INFO   # log all statements
 logger.org.jdbcdslog.ResultSetLogger=ERROR  # won't log result sets
 </code></pre>
 
+<p>Keep in mind that <strong>this is intended to be used just in development environments</strong> and you should not configure it in production, since there is a performance degradation and it will polute your logs.</p>
+
 <h2>
 <a id="jndi-support" class="anchor" href="#jndi-support" aria-hidden="true"><span class="octicon octicon-link"></span></a>JNDI Support</h2>
 
@@ -286,37 +293,12 @@ logger.org.jdbcdslog.ResultSetLogger=ERROR  # won't log result sets
 <h2>
 <a id="deploying-to-heroku" class="anchor" href="#deploying-to-heroku" aria-hidden="true"><span class="octicon octicon-link"></span></a>Deploying to Heroku</h2>
 
-<p>When using Heroku, you first need to translate its <code>DATABASE_URL</code> into another variable with the format expected by PostgreSQL JDBC Driver. As stated by <a href="https://devcenter.heroku.com/articles/heroku-postgresql#spring-java">Heroku docs</a>:</p>
-
-<blockquote>
-<p>The <code>DATABASE_URL</code> for the Heroku Postgres add-on follows this naming convention:</p>
-
-<pre><code>postgres://&lt;username&gt;:&lt;password&gt;@&lt;host&gt;/&lt;dbname&gt;
-</code></pre>
-
-<p>However the Postgres JDBC driver uses the following convention:</p>
-
-<pre><code>jdbc:postgresql://&lt;host&gt;:&lt;port&gt;/&lt;dbname&gt;?user=&lt;username&gt;&amp;password=&lt;password&gt;
-</code></pre>
-
-<p>Notice the additional <code>ql</code> at the end of <code>jdbc:postgresql</code>? Due to this difference you will need to hardcode the scheme to jdbc:postgresql` in your Java class or your Spring XML configuration.</p>
-</blockquote>
-
-<p>So, you will need to create another environment variable with the proper format and you will also need to create variables for username and password. To do this, run the following commands:</p>
-
-<pre><code>  $ heroku config:set DATABASE_JDBC_URL="jdbc:postgresql://host:5432/dbname"
-  $ heroku config:set DATABASE_USERNAME=username
-  $ heroku config:set DATABASE_PASSWORD=password
-</code></pre>
-
-<p>You can obtain the correct values for <code>host</code>, <code>dbname</code>, <code>username</code>, and <code>password</code> from the <code>DATABASE_URL</code> environment variable, which Heroku creates for you. Then you can use these variables directly inside <code>application.conf</code>, since it is supported by <a href="https://github.com/typesafehub/config">Typesafe Config</a>:</p>
+<p>When using Heroku, a <code>DATABASE_URL</code> environment variable in the form <code>scheme://user:password@host:port/db</code> will be created for you. This variable can be used directly inside <code>application.conf</code>:</p>
 
 <pre><code>db {
   default {
     driverClassName=org.postgresql.Driver
-    jdbcUrl=${DATABASE_JDBC_URL}
-    username=${DATABASE_USERNAME}
-    password=${DATABASE_PASSWORD}
+    databaseUrl=${DATABASE_URL}
   }
 }
 </code></pre>
