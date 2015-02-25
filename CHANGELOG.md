@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 2.0.1 - 2015/02/25
+
+1. PR-54 - Added databaseUrl to allow for direct usage of DATABASE_URL on Heroku
+
 ## Version 2.0.0 - 2015/02/24
 
 This is a full rewrite of this plugin and it is not backwards compatible with previous versions. We did that in order to have:
