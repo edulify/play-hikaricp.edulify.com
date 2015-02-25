@@ -34,7 +34,7 @@ Here is how HikariCP is working for us:
 | 1.1.0   | 1.3.8    | 2.2.3 |
 | 1.0.0   | 1.3.5    | 2.2.2 |
 
-For more information about what changed in each version, please, see the our CHANGELOG.md file.
+For more information about what changed in each version, see the our CHANGELOG.md file.
 
 ## Repository
 
@@ -60,7 +60,7 @@ Add the following line to your `conf/application.conf`:
 
     dbplugin=disabled
 
-This will disable dbplugin and avoids that BoneCP creates useless connections (which in some cases can create database problems, like exhaust available connections).
+This will disable `dbplugin` and avoids that BoneCP creates useless connections (which in some cases can create database problems, like exhaust available connections).
 
 ### Step 3: Enable HikariCP Plugin
 
@@ -72,20 +72,20 @@ Due to the fact that the [Play JPA plugin](https://github.com/playframework/play
 
 ### Step 4: Configure HikariCP
 
-Please, before reading this section, we recommend that you get familiarized with [HikariCP configurations](https://github.com/brettwooldridge/HikariCP#configuration-knobs-baby). It is the main source to understand each possible configuration for HikariCP and it have invaluable information about how to best configure your pool. Also, it is a good idea to read about [Typesafe Config](https://github.com/typesafehub/config), which is the configuration language used by PlayFramework.
+Please, before reading this section, we recommend that you get familiarized with [HikariCP configurations](https://github.com/brettwooldridge/HikariCP#configuration-knobs-baby). It is the main source to understand each possible configuration for HikariCP and it have invaluable information about how to best configure your pool. We also recommends that you read about [Typesafe Config](https://github.com/typesafehub/config), which is the configuration language used by PlayFramework.
 
-This plugin just read each possible Hikari configuration and create the pool from it and all the defaults are honored. Here is a simple example of how to configure you pool in `application.conf`:
+This plugin just read each possible HikariCP configuration and create the pool from it, with all the defaults honored. Here is a simple example of how to configure your pool in `application.conf`:
 
     db {
       default {
         driverClassName=org.postgresql.Driver
-        jdbcUrl="jdbc:mysql://localhost:3306/simpsons"
+        jdbcUrl="jdbc:postgresql://localhost/simpsons"
         username=bart
         password=51mp50n
       }
     }
 
-Alternatively, you can configure it using a data source provided by your JDBC Driver:
+Alternatively, you can configure it using some implementation of `javax.sql.DataSource` provided by your JDBC Driver:
 
     db {
       default {
@@ -126,7 +126,7 @@ HikariCP documentation has a [list of JDBC DataSource classes for popular databa
 
 ## Log SQL statements
 
-HikariCP does not offer (out of the box) a way to log SQL statements and it recommends that you use the log capacities of your database vendor. From HikariCP docs:
+HikariCP does not offer (out of the box) a way to log SQL statements and it suggests that you use the log capacities of your database vendor. From HikariCP docs:
 
 > **Log Statement Text / Slow Query Logging**
 >
@@ -156,6 +156,8 @@ After that, you can configure the jdbcdslog-exp [log level as explained in their
     logger.org.jdbcdslog.ConnectionLogger=ERROR # won't log connections
     logger.org.jdbcdslog.StatementLogger=INFO   # log all statements
     logger.org.jdbcdslog.ResultSetLogger=ERROR  # won't log result sets
+
+Keep in mind that **this is intended to be used just in development environments** and you should not configure it in production, since there is a performance degradation and it will polute your logs.
 
 ## JNDI Support
 
