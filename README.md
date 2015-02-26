@@ -179,6 +179,22 @@ Thanks to contributions from the community, this plugin supports to bind a DataS
       }
     }
 
+## Using with Slick
+
+[play-slick](https://github.com/playframework/play-slick) requires a `db.<database>.driver` property to be configured. So, besides your pool configuration, when using Slick, you also have to configure this property. Per instance:
+
+    db {
+      default {
+        driver=org.postgresql.Driver
+        driverClassName=${db.default.driver}
+        jdbcUrl="jdbc:postgresql://localhost/simpsons"
+        username=bart
+        password=51mp50n
+      }
+    }
+
+Notice that the driver was repeated in two different properties, even if one is reference the other. After that, play-slick is smart enough to use the configured pool.
+
 ## Deploying to Heroku
 
 When using Heroku, a `DATABASE_URL` environment variable in the form `scheme://user:password@host:port/db` will be created for you. This variable can be used directly inside `application.conf`:
