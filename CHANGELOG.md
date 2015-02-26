@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 2.0.2 - 2015/02/25
+
+1. GH-52 - Correct error report when database connection fail
+
 ## Version 2.0.1 - 2015/02/25
 
 1. PR-54 - Added databaseUrl to allow for direct usage of DATABASE_URL on Heroku
