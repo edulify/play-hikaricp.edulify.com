@@ -70,6 +70,7 @@ class HikariCPDBApi(configuration: Configuration, classloader: ClassLoader) exte
     ds match {
       case ds: HikariDataSource => ds.shutdown()
       case ds: LogSqlDataSource => ds.shutdown()
+      case _ => Logger.debug("DataSource type was not recognized by HikariCP Plugin")
     }
   }
 
