@@ -26,6 +26,7 @@ import org.specs2.specification.{Scope, AroundExample}
 import play.api.{PlayException, Configuration}
 import play.api.libs.JNDI
 import scala.collection.JavaConversions._
+import scala.util.control.NonFatal
 
 class HikariCPDBApiSpec extends Specification with AroundExample {
 
@@ -95,7 +96,7 @@ class HikariCPDBApiSpec extends Specification with AroundExample {
       val result = AsResult(t)
       result
     } catch {
-      case e: Exception => failure(e.getMessage)
+      case NonFatal(e) => failure(e.getMessage)
     } finally {
       conn.close()
     }

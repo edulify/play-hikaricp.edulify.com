@@ -26,6 +26,8 @@ import org.specs2.execute.AsResult
 import org.specs2.mutable.Specification
 import org.specs2.specification.{Scope, AroundExample}
 
+import scala.util.control.NonFatal
+
 class HikariCPPluginSpec extends Specification with AroundExample {
 
   "When configuring the plugin" should {
@@ -67,7 +69,7 @@ class HikariCPPluginSpec extends Specification with AroundExample {
       val result = AsResult(t)
       result
     } catch {
-      case e: Exception => failure(e.getMessage)
+      case NonFatal(e) => failure(e.getMessage)
     } finally {
       conn.close()
     }

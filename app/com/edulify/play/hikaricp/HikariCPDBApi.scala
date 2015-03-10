@@ -24,6 +24,8 @@ import play.api.db.DBApi
 import play.api.libs.JNDI
 import play.api.{Configuration, Logger}
 
+import scala.util.control.NonFatal
+
 class HikariCPDBApi(configuration: Configuration, classloader: ClassLoader) extends DBApi {
 
   lazy val dataSourceConfigs = configuration.subKeys.map {
@@ -58,7 +60,7 @@ class HikariCPDBApi(configuration: Configuration, classloader: ClassLoader) exte
           dataSource -> dataSourceName
         }
       } catch {
-        case ex: Exception => throw dataSourceConfig.reportError(dataSourceName, ex.getMessage, Some(ex))
+        case NonFatal(ex) => throw dataSourceConfig.reportError(dataSourceName, ex.getMessage, Some(ex))
       }
   }.toList
 
