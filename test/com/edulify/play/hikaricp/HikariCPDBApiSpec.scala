@@ -44,7 +44,7 @@ class HikariCPDBApiSpec extends Specification with AroundExample {
     "bind data source to jndi" in new DataSourceConfigs {
       val api = new HikariCPDBApi(configWithLogSql, classLoader)
       val ds = api.getDataSource("default")
-      JNDI.initialContext.lookup("TestContext") != null
+      JNDI.initialContext.lookup("TestContext") must not(beNull)
     }
     "register driver configured in `driverClassName`" in new DataSourceConfigs {
       val api = new HikariCPDBApi(configWithLogSql, classLoader)
@@ -53,8 +53,8 @@ class HikariCPDBApiSpec extends Specification with AroundExample {
     }
     "create more than one datasource" in new DataSourceConfigs {
       val api = new HikariCPDBApi(multipleDataSources, classLoader)
-      api.getDataSource("default")  != null
-      api.getDataSource("default2") != null
+      api.getDataSource("default")  must not(beNull)
+      api.getDataSource("default2") must not(beNull)
     }
     "report misconfiguration error when" in {
       "dataSourceClassName and jdbcUrl are not present" in new DataSourceConfigs {
