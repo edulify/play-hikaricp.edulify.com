@@ -12,7 +12,7 @@ libraryDependencies ++= Seq(
   jdbc,
   "com.zaxxer" % "HikariCP" % "2.3.3",
   "com.googlecode.usc" % "jdbcdslog" % "1.0.6.2",
-  "com.h2database" % "h2" % "1.4.185" % "test"
+  "com.h2database" % "h2" % "1.4.186" % "test"
 )
 
 resolvers ++= Seq(
