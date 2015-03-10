@@ -44,7 +44,7 @@ class HikariCPDBApi(configuration: Configuration, classloader: ClassLoader) exte
 
   val datasources: List[(DataSource, String)] = dataSourceConfigs.map {
     case (dataSourceName, dataSourceConfig) =>
-      try {
+      Try {
         Logger.info(s"Creating Pool for datasource '$dataSourceName'")
 
         val hikariConfig = HikariCPConfig.toHikariConfig(dataSourceConfig)
@@ -60,8 +60,9 @@ class HikariCPDBApi(configuration: Configuration, classloader: ClassLoader) exte
         } else {
           dataSource -> dataSourceName
         }
-      } catch {
-        case NonFatal(ex) => throw dataSourceConfig.reportError(dataSourceName, ex.getMessage, Some(ex))
+      } match {
+        case Success(result) => result
+        case Failure(ex) => throw dataSourceConfig.reportError(dataSourceName, ex.getMessage, Some(ex))
       }
   }.toList
 
