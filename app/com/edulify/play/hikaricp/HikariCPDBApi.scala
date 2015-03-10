@@ -75,8 +75,9 @@ class HikariCPDBApi(configuration: Configuration, classloader: ClassLoader) exte
   }
 
   def getDataSource(name: String): DataSource = {
-    datasources.find(_._2 == name)
-      .map(_._1)
+    datasources
+      .find { case (_, dsName) => dsName == name }
+      .map  { case (ds, _) => ds }
       .getOrElse(sys.error(s" - could not find data source for name $name"))
   }
 
