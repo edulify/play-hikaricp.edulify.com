@@ -24,6 +24,7 @@ import play.api.db.DBApi
 import play.api.libs.JNDI
 import play.api.{Configuration, Logger}
 
+import scala.util.{Success, Failure, Try}
 import scala.util.control.NonFatal
 
 class HikariCPDBApi(configuration: Configuration, classloader: ClassLoader) extends DBApi {
@@ -80,13 +81,14 @@ class HikariCPDBApi(configuration: Configuration, classloader: ClassLoader) exte
 
   private def registerDriver(config: Configuration) = {
     config.getString("driverClassName").foreach { driverClassName =>
-      try {
+      Try {
         Logger.info("Registering driver " + driverClassName)
         DriverManager.registerDriver(new play.utils.ProxyDriver(Class.forName(driverClassName, true, classloader)
           .newInstance
           .asInstanceOf[Driver]))
-      } catch {
-        case t: Throwable => throw config.reportError("driverClassName", s"Driver not found: [$driverClassName]", Some(t))
+      } match {
+        case Success(r) => Logger.info("Driver was successfully registered")
+        case Failure(e) => throw config.reportError("driverClassName", s"Driver not found: [$driverClassName]", Some(e))
       }
     }
   }

@@ -20,6 +20,7 @@ import java.sql.Connection
 import play.api.db.{DBApi, DBPlugin}
 import play.api.{Application, Configuration, Mode, Logger}
 
+import scala.util.{Success, Failure, Try}
 import scala.util.control.NonFatal
 
 class HikariCPPlugin(app: Application) extends DBPlugin {
@@ -34,27 +35,26 @@ class HikariCPPlugin(app: Application) extends DBPlugin {
 
   override def onStart() {
     Logger.info("Starting HikariCP connection pool...")
-    hikariCPDBApi.datasources.map { ds =>
-        try {
-          ds._1.getConnection.close()
-          app.mode match {
-            case Mode.Test =>
-            case mode => Logger.info(s"database [${ds._2}] connected at ${dbURL(ds._1.getConnection)}")
-          }
-        } catch {
-          case NonFatal(e) =>
-            throw databaseConfig.reportError(s"${ds._2}", s"Cannot connect to database [$ds._2]", Some(e.getCause))
+    hikariCPDBApi.datasources.map {
+      case (ds, name) => {
+        Try {
+          ds.getConnection.close()
+        } match {
+          case Success(r) => Logger.info(s"database [$name] connected at ${dbURL(ds.getConnection)}")
+          case Failure(e) => throw databaseConfig.reportError(s"$name", s"Cannot connect to database [$name]", Some(e.getCause))
         }
+      }
     }
   }
 
   override def onStop() {
     Logger.info("Stopping HikariCP connection pool...")
     hikariCPDBApi.datasources.foreach {
-      case (ds, _) => try {
+      case (ds, name) => Try {
         hikariCPDBApi.shutdownPool(ds)
-      } catch {
-        case t: Throwable => Logger.error("Was not able to shutdown the connection pool", t)
+      } match {
+        case Success(r) => Logger.info(s"HikariCP connection pool [$name] was terminated")
+        case Failure(t) => Logger.error(s"Was not able to shutdown the connection pool [$name]", t)
       }
     }
   }
