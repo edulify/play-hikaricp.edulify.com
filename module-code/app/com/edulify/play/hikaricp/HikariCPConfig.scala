@@ -80,6 +80,8 @@ object HikariCPConfig {
     properties.setPropertyFromConfig("registerMbeans",       "statisticsEnabled", "false")
     properties.setPropertyFromConfig("connectionInitSql",    "initSQL")
 
+    properties.setPropertyFromConfig("initializationFailFast", "initializationFailFast")
+
     logProperties(properties)
     properties
   }
