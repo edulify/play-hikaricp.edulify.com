@@ -1,6 +1,6 @@
 name := "play-hikaricp"
 
-version := "1.5.2"
+version := "1.5.3"
 
 scalaVersion := "2.11.5"
 
@@ -63,5 +63,5 @@ pomExtra := (
     </developers>
   )
 
-scalacOptions := Seq("-feature", "-deprecation")
+scalacOptions := Seq("-feature", "-deprecation", "-target:jvm-1.7")
 
