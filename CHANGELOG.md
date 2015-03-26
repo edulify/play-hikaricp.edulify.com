@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 2.0.2 - 2015/03/26
+
+1. GH-59 - Allow play to start when a configured db is unavailable
+2. Upgrade HikariCP to version 2.3.5
+
 ## Version 2.0.2 - 2015/02/25
 
 1. GH-52 - Correct error report when database connection fail
