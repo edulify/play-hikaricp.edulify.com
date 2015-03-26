@@ -15,13 +15,10 @@
  */
 package com.edulify.play.hikaricp
 
-import java.sql.Connection
-
 import play.api.db.{DBApi, DBPlugin}
-import play.api.{Application, Configuration, Mode, Logger}
+import play.api.{Application, Configuration, Logger}
 
 import scala.util.{Success, Failure, Try}
-import scala.util.control.NonFatal
 
 class HikariCPPlugin(app: Application) extends DBPlugin {
 
@@ -29,23 +26,11 @@ class HikariCPPlugin(app: Application) extends DBPlugin {
 
   override def enabled = app.configuration.getBoolean("hikari.enabled").getOrElse(true)
 
-  private lazy val hikariCPDBApi: DBApi = new HikariCPDBApi(databaseConfig, app.classloader)
+  private val hikariCPDBApi: DBApi = new HikariCPDBApi(databaseConfig, app.classloader)
 
   def api: DBApi = hikariCPDBApi
 
-  override def onStart() {
-    Logger.info("Starting HikariCP connection pool...")
-    hikariCPDBApi.datasources.map {
-      case (ds, name) => {
-        Try {
-          ds.getConnection.close()
-        } match {
-          case Success(r) => Logger.info(s"database [$name] connected at ${dbURL(ds.getConnection)}")
-          case Failure(e) => throw databaseConfig.reportError(s"$name", s"Cannot connect to database [$name]", Some(e.getCause))
-        }
-      }
-    }
-  }
+  override def onStart() = Logger.info("Starting HikariCP connection pool...")
 
   override def onStop() {
     Logger.info("Stopping HikariCP connection pool...")
@@ -57,11 +42,5 @@ class HikariCPPlugin(app: Application) extends DBPlugin {
         case Failure(t) => Logger.error(s"Was not able to shutdown the connection pool [$name]", t)
       }
     }
-  }
-
-  private def dbURL(conn: Connection): String = {
-    val u = conn.getMetaData.getURL
-    conn.close()
-    u
   }
 }

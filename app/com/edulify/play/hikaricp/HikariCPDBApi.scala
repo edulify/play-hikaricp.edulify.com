@@ -25,7 +25,6 @@ import play.api.libs.JNDI
 import play.api.{Configuration, Logger}
 
 import scala.util.{Success, Failure, Try}
-import scala.util.control.NonFatal
 
 class HikariCPDBApi(configuration: Configuration, classloader: ClassLoader) extends DBApi {
 
