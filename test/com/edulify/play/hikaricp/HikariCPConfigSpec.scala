@@ -32,14 +32,14 @@ class HikariCPConfigSpec extends Specification {
       properties.setProperty("dataSourceClassName", "org.postgresql.ds.PGPoolingDataSource")
       properties.setProperty("username", "user")
       val config = new Configuration(ConfigFactory.parseProperties(properties))
-      HikariCPConfig.toHikariConfig(config).getDataSourceClassName == "org.postgresql.ds.PGPoolingDataSource"
+      HikariCPConfig.toHikariConfig("testDataSource", config).getDataSourceClassName == "org.postgresql.ds.PGPoolingDataSource"
     }
 
     "set databaseUrl when present" in {
       val properties = new Properties()
       properties.setProperty("databaseUrl", "postgres://foo:bar@host:1234/dbname")
       val config = new Configuration(ConfigFactory.parseProperties(properties))
-      val hikariConfig: HikariConfig = HikariCPConfig.toHikariConfig(config)
+      val hikariConfig: HikariConfig = HikariCPConfig.toHikariConfig("testDataSource", config)
 
       hikariConfig.getJdbcUrl == "jdbc:postgresql://host:1234/dbname"
       hikariConfig.getUsername == "foo"
@@ -51,13 +51,13 @@ class HikariCPConfigSpec extends Specification {
       properties.setProperty("jdbcUrl", "jdbc:postgresql://host/database")
       properties.setProperty("username", "user")
       val config = new Configuration(ConfigFactory.parseProperties(properties))
-      HikariCPConfig.toHikariConfig(config).getJdbcUrl == "jdbc:postgresql://host/database"
+      HikariCPConfig.toHikariConfig("testDataSource", config).getJdbcUrl == "jdbc:postgresql://host/database"
     }
 
     "discard configuration not related to hikari config" in new Configs {
       val props = valid
       props.setProperty("just.some.garbage", "garbage")
-      HikariCPConfig.toHikariConfig(asConfig(props))
+      HikariCPConfig.toHikariConfig("testDataSource", asConfig(props))
       success // won't fail because of garbage property
     }
 
@@ -65,7 +65,7 @@ class HikariCPConfigSpec extends Specification {
       val props = valid
       props.setProperty("dataSource.user", "user")
       props.setProperty("dataSource.password", "password")
-      val hikariConfig: HikariConfig = HikariCPConfig.toHikariConfig(asConfig(props))
+      val hikariConfig: HikariConfig = HikariCPConfig.toHikariConfig("testDataSource", asConfig(props))
 
       hikariConfig.getDataSourceProperties.getProperty("user") == "user"
       hikariConfig.getDataSourceProperties.getProperty("password") == "password"
@@ -73,55 +73,55 @@ class HikariCPConfigSpec extends Specification {
 
     "respect the defaults as" in {
       "autoCommit to true" in new Configs {
-        HikariCPConfig.toHikariConfig(config).isAutoCommit must beTrue
+        HikariCPConfig.toHikariConfig("testDataSource", config).isAutoCommit must beTrue
       }
 
       "connectionTimeout to 30 seconds" in new Configs {
-        HikariCPConfig.toHikariConfig(config).getConnectionTimeout == 30.seconds.inMillis
+        HikariCPConfig.toHikariConfig("testDataSource", config).getConnectionTimeout == 30.seconds.inMillis
       }
 
       "idleTimeout to 10 minutes" in new Configs {
-        HikariCPConfig.toHikariConfig(config).getIdleTimeout == 10.minutes.inMillis
+        HikariCPConfig.toHikariConfig("testDataSource", config).getIdleTimeout == 10.minutes.inMillis
       }
 
       "maxLifetime to 30 minutes" in new Configs {
-        HikariCPConfig.toHikariConfig(config).getMaxLifetime == 30.minutes.inMillis
+        HikariCPConfig.toHikariConfig("testDataSource", config).getMaxLifetime == 30.minutes.inMillis
       }
 
       "validationTimeout to 5 seconds" in new Configs {
-        HikariCPConfig.toHikariConfig(config).getValidationTimeout == 5.seconds.inMillis
+        HikariCPConfig.toHikariConfig("testDataSource", config).getValidationTimeout == 5.seconds.inMillis
       }
 
       "minimumIdle to 10" in new Configs {
-        HikariCPConfig.toHikariConfig(config).getMinimumIdle == 10
+        HikariCPConfig.toHikariConfig("testDataSource", config).getMinimumIdle == 10
       }
 
       "maximumPoolSize to 10" in new Configs {
-        HikariCPConfig.toHikariConfig(config).getMaximumPoolSize == 10
+        HikariCPConfig.toHikariConfig("testDataSource", config).getMaximumPoolSize == 10
       }
 
       "initializationFailFast to true" in new Configs {
-        HikariCPConfig.toHikariConfig(config).isInitializationFailFast must beTrue
+        HikariCPConfig.toHikariConfig("testDataSource", config).isInitializationFailFast must beTrue
       }
 
       "isolateInternalQueries to false" in new Configs {
-        HikariCPConfig.toHikariConfig(config).isIsolateInternalQueries must beFalse
+        HikariCPConfig.toHikariConfig("testDataSource", config).isIsolateInternalQueries must beFalse
       }
 
       "allowPoolSuspension to false" in new Configs {
-        HikariCPConfig.toHikariConfig(config).isAllowPoolSuspension must beFalse
+        HikariCPConfig.toHikariConfig("testDataSource", config).isAllowPoolSuspension must beFalse
       }
 
       "readOnly to false" in new Configs {
-        HikariCPConfig.toHikariConfig(config).isReadOnly must beFalse
+        HikariCPConfig.toHikariConfig("testDataSource", config).isReadOnly must beFalse
       }
 
       "registerMBeans to false" in new Configs {
-        HikariCPConfig.toHikariConfig(config).isRegisterMbeans must beFalse
+        HikariCPConfig.toHikariConfig("testDataSource", config).isRegisterMbeans must beFalse
       }
 
       "leakDetectionThreshold to 0 (zero)" in new Configs {
-        HikariCPConfig.toHikariConfig(config).getLeakDetectionThreshold == 0
+        HikariCPConfig.toHikariConfig("testDataSource", config).getLeakDetectionThreshold == 0
       }
     }
 
@@ -129,73 +129,73 @@ class HikariCPConfigSpec extends Specification {
       "autoCommit" in new Configs {
         val props = valid
         props.setProperty("autoCommit", "false")
-        HikariCPConfig.toHikariConfig(asConfig(props)).isAutoCommit must beFalse
+        HikariCPConfig.toHikariConfig("testDataSource", asConfig(props)).isAutoCommit must beFalse
       }
 
       "connectionTimeout" in new Configs {
         val props = valid
         props.setProperty("connectionTimeout", "40 seconds")
-        HikariCPConfig.toHikariConfig(asConfig(props)).getConnectionTimeout == 40.seconds.inMillis
+        HikariCPConfig.toHikariConfig("testDataSource", asConfig(props)).getConnectionTimeout == 40.seconds.inMillis
       }
 
       "idleTimeout" in new Configs {
         val props = valid
         props.setProperty("idleTimeout", "5 minutes")
-        HikariCPConfig.toHikariConfig(asConfig(props)).getIdleTimeout == 5.minutes.inMillis
+        HikariCPConfig.toHikariConfig("testDataSource", asConfig(props)).getIdleTimeout == 5.minutes.inMillis
       }
 
       "maxLifetime" in new Configs {
         val props = valid
         props.setProperty("maxLifetime", "15 minutes")
-        HikariCPConfig.toHikariConfig(asConfig(props)).getMaxLifetime == 15.minutes.inMillis
+        HikariCPConfig.toHikariConfig("testDataSource", asConfig(props)).getMaxLifetime == 15.minutes.inMillis
       }
 
       "validationTimeout" in new Configs {
         val props = valid
         props.setProperty("validationTimeout", "10 seconds")
-        HikariCPConfig.toHikariConfig(asConfig(props)).getValidationTimeout == 10.seconds.inMillis
+        HikariCPConfig.toHikariConfig("testDataSource", asConfig(props)).getValidationTimeout == 10.seconds.inMillis
       }
 
       "minimumIdle" in new Configs {
         val props = valid
         props.setProperty("minimumIdle", "20")
-        HikariCPConfig.toHikariConfig(asConfig(props)).getMinimumIdle == 20
+        HikariCPConfig.toHikariConfig("testDataSource", asConfig(props)).getMinimumIdle == 20
       }
 
       "maximumPoolSize" in new Configs {
         val props = valid
         props.setProperty("maximumPoolSize", "20")
-        HikariCPConfig.toHikariConfig(asConfig(props)).getMaximumPoolSize == 20
+        HikariCPConfig.toHikariConfig("testDataSource", asConfig(props)).getMaximumPoolSize == 20
       }
 
       "initializationFailFast" in new Configs {
         val props = valid
         props.setProperty("initializationFailFast", "false")
-        HikariCPConfig.toHikariConfig(asConfig(props)).isInitializationFailFast must beFalse
+        HikariCPConfig.toHikariConfig("testDataSource", asConfig(props)).isInitializationFailFast must beFalse
       }
 
       "isolateInternalQueries" in new Configs {
         val props = valid
         props.setProperty("isolateInternalQueries", "true")
-        HikariCPConfig.toHikariConfig(asConfig(props)).isIsolateInternalQueries must beTrue
+        HikariCPConfig.toHikariConfig("testDataSource", asConfig(props)).isIsolateInternalQueries must beTrue
       }
 
       "allowPoolSuspension" in new Configs {
         val props = valid
         props.setProperty("allowPoolSuspension", "true")
-        HikariCPConfig.toHikariConfig(asConfig(props)).isAllowPoolSuspension must beTrue
+        HikariCPConfig.toHikariConfig("testDataSource", asConfig(props)).isAllowPoolSuspension must beTrue
       }
 
       "readOnly" in new Configs {
         val props = valid
         props.setProperty("readOnly", "true")
-        HikariCPConfig.toHikariConfig(asConfig(props)).isReadOnly must beTrue
+        HikariCPConfig.toHikariConfig("testDataSource", asConfig(props)).isReadOnly must beTrue
       }
 
       "leakDetectionThreshold" in new Configs {
         val props = valid
         props.setProperty("leakDetectionThreshold", "2")
-        HikariCPConfig.toHikariConfig(asConfig(props)).getLeakDetectionThreshold == 0
+        HikariCPConfig.toHikariConfig("testDataSource", asConfig(props)).getLeakDetectionThreshold == 0
       }
     }
   }

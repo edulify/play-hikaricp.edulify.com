@@ -46,7 +46,7 @@ class HikariCPDBApi(configuration: Configuration, classloader: ClassLoader) exte
       Try {
         Logger.info(s"Creating Pool for datasource '$dataSourceName'")
 
-        val hikariConfig = HikariCPConfig.toHikariConfig(dataSourceConfig)
+        val hikariConfig = HikariCPConfig.toHikariConfig(dataSourceName, dataSourceConfig)
         registerDriver(dataSourceConfig)
 
         val dataSource = new HikariDataSource(hikariConfig)

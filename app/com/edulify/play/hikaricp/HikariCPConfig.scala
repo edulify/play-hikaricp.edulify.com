@@ -21,7 +21,7 @@ import java.net.URI
 
 object HikariCPConfig {
 
-  def toHikariConfig(config: Configuration): HikariConfig = {
+  def toHikariConfig(dataSourceName: String, config: Configuration): HikariConfig = {
     val hikariConfig = new HikariConfig()
 
     // Essentials configurations
@@ -68,7 +68,7 @@ object HikariCPConfig {
     config.getString("connectionTestQuery").foreach(hikariConfig.setConnectionTestQuery)
     config.getInt("minimumIdle").foreach(hikariConfig.setMinimumIdle)
     config.getInt("maximumPoolSize").foreach(hikariConfig.setMaximumPoolSize)
-    config.getString("poolName").foreach(hikariConfig.setPoolName)
+    hikariConfig.setPoolName(config.getString("poolName").getOrElse(dataSourceName))
 
     // Infrequently used
     config.getBoolean("initializationFailFast").foreach(hikariConfig.setInitializationFailFast)
