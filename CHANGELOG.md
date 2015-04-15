@@ -1,6 +1,11 @@
 # Changelog
 
-## Version 2.0.2 - 2015/03/26
+## Version 2.0.4 - 2015/04/14
+
+1. PR-60 - Add sensible pool names by default
+2. Updates HikariCP to version 2.3.6
+
+## Version 2.0.3 - 2015/03/26
 
 1. GH-59 - Allow play to start when a configured db is unavailable
 2. Upgrade HikariCP to version 2.3.5

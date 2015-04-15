@@ -1,6 +1,6 @@
 # HikariCP Plugin for 2.3.x
 
-This plugin works with `2.3.x` of PlayFramework and uses version `2.3.5` of HikariCP.
+This plugin works with `2.3.x` of PlayFramework and uses version `2.3.6` of HikariCP.
 
 Note, it can be made to work with Play `2.2.x` of the PlayFramework, but it requires changing the dependencies as the current build relies on the Play `2.3.x` plugin. Please, see the versions table below to see which version of Play is supported.
 
@@ -22,6 +22,7 @@ Here is how HikariCP is working for us:
 
 | Version | HikariCP | Play  |
 |--------:|---------:|------:|
+| 2.0.4   | 2.3.6    | 2.3.8 |
 | 2.0.3   | 2.3.5    | 2.3.8 |
 | 2.0.2   | 2.3.2    | 2.3.8 |
 | 2.0.1   | 2.3.2    | 2.3.8 |
@@ -55,7 +56,7 @@ There are just a few steps to properly configure the plugin:
 
 Add the following dependency to your `project/build.sbt` or `project/Build.scala`:
 
-    "com.edulify" %% "play-hikaricp" % "2.0.3"
+    "com.edulify" %% "play-hikaricp" % "2.0.4"
 
 ### Step 2: Disable default `dbplugin`
 
