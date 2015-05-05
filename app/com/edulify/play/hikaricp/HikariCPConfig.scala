@@ -30,7 +30,7 @@ object HikariCPConfig {
       case None => Logger.debug("`dataSourceClassName` not present. Will use `jdbcUrl` instead.")
     }
 
-    config.getString("jdbcUrl") match {
+    config.getString("jdbcUrl").orElse(config.getString("url")) match {
       case Some(jdbcUrl) => hikariConfig.setJdbcUrl(jdbcUrl)
       case None => Logger.debug("`jdbcUrl` not present. Pool configured from `databaseUrl`.")
     }
@@ -55,10 +55,10 @@ object HikariCPConfig {
       }
     }
 
-    config.getString("username").foreach(hikariConfig.setUsername)
+    config.getString("username").orElse(config.getString("user")).foreach(hikariConfig.setUsername)
     config.getString("password").foreach(hikariConfig.setPassword)
 
-    config.getString("driverClassName").foreach(hikariConfig.setDriverClassName)
+    config.getString("driverClassName").orElse(config.getString("driver")).foreach(hikariConfig.setDriverClassName)
 
     // Frequently used
     config.getBoolean("autoCommit").foreach(hikariConfig.setAutoCommit)

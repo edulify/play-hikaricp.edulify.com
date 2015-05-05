@@ -54,6 +54,14 @@ class HikariCPConfigSpec extends Specification {
       HikariCPConfig.toHikariConfig("testDataSource", config).getJdbcUrl == "jdbc:postgresql://host/database"
     }
 
+    "set url when present" in {
+      val properties = new Properties()
+      properties.setProperty("url", "jdbc:postgresql://host/database")
+      properties.setProperty("user", "user")
+      val config = new Configuration(ConfigFactory.parseProperties(properties))
+      HikariCPConfig.toHikariConfig("testDataSource", config).getJdbcUrl == "jdbc:postgresql://host/database"
+    }
+
     "discard configuration not related to hikari config" in new Configs {
       val props = valid
       props.setProperty("just.some.garbage", "garbage")
