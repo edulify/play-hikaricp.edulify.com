@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 2.0.5 - 2015/05/05
+
+1. PR-66 GH-65 - Config translation for basic jdbc connection settings
+2. Updates HikariCP to version 2.3.7
+
 ## Version 2.0.4 - 2015/04/14
 
 1. PR-60 - Add sensible pool names by default

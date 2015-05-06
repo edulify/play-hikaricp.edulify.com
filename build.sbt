@@ -1,6 +1,6 @@
 name := "play-hikaricp"
 
-version := "2.0.4"
+version := "2.0.5"
 
 scalaVersion := "2.11.6"
 
