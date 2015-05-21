@@ -42,7 +42,7 @@ Here is how HikariCP is working for us:
 | 1.0.0   | 1.3.5    | 2.2.2 | [Release 1.0.0](https://github.com/edulify/play-hikaricp.edulify.com/blob/1.1.0/README.md)|
 
 
-For more information about what changed in each version, see the our CHANGELOG.md file.
+For more information about what changed in each version, see the CHANGELOG.md file.
 
 ## Repository
 
