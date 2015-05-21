@@ -22,26 +22,27 @@ Here is how HikariCP is working for us:
 
 ## Versions
 
-| Version | HikariCP | Play  |
-|--------:|---------:|------:|
-| 2.0.5   | 2.3.7    | 2.3.8 |
-| 2.0.4   | 2.3.6    | 2.3.8 |
-| 2.0.3   | 2.3.5    | 2.3.8 |
-| 2.0.2   | 2.3.2    | 2.3.8 |
-| 2.0.1   | 2.3.2    | 2.3.8 |
-| 2.0.0   | 2.3.2    | 2.3.8 |
-| 1.5.2   | 2.3.2    | 2.3.8 |
-| 1.5.1   | 2.2.5    | 2.3.7 |
-| 1.5.0   | 2.0.1    | 2.3.4 |
-| 1.4.1   | 2.0.1    | 2.3.2 |
-| 1.4.0   | 1.4.0    | 2.3.1 |
-| 1.3.1   | 1.3.8    | 2.3.1 |
-| 1.3.0   | 1.3.8    | 2.3.1 |
-| 1.2.0   | 1.3.8    | 2.2.3 |
-| 1.1.0   | 1.3.8    | 2.2.3 |
-| 1.0.0   | 1.3.5    | 2.2.2 |
+| Version | HikariCP | Play  | Readme note                     |
+|--------:|---------:|------:|:---------------------------------|
+| 2.0.5   | 2.3.7    | 2.3.8 | [Release 2.0.5](https://github.com/edulify/play-hikaricp.edulify.com/blob/2.0.5/README.md)|
+| 2.0.4   | 2.3.6    | 2.3.8 | [Release 2.0.4](https://github.com/edulify/play-hikaricp.edulify.com/blob/2.0.4/README.md)|
+| 2.0.3   | 2.3.5    | 2.3.8 | [Release 2.0.3](https://github.com/edulify/play-hikaricp.edulify.com/blob/2.0.3/README.md)|
+| 2.0.2   | 2.3.2    | 2.3.8 | [Release 2.0.2](https://github.com/edulify/play-hikaricp.edulify.com/blob/2.0.2/README.md)|
+| 2.0.1   | 2.3.2    | 2.3.8 | [Release 2.0.1](https://github.com/edulify/play-hikaricp.edulify.com/blob/2.0.1/README.md)|
+| 2.0.0   | 2.3.2    | 2.3.8 | [Release 2.0.0](https://github.com/edulify/play-hikaricp.edulify.com/blob/2.0.0/README.md)|
+| 1.5.2   | 2.3.2    | 2.3.8 | [Release 1.5.2](https://github.com/edulify/play-hikaricp.edulify.com/blob/1.5.2/README.md)|
+| 1.5.1   | 2.2.5    | 2.3.7 | [Release 1.5.1](https://github.com/edulify/play-hikaricp.edulify.com/blob/1.5.1/README.md)|
+| 1.5.0   | 2.0.1    | 2.3.4 | [Release 1.5.0](https://github.com/edulify/play-hikaricp.edulify.com/blob/1.5.0/README.md)|
+| 1.4.1   | 2.0.1    | 2.3.2 | [Release 1.4.1](https://github.com/edulify/play-hikaricp.edulify.com/blob/1.4.1/README.md)|
+| 1.4.0   | 1.4.0    | 2.3.1 | [Release 1.4.0](https://github.com/edulify/play-hikaricp.edulify.com/blob/1.4.0/README.md)|
+| 1.3.1   | 1.3.8    | 2.3.1 | [Release 1.3.1](https://github.com/edulify/play-hikaricp.edulify.com/blob/1.3.1/README.md)|
+| 1.3.0   | 1.3.8    | 2.3.1 | [Release 1.3.0](https://github.com/edulify/play-hikaricp.edulify.com/blob/1.3.0/README.md)|
+| 1.2.0   | 1.3.8    | 2.2.3 | [Release 1.2.0](https://github.com/edulify/play-hikaricp.edulify.com/blob/1.2.0/README.md)|
+| 1.1.0   | 1.3.8    | 2.2.3 | [Release 1.1.0](https://github.com/edulify/play-hikaricp.edulify.com/blob/1.1.0/README.md)|
+| 1.0.0   | 1.3.5    | 2.2.2 | [Release 1.0.0](https://github.com/edulify/play-hikaricp.edulify.com/blob/1.1.0/README.md)|
 
-For more information about what changed in each version, see the our CHANGELOG.md file.
+
+For more information about what changed in each version, see the CHANGELOG.md file.
 
 ## Repository
 
