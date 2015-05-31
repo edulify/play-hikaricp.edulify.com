@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 2.0.6 - 2015/05/31
+
+1. Upgrade Playframework to version 2.3.9
+2. Upgrade HikariCP to version 2.3.8
+
 ## Version 2.0.5 - 2015/05/05
 
 1. PR-66 GH-65 - Config translation for basic jdbc connection settings
