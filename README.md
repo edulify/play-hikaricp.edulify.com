@@ -49,7 +49,7 @@ For more information about what changed in each version, see the CHANGELOG.md fi
 You need to add the following repository in order to use this module:
 
 ```scala
-resolvers += Resolver.url("Edulify Repository", url("http://edulify.github.io/modules/releases/"))(Resolver.ivyStylePatterns)
+resolvers += Resolver.url("Edulify Repository", url("https://edulify.github.io/modules/releases/"))(Resolver.ivyStylePatterns)
 ```
 
 ## How to Use

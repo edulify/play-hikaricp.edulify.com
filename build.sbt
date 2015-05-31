@@ -17,7 +17,7 @@ libraryDependencies ++= Seq(
 
 resolvers ++= Seq(
   Resolver.typesafeRepo("releases"),
-  "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases"
+  "Scalaz Bintray Repo" at "https://dl.bintray.com/scalaz/releases"
 )
 
 organization := "com.edulify"
@@ -48,7 +48,7 @@ description := "HikariCP Plugin for Play Framework 2.2.x"
 
 licenses := Seq("The Apache Software License, Version 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt"))
 
-homepage := Some(url("http://edulify.github.io/play-hikaricp.edulify.com/"))
+homepage := Some(url("https://edulify.github.io/play-hikaricp.edulify.com/"))
 
 pomExtra :=
   <scm>
