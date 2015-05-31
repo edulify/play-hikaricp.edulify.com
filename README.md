@@ -1,6 +1,6 @@
 # HikariCP Plugin for 2.3.x
 
-> This plugin is not necessary for applications using using **Play 2.4.0** because HikariCP is the default pool for Play 2.4.0. Anyway, we will try to keep this plugin updated with HikariCP releases to support developers using Play 2.3.x.
+> This plugin is not necessary for applications using using **Play 2.4.0** because HikariCP is [the default pool for Play 2.4.0](https://playframework.com/documentation/2.4.x/Highlights24#HikariCP). Anyway, we will try to keep this plugin updated with HikariCP releases to support developers using Play 2.3.x.
 
 This plugin works with `2.3.x` of PlayFramework and uses version `2.3.8` of HikariCP.
 
