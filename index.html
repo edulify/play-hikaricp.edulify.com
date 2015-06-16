@@ -1,43 +1,36 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en-us">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta charset="UTF-8">
     <title>play-hikaricp by edulify</title>
-
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="javascripts/scale.fix.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
   <body>
-    <div class="wrapper">
-      <header>
-        <h1 class="header">play-hikaricp</h1>
-        <p class="header">HikariCP Plugin for Play 2.2.x and 2.3.x</p>
+    <section class="page-header">
+      <h1 class="project-name">play-hikaricp</h1>
+      <h2 class="project-tagline">HikariCP Plugin for Play 2.2.x and 2.3.x</h2>
+      <a href="https://github.com/edulify/play-hikaricp.edulify.com" class="btn">View on GitHub</a>
+      <a href="https://github.com/edulify/play-hikaricp.edulify.com/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/edulify/play-hikaricp.edulify.com/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-        <ul>
-          <li class="download"><a class="buttons" href="https://github.com/edulify/play-hikaricp.edulify.com/zipball/master">Download ZIP</a></li>
-          <li class="download"><a class="buttons" href="https://github.com/edulify/play-hikaricp.edulify.com/tarball/master">Download TAR</a></li>
-          <li><a class="buttons github" href="https://github.com/edulify/play-hikaricp.edulify.com">View On GitHub</a></li>
-        </ul>
-
-        <p class="header">This project is maintained by <a class="header name" href="https://github.com/edulify">edulify</a></p>
-
-
-      </header>
-      <section>
-        <h1>
+    <section class="main-content">
+      <h1>
 <a id="hikaricp-plugin-for-23x" class="anchor" href="#hikaricp-plugin-for-23x" aria-hidden="true"><span class="octicon octicon-link"></span></a>HikariCP Plugin for 2.3.x</h1>
 
-<p>This plugin works with <code>2.3.x</code> of PlayFramework and uses version <code>2.3.2</code> of HikariCP.</p>
+<blockquote>
+<p>This plugin is not necessary for applications using using <strong>Play 2.4.0</strong> because HikariCP is <a href="https://playframework.com/documentation/2.4.x/Highlights24#HikariCP">the default pool for Play 2.4.0</a>. Anyway, we will try to keep this plugin updated with HikariCP releases to support developers using Play 2.3.x.</p>
+</blockquote>
+
+<p>This plugin works with <code>2.3.x</code> of PlayFramework and uses version <code>2.3.8</code> of HikariCP.</p>
 
 <p>Note, it can be made to work with Play <code>2.2.x</code> of the PlayFramework, but it requires changing the dependencies as the current build relies on the Play <code>2.3.x</code> plugin. Please, see the versions table below to see which version of Play is supported.</p>
 
-<p><a href="https://travis-ci.org/edulify/play-hikaricp.edulify.com"><img src="https://travis-ci.org/edulify/play-hikaricp.edulify.com.svg?branch=master" alt="Build Status"></a> <a href="http://issuestats.com/github/edulify/play-hikaricp.edulify.com"><img src="http://issuestats.com/github/edulify/play-hikaricp.edulify.com/badge/pr" alt="Issue Stats"></a> <a href="https://www.versioneye.com/user/projects/54eaa687d1ec577c97000cd5"><img src="https://www.versioneye.com/user/projects/54eaa687d1ec577c97000cd5/badge.svg?style=flat" alt="Dependency Status"></a> <a href="https://coveralls.io/r/edulify/play-hikaricp.edulify.com?branch=master"><img src="https://coveralls.io/repos/edulify/play-hikaricp.edulify.com/badge.svg?branch=master" alt="Coverage Status"></a></p>
+<p><a href="https://travis-ci.org/edulify/play-hikaricp.edulify.com"><img src="https://travis-ci.org/edulify/play-hikaricp.edulify.com.svg?branch=master" alt="Build Status"></a> <a href="http://issuestats.com/github/edulify/play-hikaricp.edulify.com"><img src="http://issuestats.com/github/edulify/play-hikaricp.edulify.com/badge/pr" alt="Issue Stats"></a> <a href="https://www.versioneye.com/user/projects/54eaa687d1ec577c97000cd5"><img src="https://www.versioneye.com/user/projects/54eaa687d1ec577c97000cd5/badge.svg?style=flat" alt="Dependency Status"></a> <a href="https://coveralls.io/r/edulify/play-hikaricp.edulify.com?branch=master"><img src="https://coveralls.io/repos/edulify/play-hikaricp.edulify.com/badge.svg?branch=master" alt="Coverage Status"></a> <a href="https://www.codacy.com/public/contact_4/play-hikaricp.edulify.com"><img src="https://www.codacy.com/project/badge/9817a5d0538b434eb052ce5917a7ae9d" alt="Codacy Badge"></a></p>
 
 <h2>
 <a id="about-this-documentation" class="anchor" href="#about-this-documentation" aria-hidden="true"><span class="octicon octicon-link"></span></a>About this documentation</h2>
@@ -62,80 +55,123 @@
 <th align="right">Version</th>
 <th align="right">HikariCP</th>
 <th align="right">Play</th>
+<th align="left">Docs reference</th>
 </tr>
 </thead>
 <tbody>
 <tr>
+<td align="right">2.0.6</td>
+<td align="right">2.3.8</td>
+<td align="right">2.3.9</td>
+<td align="left"><a href="https://github.com/edulify/play-hikaricp.edulify.com/blob/2.0.6/README.md">Release 2.0.6</a></td>
+</tr>
+<tr>
+<td align="right">2.0.5</td>
+<td align="right">2.3.7</td>
+<td align="right">2.3.8</td>
+<td align="left"><a href="https://github.com/edulify/play-hikaricp.edulify.com/blob/2.0.5/README.md">Release 2.0.5</a></td>
+</tr>
+<tr>
+<td align="right">2.0.4</td>
+<td align="right">2.3.6</td>
+<td align="right">2.3.8</td>
+<td align="left"><a href="https://github.com/edulify/play-hikaricp.edulify.com/blob/2.0.4/README.md">Release 2.0.4</a></td>
+</tr>
+<tr>
+<td align="right">2.0.3</td>
+<td align="right">2.3.5</td>
+<td align="right">2.3.8</td>
+<td align="left"><a href="https://github.com/edulify/play-hikaricp.edulify.com/blob/2.0.3/README.md">Release 2.0.3</a></td>
+</tr>
+<tr>
+<td align="right">2.0.2</td>
+<td align="right">2.3.2</td>
+<td align="right">2.3.8</td>
+<td align="left"><a href="https://github.com/edulify/play-hikaricp.edulify.com/blob/2.0.2/README.md">Release 2.0.2</a></td>
+</tr>
+<tr>
 <td align="right">2.0.1</td>
 <td align="right">2.3.2</td>
 <td align="right">2.3.8</td>
+<td align="left"><a href="https://github.com/edulify/play-hikaricp.edulify.com/blob/2.0.1/README.md">Release 2.0.1</a></td>
 </tr>
 <tr>
 <td align="right">2.0.0</td>
 <td align="right">2.3.2</td>
 <td align="right">2.3.8</td>
+<td align="left"><a href="https://github.com/edulify/play-hikaricp.edulify.com/blob/2.0.0/README.md">Release 2.0.0</a></td>
 </tr>
 <tr>
 <td align="right">1.5.2</td>
 <td align="right">2.3.2</td>
 <td align="right">2.3.8</td>
+<td align="left"><a href="https://github.com/edulify/play-hikaricp.edulify.com/blob/1.5.2/README.md">Release 1.5.2</a></td>
 </tr>
 <tr>
 <td align="right">1.5.1</td>
 <td align="right">2.2.5</td>
 <td align="right">2.3.7</td>
+<td align="left"><a href="https://github.com/edulify/play-hikaricp.edulify.com/blob/1.5.1/README.md">Release 1.5.1</a></td>
 </tr>
 <tr>
 <td align="right">1.5.0</td>
 <td align="right">2.0.1</td>
 <td align="right">2.3.4</td>
+<td align="left"><a href="https://github.com/edulify/play-hikaricp.edulify.com/blob/1.5.0/README.md">Release 1.5.0</a></td>
 </tr>
 <tr>
 <td align="right">1.4.1</td>
 <td align="right">2.0.1</td>
 <td align="right">2.3.2</td>
+<td align="left"><a href="https://github.com/edulify/play-hikaricp.edulify.com/blob/1.4.1/README.md">Release 1.4.1</a></td>
 </tr>
 <tr>
 <td align="right">1.4.0</td>
 <td align="right">1.4.0</td>
 <td align="right">2.3.1</td>
+<td align="left"><a href="https://github.com/edulify/play-hikaricp.edulify.com/blob/1.4.0/README.md">Release 1.4.0</a></td>
 </tr>
 <tr>
 <td align="right">1.3.1</td>
 <td align="right">1.3.8</td>
 <td align="right">2.3.1</td>
+<td align="left"><a href="https://github.com/edulify/play-hikaricp.edulify.com/blob/1.3.1/README.md">Release 1.3.1</a></td>
 </tr>
 <tr>
 <td align="right">1.3.0</td>
 <td align="right">1.3.8</td>
 <td align="right">2.3.1</td>
+<td align="left"><a href="https://github.com/edulify/play-hikaricp.edulify.com/blob/1.3.0/README.md">Release 1.3.0</a></td>
 </tr>
 <tr>
 <td align="right">1.2.0</td>
 <td align="right">1.3.8</td>
 <td align="right">2.2.3</td>
+<td align="left"><a href="https://github.com/edulify/play-hikaricp.edulify.com/blob/1.2.0/README.md">Release 1.2.0</a></td>
 </tr>
 <tr>
 <td align="right">1.1.0</td>
 <td align="right">1.3.8</td>
 <td align="right">2.2.3</td>
+<td align="left"><a href="https://github.com/edulify/play-hikaricp.edulify.com/blob/1.1.0/README.md">Release 1.1.0</a></td>
 </tr>
 <tr>
 <td align="right">1.0.0</td>
 <td align="right">1.3.5</td>
 <td align="right">2.2.2</td>
+<td align="left"><a href="https://github.com/edulify/play-hikaricp.edulify.com/blob/1.1.0/README.md">Release 1.0.0</a></td>
 </tr>
 </tbody>
 </table>
 
-<p>For more information about what changed in each version, see the our CHANGELOG.md file.</p>
+<p>For more information about what changed in each version, see the CHANGELOG.md file.</p>
 
 <h2>
 <a id="repository" class="anchor" href="#repository" aria-hidden="true"><span class="octicon octicon-link"></span></a>Repository</h2>
 
 <p>You need to add the following repository in order to use this module:</p>
 
-<div class="highlight highlight-scala"><pre>resolvers <span class="pl-k">+</span><span class="pl-k">=</span> <span class="pl-en">Resolver</span>.url(<span class="pl-s1"><span class="pl-pds">"</span>Edulify Repository<span class="pl-pds">"</span></span>, url(<span class="pl-s1"><span class="pl-pds">"</span>http://edulify.github.io/modules/releases/<span class="pl-pds">"</span></span>))(<span class="pl-en">Resolver</span>.ivyStylePatterns)</pre></div>
+<div class="highlight highlight-scala"><pre>resolvers <span class="pl-k">+</span><span class="pl-k">=</span> <span class="pl-en">Resolver</span>.url(<span class="pl-s"><span class="pl-pds">"</span>Edulify Repository<span class="pl-pds">"</span></span>, url(<span class="pl-s"><span class="pl-pds">"</span>https://edulify.github.io/modules/releases/<span class="pl-pds">"</span></span>))(<span class="pl-en">Resolver</span>.ivyStylePatterns)</pre></div>
 
 <h2>
 <a id="how-to-use" class="anchor" href="#how-to-use" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to Use</h2>
@@ -147,7 +183,7 @@
 
 <p>Add the following dependency to your <code>project/build.sbt</code> or <code>project/Build.scala</code>:</p>
 
-<pre><code>"com.edulify" %% "play-hikaricp" % "2.0.1"
+<pre><code>"com.edulify" %% "play-hikaricp" % "2.0.6"
 </code></pre>
 
 <h3>
@@ -291,6 +327,24 @@ logger.org.jdbcdslog.ResultSetLogger=ERROR  # won't log result sets
 </code></pre>
 
 <h2>
+<a id="using-with-slick" class="anchor" href="#using-with-slick" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using with Slick</h2>
+
+<p><a href="https://github.com/playframework/play-slick">play-slick</a> requires a <code>db.&lt;database&gt;.driver</code> property to be configured. So, besides your pool configuration, when using Slick, you also have to configure this property. Per instance:</p>
+
+<pre><code>db {
+  default {
+    driver=org.postgresql.Driver
+    driverClassName=${db.default.driver}
+    jdbcUrl="jdbc:postgresql://localhost/simpsons"
+    username=bart
+    password=51mp50n
+  }
+}
+</code></pre>
+
+<p>Notice that the driver was repeated in two different properties, even if one is reference the other. After that, play-slick is smart enough to use the configured pool.</p>
+
+<h2>
 <a id="deploying-to-heroku" class="anchor" href="#deploying-to-heroku" aria-hidden="true"><span class="octicon octicon-link"></span></a>Deploying to Heroku</h2>
 
 <p>When using Heroku, a <code>DATABASE_URL</code> environment variable in the form <code>scheme://user:password@host:port/db</code> will be created for you. This variable can be used directly inside <code>application.conf</code>:</p>
@@ -359,12 +413,16 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
-      </section>
-      <footer>
-        <p><small>Hosted on <a href="http://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/edulify/play-hikaricp.edulify.com">play-hikaricp</a> is maintained by <a href="https://github.com/edulify">edulify</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
       </footer>
-    </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-		
+
+    </section>
+
+  
   </body>
 </html>
+
