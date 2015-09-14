@@ -44,7 +44,7 @@ credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
 
 startYear := Some(2012)
 
-description := "HikariCP Plugin for Play Framework 2.2.x"
+description := "HikariCP Plugin for Play Framework 2.2.x/2.3.x"
 
 licenses := Seq("The Apache Software License, Version 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt"))
 
