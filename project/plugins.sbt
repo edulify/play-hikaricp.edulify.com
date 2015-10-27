@@ -12,7 +12,7 @@ resolvers ++= Seq(
     Classpaths.typesafeReleases
 )
 
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % System.getProperty("play.version", "2.3.9"))
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % System.getProperty("play.version", "2.3.10"))
 
 addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.0.0")
 
