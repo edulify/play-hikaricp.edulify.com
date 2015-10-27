@@ -26,7 +26,6 @@ import com.zaxxer.hikari.HikariDataSource
  * the pool.
  */
 class LogSqlDataSource extends ConnectionPoolDataSourceProxy {
-  override def getParentLogger: Logger = throw new SQLFeatureNotSupportedException
 
   def shutdown() = this.targetDS match {
     case ds: HikariDataSource => ds.shutdown()

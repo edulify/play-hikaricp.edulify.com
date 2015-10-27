@@ -2,7 +2,7 @@ name := "play-hikaricp"
 
 version := "2.0.7"
 
-scalaVersion := "2.11.6"
+scalaVersion := "2.10.4"
 
 crossScalaVersions := Seq("2.10.5", "2.11.6")
 
@@ -10,7 +10,7 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 libraryDependencies ++= Seq(
   jdbc,
-  "com.zaxxer" % "HikariCP" % "2.3.9",
+  "com.zaxxer" % "HikariCP-java6" % "2.3.9",
   "com.googlecode.usc" % "jdbcdslog" % "1.0.6.2",
   "com.h2database" % "h2" % "1.4.187" % "test"
 )
