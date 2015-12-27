@@ -46,6 +46,12 @@ class HikariCPDBApiSpec extends Specification with AroundExample {
       val ds = api.getDataSource("default")
       JNDI.initialContext.lookup("TestContext") must not(beNull)
     }
+    "logSql for data sources bounded to jndi" in new DataSourceConfigs {
+      val api = new HikariCPDBApi(configWithLogSql, classLoader)
+      val ds = api.getDataSource("default")
+      val boundedDS = JNDI.initialContext.lookup("TestContext")
+      boundedDS.isInstanceOf[LogSqlDataSource] must beTrue
+    }
     "register driver configured in `driverClassName`" in new DataSourceConfigs {
       val api = new HikariCPDBApi(configWithLogSql, classLoader)
       val ds = api.getDataSource("default")

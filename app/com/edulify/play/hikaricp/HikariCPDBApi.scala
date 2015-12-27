@@ -50,13 +50,14 @@ class HikariCPDBApi(configuration: Configuration, classloader: ClassLoader) exte
         registerDriver(dataSourceConfig)
 
         val dataSource = new HikariDataSource(hikariConfig)
-        bindToJNDI(dataSourceConfig, hikariConfig, dataSource)
 
         if (dataSourceConfig.getBoolean("logSql").getOrElse(false)) {
           val dataSourceWithLogging = new LogSqlDataSource()
           dataSourceWithLogging.setTargetDSDirect(dataSource)
+          bindToJNDI(dataSourceConfig, hikariConfig, dataSourceWithLogging)
           dataSourceWithLogging -> dataSourceName
         } else {
+          bindToJNDI(dataSourceConfig, hikariConfig, dataSource)
           dataSource -> dataSourceName
         }
       } match {
