@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 2.1.0 - 2015/12/27 
+
+1. PR-71 - Upgrade Playframework to version 2.3.10
+2. GH-70 - Fix problem related to use logSql with JNDI
+3. Upgrade HikariCP to version 2.4.3
+
 ## Version 2.0.6 - 2015/05/31
 
 1. Upgrade Playframework to version 2.3.9

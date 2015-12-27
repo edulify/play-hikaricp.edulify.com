@@ -24,6 +24,7 @@ Here is how HikariCP is working for us:
 
 | Version | HikariCP | Play  | Docs reference                   |
 |--------:|---------:|------:|:---------------------------------|
+| 2.1.0   | 2.4.3    | 2.3.10 | [Release 2.1.0](https://github.com/edulify/play-hikaricp.edulify.com/blob/2.1.0/README.md)|
 | 2.0.6   | 2.3.8    | 2.3.9 | [Release 2.0.6](https://github.com/edulify/play-hikaricp.edulify.com/blob/2.0.6/README.md)|
 | 2.0.5   | 2.3.7    | 2.3.8 | [Release 2.0.5](https://github.com/edulify/play-hikaricp.edulify.com/blob/2.0.5/README.md)|
 | 2.0.4   | 2.3.6    | 2.3.8 | [Release 2.0.4](https://github.com/edulify/play-hikaricp.edulify.com/blob/2.0.4/README.md)|
@@ -60,7 +61,7 @@ There are just a few steps to properly configure the plugin:
 
 Add the following dependency to your `project/build.sbt` or `project/Build.scala`:
 
-    "com.edulify" %% "play-hikaricp" % "2.0.6"
+    "com.edulify" %% "play-hikaricp" % "2.1.0"
 
 ### Step 2: Disable default `dbplugin`
 
