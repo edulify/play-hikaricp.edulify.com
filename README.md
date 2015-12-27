@@ -4,7 +4,7 @@
 
 This plugin works with `2.3.x` of PlayFramework and uses version `2.3.8` of HikariCP.
 
-Note, it can be made to work with Play `2.2.x` of the PlayFramework, but it requires changing the dependencies as the current build relies on the Play `2.3.x` plugin. Please, see the versions table below to see which version of Play is supported.
+Note, it can be made to work with Play `2.2.x` (or 2.3.x) of the PlayFramework, but it requires changing the dependencies as the current build relies on the Play `2.3.x` plugin. Please, see the versions table below to see which version of Play is supported.
 
 [![Build Status](https://travis-ci.org/edulify/play-hikaricp.edulify.com.svg?branch=master)](https://travis-ci.org/edulify/play-hikaricp.edulify.com) [![Issue Stats](http://issuestats.com/github/edulify/play-hikaricp.edulify.com/badge/pr)](http://issuestats.com/github/edulify/play-hikaricp.edulify.com) [![Dependency Status](https://www.versioneye.com/user/projects/54eaa687d1ec577c97000cd5/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54eaa687d1ec577c97000cd5) [![Coverage Status](https://coveralls.io/repos/edulify/play-hikaricp.edulify.com/badge.svg?branch=master)](https://coveralls.io/r/edulify/play-hikaricp.edulify.com?branch=master) [![Codacy Badge](https://www.codacy.com/project/badge/9817a5d0538b434eb052ce5917a7ae9d)](https://www.codacy.com/public/contact_4/play-hikaricp.edulify.com)
 
