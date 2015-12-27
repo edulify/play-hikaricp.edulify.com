@@ -69,7 +69,7 @@ class HikariCPDBApi(configuration: Configuration, classloader: ClassLoader) exte
   def shutdownPool(ds: DataSource) = {
     Logger.info("Shutting down connection pool.")
     ds match {
-      case ds: HikariDataSource => ds.shutdown()
+      case ds: HikariDataSource => ds.close()
       case ds: LogSqlDataSource => ds.shutdown()
       case _ => Logger.debug("DataSource type was not recognized by HikariCP Plugin")
     }
